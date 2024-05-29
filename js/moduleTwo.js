@@ -308,3 +308,143 @@ function multiply() {
 multiply(); //This is decloration function multiply
 multiply(); //This is decloration function multiply
 multiply(); //This is decloration function multiply
+
+// ======================= Параметры и аргументы ==========
+
+// Объявление параметров x, y, z
+function multiply(x, y, z) {
+  console.log(`Результат умножения равен ${(x * y) / z}`);
+}
+
+multiply(15, 3, 2);
+
+// ===============
+
+// 1. Объявление параметров
+function multiply(x, y, z) {
+  console.log(`Результат умножения равен ${(x * y) / z}`);
+}
+
+// 2. Передача аргументов
+multiply(15, 3, 2); //22,5
+multiply(5, 3, 1); //15
+multiply(11, 2, 2); //11
+
+// ========================
+
+function multiply(x, y, z) {
+  // Возвращаем результат выражения умножения
+  return x * y * z;
+  console.log(`Этот лог никогда не выполнится, он стоит после return`);
+}
+
+// Результат работы функции можно сохранить в переменную
+
+let result = multiply(2, 3, 4);
+console.log(`Результат умножения равен: ${result}`); //Результат умножения равен: 24
+
+result = multiply(5, 6, 1);
+console.log(`Результат умножения равен: ${result}`); //Результат умножения равен: 30
+
+result = multiply(3, 3, 1);
+console.log(`Результат умножения равен: ${result}`); //Результат умножения равен: 9
+
+// ======================
+
+function multiply(x, y, z) {
+  console.log(`Результат умножения равен ${(x * y) / z}`);
+}
+
+console.log('Лог к вызову функции multiply ');
+multiply(1, 2, 3); // результат
+console.log('Лог после вызова функции multiply');
+
+// Последовательность логов в консоли
+// "Лог к вызову функции multiply"
+// "Результат функции"
+// "Лог после вызова функции multiply"
+
+// ======================== Параметры по умолчанию ============
+
+function count(countForm = 0, countTo = 10, step = 1) {
+  console.log(`countForm = ${countForm}, countTo = ${countTo}, step = ${step}`);
+
+  for (let i = countForm; i <= countTo; i += step) {
+    console.log(i);
+  }
+}
+
+count(2, 3); //countForm = 2, countTo = 3, step = 1 // 2..3
+count(2); //countForm = 2, countTo = 10, step = 1 // 2..10
+count(); //countForm = 0, countTo = 10, step = 1 // 0..10
+
+// ======================= [Arguments] ===============
+
+function multiply() {
+  let total = 1;
+
+  for (const argument of arguments) {
+    total *= argument;
+  }
+  return total;
+}
+
+console.log(multiply(5)); //5
+console.log(multiply(1, 4, 5)); //20
+console.log(multiply(3, 6, 8, 3, 1)); //432
+console.log(multiply()); //1
+
+//================= Превращение псевдомассива ==========
+
+function fn() {
+  // Переменная args будет содержать полноценный массив
+  const args = Array.from(arguments);
+}
+
+function fn(...args) {
+  // Переменная args будет содержать полноценный массив
+}
+
+// ================================
+
+function widthDraw(amount, balance) {
+  if (amount === 0) {
+    console.log('Для проведения опрерации введите сумму больше 0');
+  } else if (amount > balance) {
+    console.log('Недостаточно средств на счете');
+  } else {
+    console.log('Операция прошла успешно');
+  }
+}
+
+widthDraw(0, 300); //Для проведения опрерации введите сумму больше 0
+widthDraw(550, 300); //Недостаточно средств на счете
+widthDraw(100, 300); //Операция прошла успешно
+
+// =============
+
+function widthDraw(amount, balance) {
+  // Если условие выполнится вызывается консоль лог
+  // И выход из функции. Код после тела if не выполнится
+  if (amount === 0) {
+    console.log('Для проведения опрерации введите сумму больше 0');
+    return;
+  }
+
+  // Если условие первого if не выполнилось то его тело пропускается и инторпритатор доходит до второго if
+  // Если условие выполняется - вызывается консоль лог и выходит из функции
+  // Код, находящийся после тела if не выполняется
+
+  if (amount > balance) {
+    console.log('Недостаточно средств на счете');
+    return;
+  }
+
+  //Если ни один из предыдущих if не выполнился то инторпритатор доходит до этого кода и выполняет его
+
+  console.log('Операция прошла успешно');
+}
+
+widthDraw(0, 300); //Для проведения опрерации введите сумму больше 0
+widthDraw(550, 300); //Недостаточно средств на счете
+widthDraw(100, 300); //Операция прошла успешно
