@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/CSS/style.css" />
+    <title>Module 2</title>
+  </head>
+  <body>
+    <main>
+      <section class="container">
+        <h3 class="title">Массивы</h3>
+        <p>
+          <b>Массив</b> - структура данных для хранения и манипулирования
+          коллекций индексированых значений. Используется для храннения
+          упорядоченых коллекций данных, например списка курортов, товаров,
+          клиентов в гостиннице и т.д <br />
+          <b>Создание</b> <br />
+          Массив объявляется и берется в квадратные скобки [] - литералом
+          массива. Внутри скобок каждый элемент массива разделяется запятой
+        </p>
+        <p class="bg">const clients = ["Vasya", "Ann", "Polya"];</p>
+        <p>
+          <b>Доступ к элементам</b> <br />
+          Для доступа к значению элемента массива используется синтаксис [] -
+          массив[индекс 0...]. Между именем и переменной, хранящей массив, и []
+          не должно быть пробела.
+        </p>
+        <p class="bg">
+          const clients = ['Vasya', 'Ann', 'Polya']; <br />
+          console.log(clients[0], clients[2]);<br />
+          console.log(clients[1]);<br />
+          console.log(clients[2]);<br />
+        </p>
+        <p>Индексация частей массива начинается с 0</p>
+        <img src="/images/indices.jpg" alt="" class="img" />
+        <p>
+          <b>Переопределение</b> <br />
+          В отличии от строк элементы массива можно изменять, обратившись к ним
+          по индексу и присвоить другое значение
+        </p>
+        <p class="bg">
+          const clients = ["Vasya", "Ann", "Polya"]; <br />
+          clients[0] = "Petya"; <br />
+          clients[1] = "Vasya" <br />
+          console.log(clients);// ["Petya", "Vasya", "Polya"]
+        </p>
+        <p>
+          <b>Длинна массива</b> <br />
+          Длина массива, т.е количество его элементов, сохраняется в свойстве
+          length. Это динамическая величина, которая меняется автоматически при
+          добавлении или удалении элементов
+        </p>
+        <p class="bg">
+          const clients = ["Vasya", "Ann", "Polya"]; <br />
+          console.log(clients.length);//3
+        </p>
+        <p>
+          <b>Индекс последнего элемента</b><br />
+          Чаще всего мы заранее не знаем какова будет длинна массива в коде. Для
+          того чтобы получить значение последнего элемента, применяется след
+          подход - длинна массива всегда на еденицу больше, чем индекс
+          последнего элемента. Используя формулу длинна_массива - 1, можно
+          получить значение последнего элемента массива произвольной длинны
+        </p>
+        <p class="bg">
+          const clients = ['Vasya', 'Ann', 'Polya']; <br />
+          const lastElement = clients.length - 1;<br />
+          console.log(lastElement);//2<br />
+          console.log(clients[lastElement]);//Polya<br />
+        </p>
+        <p><b>Итерация по массиву</b> <br /></p>
+
+        <p>
+          <b>Цикл for</b> - можно использовать для итерации по массиву, т.е
+          перебор его по элементно
+        </p>
+
+        <p class="bg">
+          const clients = ['Vasya', 'Ann', 'Polya']; <br /><br />
+
+          for (let i = 0; i < clients.length; i += 1) { <br />
+          console.log(clients[i]); <br />
+          }
+        </p>
+        <p>
+          Для доступа к элементам используется синтаксис квадратных скобок
+          массив[индекс], где индекс это значение счетчика цикла с 0 и до
+          последнего индекса массива, т.е меньшее но не равное его длинне
+        </p>
+        <p>
+          <b>Цикл for...of</b><br />
+          Конструкция for..of обявляет цикл перебирающий итерабельные объекты,
+          например массив и строки. Тело цикла будет производится для значения
+          каждого элемента. Это хорошая замена цикла for если не требуется
+          доступ к счетчику итерации
+        </p>
+        <p class="bg">
+          for (const variable of iterable) { <br />
+          //тело цикла <br />
+          }
+        </p>
+        <ul>
+          <li>
+            <b>variable</b> - переменная которая сохраняет значение элемента на
+            каждой итерации.
+          </li>
+          <li>
+            <b>iterable</b> - коллекция содержащая итерабельные (что можно
+            посчитать) элементы, например массив
+          </li>
+        </ul>
+        <p class="bg">
+          const clients = ['Vasya', 'Ann', 'Polya']; <br /><br />
+
+          for (client of clients) {<br />
+          console.log(client);<br />
+          }<br /><br />
+
+          const string = "JS";<br /><br />
+
+          for (const character of string) {<br />
+          console.log(character);<br />
+          }<br />
+        </p>
+        <p>
+          <b>Операторы break и continue</b><br />
+          Будем искать имя клиента в массиве имен, если нашли - прерывается
+          цикл, поскольку нет смысла искать дальше, имена у нас уникальные
+        </p>
+        <p class="bg">
+          const clients = ['Vasya', 'Ann', 'Polya']; <br />
+          const clietsNameFind = "Ann";<br />
+          let message;<br /><br />
+
+          for (client of clients) {<br />
+          //На каждой итерации будет проверять совпадает ли элемент массива с
+          именем клиента, если совпадает, запишем в message<br />
+          //Про успех и работу break чтобы дальше не искать<br /><br />
+
+          if (client === clietsNameFind) {<br />
+          message = 'Client found';<br />
+          break;<br />
+          }<br /><br />
+
+          //Если они не совпадают записываем message об отсутствии имени<br /><br />
+
+          message = "Client not found";<br />
+          }<br />
+          console.log(message);<br />
+        </p>
+        <p>
+          Можно сначала задать message значение неудачи поиска а в цикле
+          перезаписать его на упех, если нашли имя. Но break все равно нам
+          понадобится, поскольку если у нас массив из 1000 клиентов, а нужный
+          нам находится на 2й позиции, то нет никакого смысла перебирать
+          оставшиеся элементы
+        </p>
+        <p class="bg">
+          const clients = ['Vasya', 'Ann', 'Polya']; <br />
+          const clietsNameFind = 'Ann';<br />
+          let message = "Client not found";<br /><br />
+
+          for (const client of clients) {<br />
+          if (client === clietsNameFind) {<br />
+          message = "Client found";<br />
+          break;<br />
+          }<br />
+          //Если не совпадает, то на этой итерации ничего не делается<br />
+          }<br />
+          console.log(message);<br />
+        </p>
+        <p>
+          Используем цикл для вывода чисел только больше определенного значения
+        </p>
+        <p class="bg">
+          const numbers = [1, 3, 14, 18, 4, 7, 29, 6, 34]; <br />
+          const threshold = 15;<br /><br />
+
+          //Для чисел меньше порогового значения срабатывает continue.
+          Выполнение тела прекращается и управление <br />передается на след
+          итерацию<br /><br />
+
+          for (let i = 0; i < numbers.length; i += 1){<br />
+          if (numbers[i] < threshold) {<br />
+          continue;<br />
+          } <br />
+          console.log(`Число больше ${threshold} : ${numbers[i]}`);<br />
+          }
+        </p>
+        <h3 class="title">Присвоение по ссылке и значению</h3>
+        <p>
+          Фундаментальным отличаем сложных типов от примитивов является то как
+          они хранятся и копируются. Примитивы: строки, числа, були, null,
+          underfind, при присвоении полностью копируется по значению (by value)
+          <br />
+          Со сложными типами все по другому. В переменной, котрой присвоен
+          массив или объект сохраняется не само значение, а адрес его места и
+          памяти, иными словами - ссылка (указатель) на него и они передаются по
+          ссылке (by reference) <br />
+          Представим переменную в виде листа бумаги. Ее значени мы представим
+          как запись на этом листе
+        </p>
+        <img src="/images/original.svg" alt="" class="img" />
+        <p>
+          Если мы захотим сообщить содержание этой записи пользователю, то можем
+          это сделать след образом - сделать физические копии и вручить каждому,
+          т.е сделать много независимых копий (присвоение по значению)
+        </p>
+        <img src="/images/by-value.svg" alt="" class="img" />
+        <p>
+          Или положить лист в закрытой комнате и дать ключ к этой комнате, т.е
+          один экземпляр с общим доступом (присвоение по ссылке)
+        </p>
+        <img src="/images/by-reference.svg" alt="" class="img" />
+        <p>
+          Теперь изменим данные на листе бумаги - значение переменной. Очевидно
+          что посетители всегда будут видеть изменения, которые мы вносим,
+          поскольку меняется оригинал и иони имеют к нему доступ. И так же
+          очевидно что владельцы бумажных копий не заметят перемен, глядя на
+          свои копии.
+        </p>
+        <p>
+          При передачи по значению переменной выделяется новая ячейка памяти и в
+          нее копируются данные. Аналогия со многими копиями бумажного листа
+          имеет реальное воплощение - отдельный лист для каждой копии. <br />
+          При передаче по ссылке, вместо создания нового объекта переменной
+          присваивается ссылка (указатель) на уже существующий объект, т.е на
+          его место в памяти. Таким образом несколько переменных могут указать
+          на один и тот же объект, по аналогии с закрытой комнатой, они имеют
+          ключ доступа к оригиналу листа <br />
+          Все типичные типы присваиваются по значению, другими словами создается
+          копия
+        </p>
+        <p class="bg">
+          let a = 5; <br /><br />
+
+          //Присвоение по значению в памяти будет создана еще 1 ячейка, в
+          которую будет скопировано значение 5<br /><br />
+
+          let b = a;<br />
+          console.log(a);//5<br />
+          console.log(b);//5<br /><br />
+
+          //Изменим значение a<br /><br />
+
+          a = 10;<br />
+          console.log(a);//10<br /><br />
+
+          //Значение b не изменилось поскольку это отдельная копия<br /><br />
+
+          console.log(b);//5<br />
+        </p>
+
+        <p>
+          <b>Сложные типы</b> - объекты, массивы, функции присваиваются по
+          ссылке, т.е переменная получает ссылку на уже существующий объект
+        </p>
+        <p class="bg">
+          const a = ['Ann']; <br /><br />
+
+          //Поскольку а это массив в b записывается ссылка на уже существующий
+          массив в памяти. Теперь a и b <br />указывают на один и тот же
+          массив<br /><br />
+
+          const b = a;<br />
+          console.log(a); //["Ann"]<br />
+          console.log(b); //["Ann"]<br /><br />
+
+          //Изменим массив - добавим еще 1 элемент, используя указатель из а<br />
+
+          a.push('Vasya');<br />
+          console.log(a); //[ 'Ann', 'Vasya' ]<br /><br />
+
+          //b так же изменилась, потому что b как и а просто содержит ссылку на
+          то же место в памяти<br /><br />
+
+          console.log(b); //[ 'Ann', 'Vasya' ]<br /><br />
+
+          //Результат повторяется<br /><br />
+
+          b.push('Petya');<br />
+          console.log(a);//['Ann', 'Vasya', 'Petya']<br />
+          console.log(b);//[ 'Ann', 'Vasya', 'Petya']<br />
+        </p>
+        <h3 class="title">Методы массивов</h3>
+        <p>
+          <b>Методы split() и join()</b><br />
+          <b>Метод split(delimiter)</b> превращает строку в массив, разбивая его
+          разделителем delimeter. Если разделитель это пустая строка, то
+          создается массив отдельных символов. Разделителем можЕТ быть один или
+          несколько символов
+        </p>
+        <p class="bg">
+          const name = 'Mango'; <br />
+          console.log(name.split('')); //[ 'M', 'a', 'n', 'g', 'o' ]
+          <br /><br /><br />
+          const message = 'JS - is awesome'; <br />
+          console.log(message.split(' '));//[ 'JS', '-', 'is', 'awesome' ]
+        </p>
+        <p>
+          <b>Метод массива join (delimiter)</b> <br />
+          Объеденяет элементы массива в строку, в строке элементы будут
+          разделены символом или группой символов, указанных в delimiter.
+        </p>
+        <p class="bg">
+          const message = ['JS', '-', 'is', 'awesome']; <br />
+          console.log(message.join('')); //JS-isawesome<br />
+          console.log(message.join(' ')); //JS - is awesome<br />
+          console.log(message.join('-'));//JS---is-awesome<br />
+        </p>
+        <p>
+          <b>Метод indexOf(value)</b><br />
+          Возвращает первый индекс, в котором элемент со значением value был
+          найден в массиве или число - 1, если такой элемент отсутствует
+          используется indexOf() когда необходимо получить сам индекс элемента
+        </p>
+        <p class="bg">
+          const clients = ["Ann", "Petya", "Vasya", "Polina"]; <br />
+          console.log(clients.indexOf("Vasya"));//2 <br />
+          console.log(clients.indexOf("Ignat"));//-1 <br />
+        </p>
+        <p>
+          <b>Метод includes(value)</b><br />
+          Проверяет содержит ли массив элемент со значением value, возвращает
+          true или false. Применение этого способа полезно в ситуациях, когда
+          нужно проверить есть ли элемент в массиве и не принципиальна его
+          позиция (index)
+        </p>
+        <p class="bg">
+          const clients = ["Ann", "Petya", "Vasya", "Polina"]; <br />
+          console.log(clients.includes("Ann"));//true <br />
+          console.log(clients.includes('Ignat'));//false
+        </p>
+        <p>Проверка многих условий includes</p>
+        <p class="bg">
+          // Запишем один из способов который на первый взгляд выглядит хорошо
+          <br />
+          const fruit = "Apple"; <br /><br />
+
+          if (fruit === "Apple" || fruit === "Strawberry") {<br />
+          console.log("It is a red fruit");<br />
+          }<br />
+        </p>
+        <p>
+          Однако что делать если у нас больше красных фруктов, например вишня
+          или клюква? Будем ли мы расширять условие с помощью дополнительных ||
+        </p>
+        <p class="bg">
+          const fruit = 'Apple'; <br /><br />
+
+          if (fruit === "Apple" || fruit === "Strawberry" || fruit === "Cherry"
+          || fruit === "Cranberries") {<br />
+          console.log("It is a red fruit");<br />
+          }<br />
+        </p>
+        <p>
+          Модем перепесить условие используя includes(), это очень просто и
+          масштабируемо
+        </p>
+        <p class="bg">
+          const redFruits = ["Apple", "Strawberry", "Cherry", "Cranberries"];
+          <br />
+          const fruit = "Cherry";<br /><br />
+
+          const hasFruit = redFruits.includes(fruit);<br /><br />
+
+          if (hasFruit) {<br />
+          console.log(`${fruit} is a red fruit`);//Cherry<br />
+          }<br />
+        </p>
+        <p>
+          <b>Методы push() и pop()</b> <br />
+          Добавляют или удаляют крайние элементы массива. Работают только с
+          крайним левым и крайним правым элементом массива и не могут вставить
+          или удалить элемент из произвольной позиции
+        </p>
+        <img src="/images/arr-method.jpg" alt="" class="img" />
+        <p>
+          <b>Метод push()</b><br />
+          Добавляет один или несколько элементов в конец массива без
+          необходимости указывать индекс прилегаемых элементов
+        </p>
+        <img src="/images/puh.jpg" alt="" class="img" />
+        <p class="bg">
+          const numbers = []; <br /><br />
+
+          numbers.push(1);<br />
+          console.log(numbers); //[ 1 ]<br /><br />
+
+          numbers.push(2);<br />
+          console.log(numbers); //[ 1, 2 ]<br /><br />
+
+          numbers.push(3);<br />
+          console.log(numbers); //[ 1, 2, 3 ]<br /><br />
+
+          numbers.push(4);<br />
+          console.log(numbers); //[ 1, 2, 3, 4 ]<br /><br />
+
+          numbers.push(5);<br />
+          console.log(numbers); //[ 1, 2, 3, 4, 5 ]<br /><br />
+
+          numbers.push(6);<br />
+          console.log(numbers);//[ 1, 2, 3, 4, 5, 6 ]<br /><br />
+        </p>
+        <p>
+          <b>Метод pop()</b><br />
+          Удаляет последний элемент из конца массива и возвращает удаленный
+          элемент. Если массив пуст метод возвращает underfind
+        </p>
+        <p class="bg">
+          const numbers = [1, 2, 3, 4, 5]; <br /><br />
+
+          console.log(numbers.pop());<br />
+          console.log(numbers); //[ 1, 2, 3, 4 ]<br /><br />
+
+          console.log(numbers.pop());<br />
+          console.log(numbers); //[ 1, 2, 3 ]<br /><br />
+
+          console.log(numbers.pop());<br />
+          console.log(numbers); //[ 1, 2 ]<br /><br />
+
+          console.log(numbers.pop());<br />
+          console.log(numbers); //[1]<br /><br />
+
+          console.log(numbers.pop());<br />
+          console.log(numbers);//[]<br /><br />
+        </p>
+        <p>
+          <b>Метод slice(begin, end)</b><br />
+          Возвращает новый массив, содержащий копию части исходного массива, не
+          изменяя его. Копия создается из значения begin и до end включительно;
+          это индексы элементов исходного массива
+        </p>
+        <img src="/images/slice.jpg" alt="" class="img" />
+        <p class="bg">
+          const clients = ['Ann', 'Petya', 'Vasya', 'Polina']; <br /><br />
+
+          console.log(clients.slice(1, 3));//[ 'Petya', 'Vasya' ]
+        </p>
+        <p>
+          Если begin и end не указаны будет создана полная копия исходного
+          массива
+        </p>
+        <p class="bg">
+          const clients = ['Ann', 'Petya', 'Vasya', 'Polina']; <br /><br />
+
+          console.log(clients.slice());//[ 'Ann', 'Petya', 'Vasya', 'Polina' ]
+        </p>
+        <p>
+          Если не указана end копирование будет сокращаться из begin и до конца
+          исходного массива
+        </p>
+        <p class="bg">
+          const clients = ['Ann', 'Petya', 'Vasya', 'Polina']; <br /><br />
+
+          console.log(clients.slice(1));//[ 'Petya', 'Vasya', 'Polina' ] <br />
+          console.log(clients.slice(2));//[ 'Vasya', 'Polina' ]
+        </p>
+        <p>
+          Если значение begin отрицательное а end не указано, будут скопированы
+          последние begin элементы (c конца)
+        </p>
+        <p class="bg">
+          const clients = ['Ann', 'Petya', 'Vasya', 'Polina']; <br /><br />
+
+          console.log(clients.slice(-2));//[ 'Vasya', 'Polina' ]
+        </p>
+        <p>
+          <b>Метод splice()</b><br />
+          Splice() для работы с массивами, если необходимо изменить исходный
+          массив. Удаляет, добавляет и заменяет элементы в любом месте массива
+          <br />
+          <b>Удаление</b> <br />
+          Чтобы удалить элементы в массиве передаются два аргумента -
+          splice(position, num)
+        </p>
+        <p class="bg">splice(position, num)</p>
+        <ul>
+          <li>
+            <b>Position</b> - указывает позицию (index) первого элемента для
+            удаления
+          </li>
+          <li><b>Num</b> - определяет колличество удаляемых элементов</li>
+        </ul>
+        <p>
+          Метод splice() изменяет исходный массив и возвращает массив содержащий
+          удаленные элементы. К примеру у нас есть массив оценок, содержащий
+          пять чисел от 1 до 5
+        </p>
+        <p class="bg">
+          const scores = [1, 2, 3, 4, 5]; <br /><br />
+
+          // Удаляем три элемента массива начиная с первого элемента (index
+          0)<br />
+          const deleteScores = scores.splice(0, 3);<br /><br />
+
+          // Теперь массив scores содержит два элемента<br />
+          console.log(scores);// [ 4, 5 ]<br /><br />
+
+          // А массив deleteScores содержит три удаленных элементов<br />
+          console.log(deleteScores);// [ 1, 2, 3 ]<br />
+        </p>
+        <p>На изображении показан вызов методов score.splice(0, 3)</p>
+        <img src="/images/splice-remove.jpg" alt="" class="img" />
+        <p class="information">
+          На практике возвращаемое значение (массив удаленных элементов)
+          используется редко. Предпочтительно просто удалить элементы из массива
+        </p>
+        <p>
+          <b>Добавление</b><br />
+          Для того чтобы добавить один или несколько элементов в массив
+          необходимо передать три или более аргумента, при таком условии, второй
+          аргумент должен быть равен нулю
+        </p>
+        <p class="bg">splice(position, 0, newElement_1, newElement_2, ...)</p>
+        <ul>
+          <li>
+            Аргумент position указывает исходную позицию в массиве, куда будут
+            вставлены новые элементы
+          </li>
+          <li>
+            Второй аргумент это 0. Он говорит методу не удалять элементы в месте
+            добавления новых
+          </li>
+          <li>
+            Третий и последующие аргументы - это новые элементы, которые
+            добавляются в массив
+          </li>
+        </ul>
+        <p>
+          К примеру у нас есть массив с названиями цветов в виде строк. Добавим
+          новый цвет с элементом с индексом 2
+        </p>
+        <p class="bg">
+          const colors = ['red', 'green', 'blue']; <br />
+          colors.splice(2, 0, 'black'); <br />
+          console.log(colors);//[ 'red', 'green', 'black', 'blue' ]
+        </p>
+        <p>На рисунке показан вызов метода colors.splice(2, 0 , "Purple")</p>
+        <img class="img" src="/images/splice-insert.jpg" alt="" />
+        <p>
+          Можно добавить любое количество элементов передав 4, 5 аргумент и т.д
+        </p>
+        <p class="bg">
+          const colors = ['red', 'green', 'blue']; <br />
+          colors.splice(1, 0, 'yellow', 'pink'); <br />
+          console.log(colors);//[ 'red', 'yellow', 'pink', 'green', 'blue' ]
+        </p>
+        <p>
+          <b>Замена</b><br />
+          Это операция добавления в которой удаляются элементы вместо добавления
+          новых. Для этого необходимо передать минимум три аргумента,
+          колличество удаляемых и добавляемых элементов может не совпадать.
+        </p>
+        <p class="bg">splice(position, num, newElement_1, newElement_2, ...)</p>
+        <ul>
+          <li>
+            Position указывает позицию (index) первого элемента для удаления
+          </li>
+          <li>Num определяет колличество удаляемых элементов</li>
+          <li>
+            3й, 4й и последующие аргументы - это новые жлементы, которые
+            добавляются в массив
+          </li>
+        </ul>
+        <p class="bg">
+          const languages = ['Js', 'C++', 'C', 'C#', 'Java']; <br /><br />
+
+          //Заменяем элемент с индексом 1 на новый<br />
+          languages.splice(1, 1, 'Pyton');<br />
+          console.log(languages); //[ 'Js', 'Pyton', 'C', 'C#', 'Java' ]<br /><br />
+
+          // Заменяем один элемент с индексом 2 на несколько<br />
+          languages.splice(2, 1, 'Swift', 'Go');<br />
+          console.log(languages);//[ 'Js', 'Pyton', 'Swift', 'Go', 'C#', 'Java'
+          ]<br />
+        </p>
+        <img src="/images/splice-replace.jpg" alt="" class="img" />
+        <p>
+          <b>Метод concat()</b> объеденяет два или более массивов в один. Он не
+          меняет массив на котором вызывается, а возвращает новый. Порядок
+          аргументов способа оказывает влияние на порядок частей нового элемента
+        </p>
+        <p class="bg">
+          const oldClients = ['Vasya', 'Petya', 'Ann', 'Jora']; <br />
+          const newClients = ['Polna', 'Max'];<br /><br />
+
+          const allClientsWithOldFirst = oldClients.concat(newClients);<br />
+          console.log(allClientsWithOldFirst); //[ 'Vasya', 'Petya', 'Ann',
+          'Jora', 'Polna', 'Max' ]<br /><br />
+
+          const allClientsWithNewFirst = newClients.concat(oldClients);<br />
+          console.log(allClientsWithNewFirst); //[ 'Polna', 'Max', 'Vasya',
+          'Petya', 'Ann', 'Jora' ]<br /><br />
+
+          console.log(oldClients);//['Vasya', 'Petya', 'Ann', 'Jora'];<br />
+          console.log(newClients);//['Polna', 'Max'];<br />
+        </p>
+        <h3 class="title">Функции</h3>
+        <p>
+          Функции это подпраграмма, независимая часть кода, предназначеная для
+          многократного выполнения конкретной задачи с разными начальными
+          значениями. Функции позволяют структуировать обширные программы,
+          уменьшают повторения и изолируют код <br /><br />
+          Функцию можно представить в виде черного ящика. Она получает что то на
+          входе(данные) и возвращает что-то на выходе (резальтат выполнения кода
+          внутри нее)
+        </p>
+        <img src="/images/fn-basic.jpg" alt="" class="img" />
+        <p><b>Объявление функций</b></p>
+        <p class="bg">
+          // 1. Объявление функции multiply
+          <br />
+          function multiply() {<br />
+          // тело функции<br />
+          console.log('This is decloration function multiply');<br />
+          }<br /><br />
+
+          // 2. Вызов фунции multiply<br />
+          multiply();//This is decloration function multiply<br />
+          multiply();//This is decloration function multiply<br />
+          multiply();//This is decloration function multiply<br />
+        </p>
+      </section>
+    </main>
+    <script src="/js/moduleTwo.js"></script>
+    <script src="/js/test.js"></script>
+  </body>
+</html>
