@@ -448,3 +448,108 @@ function widthDraw(amount, balance) {
 widthDraw(0, 300); //Для проведения опрерации введите сумму больше 0
 widthDraw(550, 300); //Недостаточно средств на счете
 widthDraw(100, 300); //Операция прошла успешно
+
+// ===================== Функциональные выражения ==============
+
+// Объявление функции (function declaration)
+function multiply(x, y, z) {
+  console.log(`Результат умножения равен ${x * y * z}`);
+}
+
+// Функциональное выражение (function expression)
+const multiply = function (x, y, z) {
+  console.log(`Результат умножения равен ${x * y * z}`);
+};
+
+// ===================== Область видимости функций =========
+
+const globalValue = 10;
+console.log(globalValue); //10
+
+function foo() {
+  console.log(globalValue); //10
+}
+
+for (let i = 0; i < 5; i++) {
+  console.log(globalValue); //10
+
+  if (i === 2) {
+    console.log(globalValue); //10
+  }
+}
+
+// =================
+
+function foo() {
+  const a = 20;
+  console.log(a); //20
+
+  for (let i = 0; i < 5; i++) {
+    console.log(a); //20
+    if (i === 2) {
+      console.log(a); //20
+    }
+  }
+}
+
+// ===================
+
+for (let i = 0; i < 5; i++) {
+  const a = 20;
+
+  console.log(a); //20
+
+  if (i === 2) {
+    const b = 30;
+
+    console.log(a); //20
+    console.log(b); //30
+  }
+
+  if (i === 3) {
+    console.log(a); //20
+  }
+}
+
+// =========================== Стэк вызовов =======================
+
+function fnA() {
+  console.log('Лог в середине функции fnA до вызова функции fnB');
+
+  fnB(console.log('Лог в середине функции fnA после вызова функции fnB'));
+}
+
+function fnB() {
+  console.log('Лог в середине функции fnB');
+}
+
+// Лог до вызова fnA
+// Лог в середине функции fnA до вызова fnB
+// Лог в середине функции fnB
+// Лог в середине функции fnA после вызова fnB
+// Лог после fnA
+
+// ===============================
+
+function bar() {
+  console.log('bar');
+}
+
+function bus() {
+  console.log('bus');
+}
+
+function foo() {
+  console.log('foo');
+
+  bar(console.log('bar'));
+  bus(console.log('bus'));
+}
+
+foo(console.log('foo'));
+// 1. foo
+// 2. foo
+// 3. bar
+// 4. bar
+// 5. bus
+// 6. bus
