@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/style.css" />
     <title>Document</title>
   </head>
   <body>
@@ -61,6 +62,328 @@
           like: 1,<br />
           }<br />
           }
+        </p>
+        <p>
+          В будущем это можно использовать для поиска пользователей, города,
+          минимальному и максимальному кол-ву подписчиков и т.д <br /><br />
+          <b>Доступ к свойству через точку</b><br /><br />
+          Первый способ получить доступ к свойству объекта это синтаксис
+          <b>объект.имя_свойство</b>. Синтаксис через точку используется в
+          большинстве случаев и уместен тогда, когда мы заранее знаем имя (ключ)
+          свойства, к которому хотим получить доступ <br /><br />
+          На месте обращения будет возвращено свойство с таким именем. Если
+          объект не содержит свойтво с таким именем на месте обращения будет
+          возвращено undefind.
+        </p>
+        <p class="bg">
+          const book = { <br />
+          title: 'Kingdom',<br />
+          author: 'Name Lastname',<br />
+          genres: ['History', 'Horror', 'Comedy'],<br />
+          isPublic: true,<br />
+          rating: 8.4,<br />
+          };<br /><br />
+
+          const bookTitle = book.title;<br />
+          console.log(bookTitle);//Kingdom<br />
+          const bookAuthor = book.author;<br />
+          console.log(bookAuthor);//Name Lastname<br />
+          const bookPrice = book.price;<br />
+          console.log(bookPrice);//undefind<br />
+        </p>
+        <p>
+          <b>Обращение к вложенным свойствам</b>
+          <br />
+          Для доступа к вложенным свойствам используется цепочка запросов через
+          точку. Например чтобы получить значени страны пользователя пишем
+          user.location.country. Это ссылка к объекту в свойстве location, а
+          user.location.country в этом объекте. Таким образом точка указывает на
+          следуюзее вложение
+        </p>
+        <p class="bg">
+          const user = { <br />
+          name: 'Vasya Pupkin',<br />
+          tag: '#Vasya',<br />
+          location: {<br />
+          country: 'England',<br />
+          city: 'London',<br />
+          },<br />
+          stats: {<br />
+          folowers: 15,<br />
+          views: 2,<br />
+          like: 1,<br />
+          },<br />
+          };<br /><br />
+
+          const userLocation = user.location.country;<br />
+          console.log(userLocation);//England<br />
+          const userStatus = user.stats.friends;<br />
+          console.log(userStatus);//undefind<br />
+        </p>
+        <p>
+          Если значение свойства это массив то в нашем примере user.hobbies
+          обращение к этому массиву. Дальше можно получить доступ к его
+          элементам через [] и index, переиспользовать свойства и методы
+        </p>
+        <p class="bg">
+          const user = { <br />
+          name: 'Vasya Pupkin',<br />
+          tag: '#Vasya',<br />
+          location: {<br />
+          country: 'England',<br />
+          city: 'London',<br />
+          },<br />
+          stats: {<br />
+          folowers: 15,<br />
+          views: 2,<br />
+          like: 1,<br />
+          },<br />
+          hobbies: ['Swiming', 'Music', 'Box'],<br />
+          };<br /><br />
+
+          const hobbie = user.hobbies;<br />
+          console.log(hobbie); //[ 'Swiming', 'Music', 'Box' ]<br />
+          const firstHobbie = user.hobbies[0];<br />
+          console.log(firstHobbie); //"Swiming"<br />
+          const lengthHobie = user.hobbies.length;<br />
+          console.log(lengthHobie);//3<br />
+        </p>
+        <p>
+          Обращение к свойствам через [] второй способ получить доступ к
+          свойству объекта это синтаксис ["имя свйоства"]. Похоже на обращение к
+          элементу массива с разницей в том, что в скобках указывается не индекс
+          элемента а имя свойства в виде строки <br /><br />
+          Синтаксис [] используется значительно реже, в случае когда имя
+          свойства заранее не известно или хранится в переменной например как
+          значение параметров функции <br /><br />
+          На месте обращения будет возвращено значение свойства с таким именем.
+          Если в объекте отсутствует свойство с таким именем вернется undefind.
+        </p>
+        <p class="bg">
+          const book = { <br />
+          title: 'Kingdom',<br />
+          author: 'Name Lastname',<br />
+          genres: ['History', 'Horror', 'Comedy'],<br />
+          isPublic: true,<br />
+          rating: 8.4,<br />
+          };<br /><br />
+
+          const bookTitle = book['title'];<br />
+          console.log(bookTitle); //Kingdom<br /><br />
+
+          const propKey = 'author';<br />
+          const bookAuthor = book[propKey];<br />
+          console.log(bookAuthor);//Name Lastname<br />
+        </p>
+        <p>
+          <b>Изменение значения свойств</b><br />
+          После создания объекта значение его свойства можно изменить, для этого
+          нужно обратиться к нему по имени, например через точку и присвоить
+          новое значение
+        </p>
+        <p class="bg">
+          const book = { <br />
+          title: 'Kingdom',<br />
+          author: 'Name Lastname',<br />
+          genres: ['History', 'Horror', 'Comedy'],<br />
+          isPublic: true,<br />
+          rating: 8.4,<br />
+          };<br /><br />
+
+          book.title = 'Castle';<br />
+          book.isPublic = false;<br />
+          book.genres.push('Drama'); <br /><br />
+
+          console.log(book.title);//Castle<br />
+          console.log(book.isPublic);//false<br />
+          console.log(book.genres);//[ 'History', 'Horror', 'Comedy', 'Drama'
+          ]<br />
+        </p>
+        <p>
+          <b>Добавление свойства</b><br /><br />
+          Операция добавления нового свойства после создания объекта ничем не
+          отличается от изменения значения уже существующего свойства. Если во
+          время записи значения по имени такого свойства нет, оно будет создано
+        </p>
+        <p class="bg">
+          const book = { <br />
+          title: 'Kingdom',<br />
+          author: 'Name Lastname',<br />
+          genres: ['History', 'Horror', 'Comedy'],<br />
+          isPublic: true,<br />
+          rating: 8.4,<br />
+          };<br /><br />
+
+          book.pageCount = 600;<br />
+          book.originalLanguage = "En";<br />
+          book.translations = ["Uk", "Ru", "Pl"];<br /><br />
+
+          console.log(book.pageCount);//600<br />
+          console.log(book.originalLanguage);//'En'<br />
+          console.log(book.translations);//["Uk", "Ru", "Pl"]<br />
+        </p>
+        <p>
+          <b>Короткие свойства</b><br /><br />
+          Иногда при создании объекта значение свйоства необходимо взять из
+          переменной или параметров функции с тем же именем что и у свойства.
+          <br /><br />
+          Cинтаксис в след примере слишком большой, потому что приходится
+          дублировать имя свойства и имя переменной в которой хранится нужное
+          значение
+        </p>
+        <p class="bg">
+          const name = "Vasya Pupkin"; <br />
+          const age = 30;<br /><br />
+
+          const user = {<br />
+          name: name,<br />
+          age: age,<br />
+          }<br /><br />
+
+          console.log(user.name);//"Vasya Pupkin"<br />
+          console.log(user.age);//30<br />
+        </p>
+        <p>
+          Синтаксис сокращенных свойств решает эту проблему, позволяя
+          использовать имя переменной в качестве имени свйоства, а ее значение в
+          качестве значения свойства
+        </p>
+        <p class="bg">
+          const name = 'Vasya Pupkin'; <br />
+          const age = 30;<br /><br />
+
+          const user = {<br />
+          name,<br />
+          age,<br />
+          };<br /><br />
+
+          console.log(user.name); //"Vasya Pupkin"<br />
+          console.log(user.age); //30
+        </p>
+        <p>
+          То есть при объявлении объекта достаточно указать только имя свойства
+          и значение будет взято из переменной с аналогичным именем <br /><br />
+          <b>Вычислительные свойства</b><br /><br />
+          Иногда возникают ситуации когда при объявлении объекта необходимо
+          добавить свойство с именем, которое заранее не известно, т.к оно
+          хранится как значение переменной или в качестве результата выполнения
+          функций <br /><br />
+          Ранее для этого приходилось сначала содавать объект а затем добавлять
+          свойство через [] что не всегда удобно
+        </p>
+        <p class="bg">
+          const propName = 'name'; <br />
+          const user = {<br />
+          age: 25,<br />
+          };<br /><br />
+
+          user[propName] = 'Vasya Pupkin';<br />
+          console.log(user.name);//Vasya Pupkin<br />
+        </p>
+        <p>
+          Синтаксис вычесляемых свойств помогает избежать лишнего кода и в
+          некоторых случаях упростить его. Значением вычесляемого свойства может
+          быть любое доступное выражение
+        </p>
+        <p class="bg">
+          const propName = 'name'; <br />
+          const user = {<br />
+          age: 25,<br />
+          // Имя этого свойства будет взято с переменной propName<br />
+          [propName]: "Vasya Pupkin"<br />
+          };<br /><br />
+
+          console.log(user.name); //Vasya Pupkin<br />
+        </p>
+        <p>
+          <b>Методы объекта</b> <br /><br />
+          До сих пор мы рассматривали объекты только как хранилище
+          взаимосвязанных данных, например информация о книге и т.д.
+          Объекты-хранилищ обычно находятся в массиве таких же объектов, которые
+          являются коллекцией однотипных элементов <br /><br />
+          Объекты могут хранить не только данные но и функции для работы с этими
+          данными - методы. Если значения свойства это функция, такое свойство
+          называется методом объекта.
+        </p>
+        <p class="bg">
+          const bookShelf = { <br />
+          books: ['Kingdom', "Custle"],<br />
+          // Это метод объекта<br />
+          getBooks() {<br />
+          console.log("Этот метод будет проверять все книги - свойство
+          books");<br />
+          },<br />
+          // Это метод объекта<br />
+          addBook(BookName) {<br />
+          console.log("Этот метод будет добавлять новую книгу в свойства
+          books");<br />
+          },<br />
+
+          }<br /><br />
+
+          // Вызовы методов<br />
+          bookShelf.getBooks();<br />
+          bookShelf.addBook("New book");<br />
+        </p>
+        <p>
+          Такие объекты можно назвать моделями, они считают в себе данные и
+          методы для работы с этими данными, например можно было объявить
+          переменную books и 2 функции getBooks() и addBook(bookName) но в этом
+          случае это были бы 3 отдельные сущности без явного синтаксического
+          связывания с недостаточной логической связью
+        </p>
+        <p class="bg">
+          const books = []; <br />
+          function getBooks() <br />
+          function addBook() {}
+        </p>
+        <p>
+          Доступ к свойствам объектов в методах<br /><br />
+          Методы используются для работы со свойством объекта и изменения их.
+          Для доступа к объекту в методе не используется имя переменной, такое
+          как bookShelf, а ключевое слово this - контекст. Значением this будет
+          объект перед точкой, то есть объект который вызвал этот метод. В нашем
+          случае это ссылка на объект bookShelf.
+        </p>
+        <p class="bg">
+          const bookShelf = { <br />
+          books: ["Kingdom"],<br />
+          getBooks() {<br />
+          console.log(this);<br />
+          }<br />
+          }<br /><br />
+
+          // Перед точкой находится объект bookShelf, поэтому вызов метода this
+          будет сохранять ссылку на него<br />
+          bookShelf.getBooks();
+        </p>
+        <p>
+          Для получения доступа к свойствам объекта в методах мы обращаемся к
+          нему через this и затем стандартно используем достум к свойствам через
+          точку.
+        </p>
+        <p class="bg">
+          const bookShelf = { <br />
+          books: ['Kingdom'],<br />
+          getBooks() {<br />
+          return this.books;<br />
+          },<br />
+          addBook(bookName) {<br />
+          this.books.push(bookName);<br />
+          },<br />
+          removeBook(bookName) {<br />
+          const bookIndex = this.books.indexOf(bookName);<br />
+          this.books.splice(bookIndex, 1);<br />
+          },<br />
+          };<br /><br />
+
+          console.log(bookShelf.getBooks()); //["Kingdom"]<br />
+          bookShelf.addBook('New book');<br />
+          bookShelf.addBook('Very New book');<br />
+          console.log(bookShelf.getBooks()); //[ 'Kingdom', 'New book', 'Very
+          New book' ]<br />
+          bookShelf.removeBook('Kingdom');<br />
+          console.log(bookShelf.getBooks());//[ 'New book', 'Very New book' ]<br />
         </p>
       </section>
     </main>

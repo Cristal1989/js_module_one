@@ -244,6 +244,7 @@ a {
   border: 1px solid black;
   border-radius: 8px;
   box-shadow: 3px 5px 4px 1px rgba(0, 0, 0, 0.3);
+  margin: 0;
 
   font-size: 29px;
   font-family: Monaco;
@@ -253,4 +254,32 @@ a {
 .nav__link:hover {
   color: teal;
   box-shadow: none;
+}
+
+.nav__item {
+  margin: 0;
+}
+
+.nav__list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+}
+
+.nav {
+  min-width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .contain {
+    min-width: 768px;
+  }
+
+  .nav__link {
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
