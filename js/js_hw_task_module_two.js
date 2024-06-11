@@ -1043,7 +1043,7 @@ checkForSpam('[SPAM] How to earn fast money?');
 
 function checkAge(age) {
   if (age >= 18) {
-    return console.log('You are an adult');
+    console.log('You are an adult');
   }
   return console.log('You are a minor');
 }
@@ -1524,16 +1524,33 @@ calculateTotalPrice([412, 371, 94, 63, 176]);
 //Вызов функции findLongestWord() со случайной строкой возвращает правильное значение
 
 function findLongestWord(string) {
-  let array = string.split(' ');
-  let arrayWords;
+  // let array = string.split(' ');
+  // let arrayWords ;
 
-  for (let i = 0; i < array.length; i++) {
-    arrayWords = array[i].split(' ');
-    console.log(arrayWords);
+
+  // for (let i = 0; i < array.length; i++) {
+  //   arrayWords = array[i].split(' ');
+  //   console.log(arrayWords);
+  // }
+
+  // return string.split(' ').reduce((a, b) => (b.length > a.length ? b : a));
+
+
+  function findLongestWord(string) {
+
+  const words = string.split(" ");
+  let longestWord = "";
+
+  for (let word of words) {
+    if (word.length > longestWord.length) {
+      longestWord = word;
+    }
   }
+  return longestWord;
 }
+  console.log(findLongestWord('Google do a roll'));
+  console.log(findLongestWord("The quick brown fox jumped over the lazy dog"));
 
-findLongestWord('Google do a roll');
 
 //=============================================================|
 //========================== Task 22 ==========================|
@@ -1836,20 +1853,19 @@ console.log(number);
 //В цикле for не должен использоваться break для выхода до завершения всех итераций цикла
 
 function findNumber(start, end, divisor) {
-  for (let i = start; i < end; i += 1) {
-    if (i % divisor !== 0) {
-      continue;
+  for (let i = start; i <= end; i++) {
+    if (i % divisor === 0) {
+      return i;
     }
-    console.log(i);
   }
 
-  return;
+  return null;
 }
 
-findNumber(2, 6, 5);
-findNumber(8, 17, 3);
-findNumber(6, 9, 4);
-findNumber(16, 35, 7);
+console.log(findNumber(2, 6, 5));
+console.log(findNumber(8, 17, 3));
+console.log(findNumber(6, 9, 4));
+console.log(findNumber(16, 35, 7));
 
 //=============================================================|
 //========================== Task 32 ==========================|
@@ -1870,17 +1886,27 @@ findNumber(16, 35, 7);
 //В функции includes используется for, return, но не метод массива includes
 
 function includes(array, value) {
-  for (a of array) {
-    if (a === value && a === true) {
-      console.log(true);
+  // for (a of array) {
+  //   if (a === value) {
+  //     console.log(true);
+  //     return true;
+  //   }
+  // }
+  // console.log(false);
+  // return false;
+
+  for (let i = 0; i < array.length; i++){
+    if (array[i] === value) {
       return true;
     }
   }
-  console.log(false);
   return false;
 }
+console.log(includes([1, 2, 3, 4, 5], 3));
+console.log(includes([1, 2, 3, 4, 5], 17));
+console.log(includes(['Earth', 'Mars', 'Venus', 'Jupiter', 'Saturn'], 'Jupiter'));
+console.log(includes(['Earth', 'Mars', 'Venus', 'Jupiter', 'Saturn'], 'Uranus'));
 
-includes([1, 2, 3, 4, 5], 3);
-includes([1, 2, 3, 4, 5], 17);
-includes(['Earth', 'Mars', 'Venus', 'Jupiter', 'Saturn'], 'Jupiter');
-includes(['Earth', 'Mars', 'Venus', 'Jupiter', 'Saturn'], 'Uranus');
+
+
+

@@ -385,6 +385,306 @@
           bookShelf.removeBook('Kingdom');<br />
           console.log(bookShelf.getBooks());//[ 'New book', 'Very New book' ]<br />
         </p>
+        <p>
+          Логично задуматься почему бы не использовать имя объекта в обращении к
+          свойствам, ведь мы явно не собираемся его изменять. Дело в том, что
+          имя объекта - вещь не надежная, методы одного объекта можно копировать
+          в другой (с другим именем), а в будущем узнаем что часто во время
+          создания объекта мы заранее отнюдь не знаем имя. Использование этого
+          гарантирует что метод работает именно с тем объектом, который его
+          вызвал.
+        </p>
+        <img src="./images/this-keywords.jpg" alt="" class="img" />
+        <p>
+          <b>Перебор объекта</b>
+          <br />
+          В отличае от массива или строки объект это не итерабельная сущность,
+          т.е его нельзя перебрать циклами for и for .. off
+          <br /><b>for..in</b> <br />
+          Для перебора объекта используется специальный цикл for .. in который
+          перебирает ключи объекта object.
+        </p>
+        <p class="bg">
+          for (key in object){ <br />
+          //тело
+          <br />
+          }
+        </p>
+        <p>
+          Переменная key доступна только в теле цикла. На каждой итерации в нее
+          будет записано значение ключа (имя) свойство. Для того чтобы получить
+          значение свойства с таким ключом (именем) используется синтаксис []
+        </p>
+        <p class="bg">
+          const book = { <br />
+          title: 'Kingdom',<br />
+          author: 'Name Lastname',<br />
+          genres: ['History', 'Horror', 'Comedy'],<br />
+          isPublic: true,<br />
+          rating: 8.4,<br />
+          };<br /><br />
+
+          for (const key in book) {<br />
+          console.log(key);<br />
+          console.log(book[key]);<br />
+          }<br />
+        </p>
+        <p>
+          <b>Метод hasOwnProperty()</b><br />
+          Разбираем концепцию собственных и не собственных свойств объекта и
+          научимся правильно использовать цикл for..in
+        </p>
+        <p class="bg">
+          const animal = { <br />
+          legs: 4,<br />
+          };<br />
+          const dog = Object.create(animal);<br />
+          dog.name = 'Sharik';<br /><br />
+
+          console.log(dog); //{ name: 'Sharik' }<br />
+          console.log(dog.name);//Sharik<br />
+          console.log(dog.legs);//4<br />
+        </p>
+        <p>
+          <b>Метод Object.create(animal)</b><br />
+          Создает и возвращает новый объект связывая его с объектом animal.
+          Поэтому можно получить значение свойства legs, обратившись к нему как
+          dog.legs хотя он отсутствует в объекте dog - это не собственное
+          свойство из объекта animal.
+          <br />
+          <br /><b>Оператор in</b> используемый в цикле for..in не делает
+          разницы между собственными и не собственными свойствами объекта. Эта
+          особенность мешает, поскольку мы всегда хотим взять только собственные
+          свойства. Для того чтобы узнать чтобы узнать содержит ли объект
+          собственные свойства используется метод hasOwnProperty(key)
+          возвращающий true or false.
+        </p>
+        <p class="bg">
+          // Плохой пример
+          <br />
+          console.log("name" in dog);//true <br />
+          console.log("legs" in dog);//true<br /><br />
+
+          // Хороший пример<br />
+          console.log(dog.hasOwnProperty("name"));//true<br />
+          console.log(dog.hasOwnProperty("legs"));//false<br />
+        </p>
+        <p>
+          Поэтому перебирая циклом for..in необходимо на каждой итерации
+          добавить проверку собственного свойства. Даже если сейчас мы уверены в
+          том что в объекте отсутствуют не собственные свойства это защитит от
+          возможных ошибок в будущем
+        </p>
+        <p class="bg">
+          const book = { <br />
+          title: 'Kingdom',<br />
+          author: 'Name Lastname',<br />
+          genres: ['History', 'Horror', 'Comedy'],<br />
+          isPublic: true,<br />
+          rating: 8.4,<br />
+          };<br /><br />
+
+          for (const key in book) {<br />
+          // Если это собственное свойство - выполняем тело if<br />
+          if (book.hasOwnProperty(key)) {<br />
+          console.log(key);<br />
+          console.log(book[key]);<br />
+          }<br />
+          // Если это не собстенное свойство - ничего не делаем<br />
+          }<br />
+        </p>
+        <p>
+          <b>Метод Object.keys()</b><br />
+          Встроенный класс Object имеет несколько полезных способов для работы с
+          объектами. Первый из них - это Object.keys(obj) который принимает
+          объект и возвращает массив ключей, его собственных свойств. Если
+          объект не обладает свойствами - метод вернет пустой массив.
+        </p>
+        <p class="bg">
+          const book = { <br />
+          title: 'Kingdom',<br />
+          author: 'Name Lastname'<br />, genres: ['History', 'Horror',
+          'Comedy'],<br />
+          isPublic: true,<br />
+          rating: 8.4,<br />
+          };<br /><br />
+
+          const keys = Object.keys(book);<br />
+          console.log(keys); //[ 'title', 'author', 'genres', 'isPublic',
+          'rating' ]<br />
+        </p>
+        <p>
+          Скомбинировав результат Object.keys() и цикл for..of можно удобно
+          перебрать собственные свойства объекта и не использовав архаический
+          цикл for..in с проверками принадлежнасти свойств
+        </p>
+        <p class="bg">
+          const book = { <br />
+          title: 'Kingdom',<br />
+          author: 'Name Lastname',<br />
+          genres: ['History', 'Horror', 'Comedy'],<br />
+          isPublic: true,<br />
+          rating: 8.4,<br />
+          };<br />
+          const keys = Object.keys(book);<br /><br />
+
+          for (const key of keys) {<br />
+          console.log(key);<br />
+          console.log(book[key]);<br />
+          }<br />
+        </p>
+        <p>
+          Мы перебираем массив ключей объекта и на каждой итерации получаем
+          свойство с таким ключем <br /><br />
+          <b>Метод Object.values()</b><br /><br />
+          Если метод Object.keys(obj) возвращает массив ключей собственных
+          свойств объекта, метод Object.values(obj) возвращает массив значений
+          его собственных свойств. Если в объекте отсутствуют свойства, метод
+          Object.valuses(obj) вернет пустой массив.
+        </p>
+        <p class="bg">
+          const book = { <br />
+          title: 'Kingdom',<br />
+          author: 'Name Lastname',<br />
+          genres: ['History', 'Horror', 'Comedy'],<br />
+          isPublic: true,<br />
+          rating: 8.4,<br />
+          };<br /><br />
+
+          const keys = Object.keys(book);<br />
+          const values = Object.values(book);<br /><br />
+
+          console.log(`keys: ${keys}\nvalues: ${values} `);<br />
+        </p>
+        <p>
+          Массив значений свойства так же можно перебрать циклом for, например
+          для получения общей суммы цифровых значений <br /><br />
+          Предположим что нам нужно сосчитать общее кол-во продуктов в объекте
+          формата имя-продукта: колличество. В таком случае будет уместен метод
+          Object.values(). Для того чтобы получить массив общих значений, а
+          затем удобно добавить их
+        </p>
+        <p class="bg">
+          const products = { <br />
+          apple: 4,<br />
+          carrot: 10,<br />
+          broad: 3,<br />
+          cheese: 25,<br />
+          }<br />
+          const values = Object.values(products);<br />
+          let total = 0;<br /><br />
+
+          for (const value of values) {<br />
+          total += value;<br />
+          }<br />
+          console.log(total);//42<br />
+        </p>
+        <p>
+          <b>Метод Object.entries()</b><br /><br />
+          Метод возвращает массив записи каждый элемент которого будет еще один
+          массив из двух элементов: имени свойства и значения этого свойства из
+          объекта obj.
+        </p>
+        <p class="bg">
+          const book = { <br />
+          title: 'Kingdom',<br />
+          author: 'Name Lastname',<br />
+          genres: ['History', 'Horror', 'Comedy'],<br />
+          isPublic: true,<br />
+          rating: 8.4,<br />
+          };<br />
+          const keys = Object.keys(book);<br />
+          const values = Object.values(book);<br />
+          const entries = Object.entries(book);<br /><br />
+
+          console.log(`Keys: ${keys}\nValues: ${values}\nEntries:
+          ${entries}`);<br />
+        </p>
+        <p class="information">
+          На практике метод Object.enries(obj) используется редко, только для
+          каких то очень спецефических задач. В 99% случаев будет использоваться
+          Object.keys() и Object.values()
+        </p>
+        <p>
+          <b> Массив объектов</b> - стандартный набор обычных задач разработчика
+          содержит манипуляцию массивом однотипных объектов. Это означает что
+          объекты в массиве гарантировано будут иметь одинаковый набор свойств,
+          но с разными значениями
+        </p>
+        <p class="bg">
+          const books = [ <br />
+          {<br />
+          title: 'Kingdom',<br />
+          author: 'Stiven King',<br />
+          rating: 9.9,<br />
+          },<br />
+          {<br />
+          title: 'Dom2',<br />
+          author: 'King Kong',<br />
+          rating: 1.1,<br />
+          },<br />
+          {<br />
+          title: 'Custtle',<br />
+          author: 'King Artur',<br />
+          rating: 7.4,<br />
+          },<br />
+          ];<br />
+        </p>
+        <p>
+          Для перебора такого массива используется стандартный цикл for..of.
+          Значения свойства каждого объекта можно получить использую синтаксис
+          через точку, поскольку в каждом объекте набор свойств и их имена будут
+          одинаковые, отличаются только значения
+        </p>
+        <p class="bg">
+          const books = [ <br />
+          { <br />
+          title: 'Kingdom', <br />
+          author: 'Stiven King', <br />
+          rating: 9.9, <br />
+          }, <br />
+          { <br />
+          title: 'Dom2', <br />
+          author: 'King Kong', <br />
+          rating: 1.1, <br />
+          }, <br />
+          { <br />
+          title: 'Custtle', <br />
+          author: 'King Artur', <br />
+          rating: 7.4, <br />
+          }, <br />
+          ]; <br />
+          <br />
+
+          for (const book of books) { <br />
+          console.log(`Книги: ${book}\nНазвание: ${book.title}\nАвтор:
+          ${book.author}\nРейтинг: ${book.rating}`); <br />
+          } <br />
+        </p>
+        <p>Например получаем список названий всех книг в коллекции books</p>
+        <p class="bg">
+          const bookName = []; <br /><br />
+
+          for (const book of books) {<br />
+          bookName.push(book.title);<br />
+          }<br />
+          console.log(bookName);//[ 'Kingdom', 'Dom2', 'Custtle' ]<br />
+        </p>
+        <p>
+          Узнаем средний рейтинг всей нашей коллекции, для это добавим все
+          рейтинги, после чего поделим это значение на количество книг в
+          коллекции
+        </p>
+        <p class="bg">
+          let totalRating = 0; <br /><br />
+
+          for (const book of books) {<br />
+          totalRating += book.rating;<br />
+          }<br /><br />
+
+          let avgRating = (totalRating / books.length).toFixed(1);<br />
+          console.log(avgRating);//6.1<br />
+        </p>
       </section>
     </main>
     <script src="./js/moduleThree.js"></script>

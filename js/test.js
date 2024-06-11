@@ -41,5 +41,14 @@ let a = 1;
 let a = 2;
 console.log(a);
 
+function foo(a) {
+  const b = [];
+  for (let c of a) {
+    if (c > 5) {
+      b.push(c);
+    }
+  }
+  console.log(b);
+}
 
-
+foo([6, 3, 7, 8, 1]);

@@ -247,3 +247,176 @@ bookShelf.addBook('Very New book');
 console.log(bookShelf.getBooks()); //[ 'Kingdom', 'New book', 'Very New book' ]
 bookShelf.removeBook('Kingdom');
 console.log(bookShelf.getBooks()); //[ 'New book', 'Very New book' ]
+
+// ========================= for...in==================
+
+const book = {
+  title: 'Kingdom',
+  author: 'Name Lastname',
+  genres: ['History', 'Horror', 'Comedy'],
+  isPublic: true,
+  rating: 8.4,
+};
+
+for (const key in book) {
+  console.log(key);
+  console.log(book[key]);
+}
+
+// =======================Метод hasOwnProperty()===============
+
+const animal = {
+  legs: 4,
+};
+const dog = Object.create(animal);
+dog.name = 'Sharik';
+
+console.log(dog); //{ name: 'Sharik' }
+console.log(dog.name); //Sharik
+console.log(dog.legs); //4
+
+// ==================
+
+// Плохой пример
+console.log('name' in dog); //true
+console.log('legs' in dog); //true
+
+// Хороший пример
+console.log(dog.hasOwnProperty('name')); //true
+console.log(dog.hasOwnProperty('legs')); //false
+
+// ============
+
+const book = {
+  title: 'Kingdom',
+  author: 'Name Lastname',
+  genres: ['History', 'Horror', 'Comedy'],
+  isPublic: true,
+  rating: 8.4,
+};
+
+for (const key in book) {
+  // Если это собственное свойство - выполняем тело if
+  if (book.hasOwnProperty(key)) {
+    console.log(key);
+    console.log(book[key]);
+  }
+  // Если это не собстенное свойство - ничего не делаем
+}
+
+// ============================= Метод Object.keys() ====================
+
+const book = {
+  title: 'Kingdom',
+  author: 'Name Lastname',
+  genres: ['History', 'Horror', 'Comedy'],
+  isPublic: true,
+  rating: 8.4,
+};
+
+const keys = Object.keys(book);
+console.log(keys); //[ 'title', 'author', 'genres', 'isPublic', 'rating' ]
+
+// ======================
+
+const book = {
+  title: 'Kingdom',
+  author: 'Name Lastname',
+  genres: ['History', 'Horror', 'Comedy'],
+  isPublic: true,
+  rating: 8.4,
+};
+const keys = Object.keys(book);
+
+for (const key of keys) {
+  console.log(key);
+  console.log(book[key]);
+}
+
+// =============================== Метод Object.values() =================
+
+const book = {
+  title: 'Kingdom',
+  author: 'Name Lastname',
+  genres: ['History', 'Horror', 'Comedy'],
+  isPublic: true,
+  rating: 8.4,
+};
+
+const keys = Object.keys(book);
+const values = Object.values(book);
+
+console.log(`keys: ${keys}\nvalues: ${values} `);
+
+// ==============================
+
+const products = {
+  apple: 4,
+  carrot: 10,
+  broad: 3,
+  cheese: 25,
+};
+const values = Object.values(products);
+let total = 0;
+
+for (const value of values) {
+  total += value;
+}
+console.log(total); //42
+
+// =================================== Метод Object.entries()=====================
+
+const book = {
+  title: 'Kingdom',
+  author: 'Name Lastname',
+  genres: ['History', 'Horror', 'Comedy'],
+  isPublic: true,
+  rating: 8.4,
+};
+const keys = Object.keys(book);
+const values = Object.values(book);
+const entries = Object.entries(book);
+
+console.log(`Keys: ${keys}\nValues: ${values}\nEntries: ${entries}`);
+
+// =============================== Массив объектов ==================
+
+const books = [
+  {
+    title: 'Kingdom',
+    author: 'Stiven King',
+    rating: 9.9,
+  },
+  {
+    title: 'Dom2',
+    author: 'King Kong',
+    rating: 1.1,
+  },
+  {
+    title: 'Custtle',
+    author: 'King Artur',
+    rating: 7.4,
+  },
+];
+
+for (const book of books) {
+  console.log(
+    `Книги: ${book}\nНазвание: ${book.title}\nАвтор: ${book.author}\nРейтинг: ${book.rating}`
+  );
+}
+
+const bookName = [];
+
+for (const book of books) {
+  bookName.push(book.title);
+}
+console.log(bookName); //[ 'Kingdom', 'Dom2', 'Custtle' ]
+
+let totalRating = 0;
+
+for (const book of books) {
+  totalRating += book.rating;
+}
+
+let avgRating = (totalRating / books.length).toFixed(1);
+console.log(avgRating); //6.1
