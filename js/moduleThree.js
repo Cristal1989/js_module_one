@@ -356,6 +356,11 @@ const products = {
   broad: 3,
   cheese: 25,
 };
+// =========
+// const values = Object.values(products).join(' + ');
+// console.log(values);
+// =========
+
 const values = Object.values(products);
 let total = 0;
 
@@ -420,3 +425,227 @@ for (const book of books) {
 
 let avgRating = (totalRating / books.length).toFixed(1);
 console.log(avgRating); //6.1
+
+// =============================== Синтаксис spread и rest =================
+
+const temps = [14, -2, 3, 25, 0];
+// В консоли будет массив
+console.log(`Temps: ${temps}`); //Temps: 14,-2,3,25,0
+
+// Так не сработает, потому что передаем целый массив
+console.log(Math.max(temps)); //NaN
+
+// В консоли будет набор отдельных чисел
+console.log(...temps); //14 -2 3 25 0
+
+// Распределяем коллекцию элементов в качестве отдельных аргументов
+console.log(Math.max(...temps)); //25
+
+// ========================== Spread создание нового массива
+
+const temps = [14, -2, 3, 25, 0];
+// Это точная но независимая копия tepms[]
+const copyOfTemps = [...temps];
+console.log(copyOfTemps); //[ 14, -2, 3, 25, 0 ]
+
+// ====================
+const temps1 = [14, -2, 3, 25, 0];
+const temps2 = [14, -2, 3, 25, 0];
+const allTemps = [...temps1, ...temps2];
+console.log(allTemps); //[14, -2, 3, 25, 0, 14, -2, 3, 25, 0]
+
+// ==================================== Spread: создание нового объекта ============
+
+const first = {
+  propA: 1,
+  propB: 15,
+};
+const second = {
+  propC: 25,
+};
+const third = { ...first, ...second };
+console.log(third); //{ propA: 1, propB: 15, propC: 25 }
+
+// ===========================
+
+const first = {
+  propA: 1,
+  propB: 15,
+  propC: 50,
+};
+const second = {
+  propC: 25,
+  propD: 20,
+};
+const third = { ...first, ...second };
+console.log(third); //{ propA: 1, propB: 15, propC: 25, propD: 20 }
+
+const fourth = { ...second, ...first };
+console.log(fourth); //{ propC: 50, propD: 20, propA: 1, propB: 15 }
+
+// ==================================
+const first = {
+  propA: 1,
+  propB: 15,
+  propC: 50,
+};
+const second = {
+  propC: 51,
+};
+const third = {
+  propB: 10,
+  ...first,
+  ...second,
+};
+console.log(third); //{ propB: 15, propA: 1, propC: 51 }
+
+const fourth = { ...second, ...first, propB: -5 };
+console.log(fourth); //{ propC: 50, propA: 1, propB: -5 }
+
+const fifth = { ...first, propC: 100, ...second };
+console.log(fifth); //{ propA: 1, propB: 15, propC: 51 }
+
+// =============================== Rest: сбор всех аргументов функции ============
+
+// Как объявить параметры функции таким образом чтобы можно было передать большое количество аргументов
+function multiply(...args) {
+  console.log(`args: ${args}`);
+}
+multiply(1, 3, 5);
+
+// ====================
+
+function multiply(firstNumber, secondNumber, ...args) {
+  console.log(firstNumber);
+  console.log(secondNumber);
+  console.log(args);
+}
+
+multiply(10, 20, 30); //10 20 [ 30 ]
+multiply(10, 20, 30, 100, 1000); //10 20 [(30, 100, 1000)];
+
+// ========================================= Деструктуризация объектов ================
+
+const book = {
+  title: 'Kingdom',
+  author: 'Name Lastname',
+  genres: ['History', 'Horror', 'Comedy'],
+  isPublic: false,
+  rating: 8.4,
+};
+
+const accessType = book.isPublic ? 'в печати' : 'не в печати';
+const message = `Книга ${book.title} автора ${book.author} с рейтингом ${book.rating} находится ${accessType}`;
+console.log(message); //Книга Kingdom автора Name Lastname с рейтингом 8.4 находится не в печати
+
+// ===================
+
+const book = {
+  title: 'Kingdom',
+  author: 'Name Lastname',
+  genres: ['History', 'Horror', 'Comedy'],
+  isPublic: false,
+  rating: 8.4,
+};
+
+const { title, author, genres, isPublic, rating, likes } = book;
+console.log(likes); //undefined
+
+const accessType = isPublic ? 'в печати' : 'не в печати';
+const message = `Книга ${title} автора ${author} с рейтингом ${rating} находится ${accessType}`;
+console.log(message); //Книга Kingdom автора Name Lastname с рейтингом 8.4 находится не в печати
+
+// =========================== Значения по умолчанию
+
+const book = {
+  title: 'Kingdom',
+  author: 'Name Lastname',
+};
+// Добавим изображение обертки, если оно отсутствует в объекте книги
+
+const { title, author, img = 'https://via.placeholder.com/640/480' } = book;
+console.log(title); //Kingdom
+console.log(author); //Name Lastname
+console.log(img); //https://via.placeholder.com/640/480
+
+// ================================ Изменение имени переменной===================
+
+const firstBook = {
+  title: 'First book',
+  img: 'https://via.placeholder.com/640/480',
+};
+const {
+  title: firstTitle,
+  img: firstImg = 'https://images-na.ssl-images-amazon.com/images/I/51b5YG6Y1rL.jpg',
+} = firstBook;
+
+console.log(firstTitle); //First book
+console.log(firstImg); //https://via.placeholder.com/640/480
+
+const secondBook = {
+  title: 'Second book',
+};
+const { title: secondTitle, img: secondImg = 'https://asdasdads' } = secondBook;
+console.log(secondTitle); //Second book
+console.log(secondImg); //https://asdasdads
+
+// ==================================== Деструктуризация в циклах =============
+const books = [
+  {
+    title: 'Kingdom',
+    author: 'Name Lastname',
+    genres: ['History', 'Horror', 'Comedy'],
+    isPublic: false,
+    rating: 8.4,
+  },
+  {
+    title: 'Custle',
+    author: 'Harry',
+    genres: ['Drama', 'Melodrama', 'Comedy'],
+    isPublic: true,
+    rating: 0.4,
+  },
+];
+
+// Классический способ
+for (const book of books) {
+  console.log(book.title);
+  console.log(book.author);
+  console.log(book.rating);
+}
+
+//Деструктуризированый вариант
+for (const book of books) {
+  const { title, author, rating } = book;
+  console.log(title);
+  console.log(author);
+  console.log(rating);
+}
+
+for (const { title, author, rating } of books) {
+  console.log(title);
+  console.log(author);
+  console.log(rating);
+}
+
+// ============================= Глубокая деструктуаризация ================
+
+const user = {
+  name: 'Username',
+  tag: '#User',
+  stats: {
+    folovers: 50,
+    views: 15,
+    likes: 10,
+  },
+};
+const {
+  name,
+  tag,
+  stats: { folovers, views: userViews, likes: userLikes = 0 },
+} = user;
+console.log(name); //Username
+console.log(tag); //#User
+console.log(folovers); //50
+console.log(userViews); //15
+console.log(userLikes); //10

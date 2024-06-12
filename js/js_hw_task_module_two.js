@@ -1042,16 +1042,16 @@ checkForSpam('[SPAM] How to earn fast money?');
 //В теле функции нет инструкции else или else if
 
 function checkAge(age) {
+  let message;
   if (age >= 18) {
-    console.log('You are an adult');
+    return (message = 'You are an adult');
   }
-  return console.log('You are a minor');
+  return (message = 'You are a minor');
 }
-
-checkAge(20);
-checkAge(8);
-checkAge(14);
-checkAge(38);
+console.log(checkAge(20));
+console.log(checkAge(8));
+console.log(checkAge(14));
+console.log(checkAge(38));
 
 //=============================================================|
 //========================== Task 02 ==========================|
@@ -1071,17 +1071,16 @@ checkAge(38);
 
 function checkPassword(password) {
   const ADMIN_PASSWORD = 'jqueryismyjam';
+  let message;
 
   if (password === ADMIN_PASSWORD) {
-    return console.log('Welcome!');
+    return (message = 'Welcome!');
   }
-
-  console.log('Access denied, wrong password!');
+  return (message = 'Access denied, wrong password!');
 }
-
-checkPassword('mangohackzor');
-checkPassword('polyhax');
-checkPassword('jqueryismyjam');
+console.log(checkPassword('mangohackzor'));
+console.log(checkPassword('polyhax'));
+console.log(checkPassword('jqueryismyjam'));
 
 //=============================================================|
 //========================== Task 03 ==========================|
@@ -1102,23 +1101,21 @@ checkPassword('jqueryismyjam');
 //Вызов checkStorage(150, 0) возвращает "Your order is empty!"
 
 function checkStorage(available, ordered) {
+  let message;
   if (ordered === 0) {
-    console.log('Your order is empty!');
-    return;
+    return (message = 'Your order is empty!');
   } else if (ordered > available) {
-    console.log('Your order is too large, not enough goods in stock!');
-    return;
+    return (message = 'Your order is too large, not enough goods in stock!');
   }
-
-  console.log('The order is accepted, our manager will contact you');
+  return (message = 'The order is accepted, our manager will contact you');
 }
 
-checkStorage(100, 50);
-checkStorage(100, 130);
-checkStorage(70, 0);
-checkStorage(200, 20);
-checkStorage(200, 250);
-checkStorage(150, 0);
+console.log(checkStorage(100, 50));
+console.log(checkStorage(100, 130));
+console.log(checkStorage(70, 0));
+console.log(checkStorage(200, 20));
+console.log(checkStorage(200, 250));
+console.log(checkStorage(150, 0));
 
 //=============================================================|
 //========================== Task 04 ==========================|
@@ -1211,14 +1208,12 @@ console.log(lastElement);
 function getExtremeElements(array) {
   const firstElement = array.splice(0, 1);
   const lastElement = array.splice(array.length - 1, 1);
-  const newArray = [firstElement, lastElement];
-  return console.log(newArray);
-  // return console.log(`["${firstElement}", "${lastElement}"]`);
+  const newArray = firstElement.concat(lastElement);
+  return newArray;
 }
-
-getExtremeElements([1, 2, 3, 4, 5]);
-getExtremeElements(['Earth', 'Mars', 'Venus']);
-getExtremeElements(['apple', 'peach', 'pear', 'banana']);
+console.log(getExtremeElements([1, 2, 3, 4, 5]));
+console.log(getExtremeElements(['Earth', 'Mars', 'Venus']));
+console.log(getExtremeElements(['apple', 'peach', 'pear', 'banana']));
 
 //=============================================================|
 //========================== Task 10 ==========================|
@@ -1259,14 +1254,15 @@ splitMessage('best_for_week', '_');
 
 function calculateEngravingPrice(message, pricePerWord) {
   let words = message.split(' ');
+  let allPrice;
 
-  return console.log(`${words.length * pricePerWord}`);
+  return (allPrice = pricePerWord * words.length);
 }
 
-calculateEngravingPrice('JavaScript is in my blood', 10);
-calculateEngravingPrice('JavaScript is in my blood', 20);
-calculateEngravingPrice('Web-development is creative work', 40);
-calculateEngravingPrice('Web-development is creative work', 20);
+console.log(calculateEngravingPrice('JavaScript is in my blood', 10));
+console.log(calculateEngravingPrice('JavaScript is in my blood', 20));
+console.log(calculateEngravingPrice('Web-development is creative work', 40));
+console.log(calculateEngravingPrice('Web-development is creative work', 20));
 
 //=============================================================|
 //========================== Task 12 ==========================|
@@ -1320,6 +1316,8 @@ function slugify(title) {
 }
 
 slugify('Arrays for begginers');
+slugify('Ten secrets of JavaScript');
+slugify('English for developer');
 slugify('How to become a JUNIOR developer in TWO WEEKS');
 
 //=============================================================|
@@ -1523,23 +1521,11 @@ calculateTotalPrice([412, 371, 94, 63, 176]);
 //Вызов функции findLongestWord("May the force be with you") возвращает force
 //Вызов функции findLongestWord() со случайной строкой возвращает правильное значение
 
+// return string.split(' ').reduce((a, b) => (b.length > a.length ? b : a));
+
 function findLongestWord(string) {
-  // let array = string.split(' ');
-  // let arrayWords ;
-
-
-  // for (let i = 0; i < array.length; i++) {
-  //   arrayWords = array[i].split(' ');
-  //   console.log(arrayWords);
-  // }
-
-  // return string.split(' ').reduce((a, b) => (b.length > a.length ? b : a));
-
-
-  function findLongestWord(string) {
-
-  const words = string.split(" ");
-  let longestWord = "";
+  const words = string.split(' ');
+  let longestWord = '';
 
   for (let word of words) {
     if (word.length > longestWord.length) {
@@ -1548,9 +1534,9 @@ function findLongestWord(string) {
   }
   return longestWord;
 }
-  console.log(findLongestWord('Google do a roll'));
-  console.log(findLongestWord("The quick brown fox jumped over the lazy dog"));
-
+console.log(findLongestWord('Google do a roll'));
+console.log(findLongestWord('The quick brown fox jumped over the lazy dog'));
+console.log(findLongestWord('May the force be with you'));
 
 //=============================================================|
 //========================== Task 22 ==========================|
@@ -1603,6 +1589,7 @@ function filterArray(numbers, value) {
     }
   }
   console.log(newArray);
+  return newArray;
 }
 
 filterArray([1, 2, 3, 4, 5], 3);
@@ -1634,16 +1621,16 @@ function checkFruit(fruit) {
   const fruits = ['apple', 'plum', 'pear', 'orange'];
   for (let i = 0; i < fruits.length; i++) {
     if (fruits[i].includes(fruit)) {
-      console.log(fruits[i].includes(fruit));
       return true;
     }
   }
-  console.log('false');
   return false;
 }
-
-checkFruit('plum');
-checkFruit('mandarin');
+console.log(checkFruit('plum'));
+console.log(checkFruit('mandarin'));
+console.log(checkFruit('pear'));
+console.log(checkFruit('Pear'));
+console.log(checkFruit('apple'));
 
 //=============================================================|
 //========================== Task 25 ==========================|
@@ -1672,6 +1659,7 @@ function getCommonElements(array1, array2) {
     }
   }
   console.log(newArray);
+  return newArray;
 }
 
 getCommonElements([1, 2, 3], [2, 4]);
@@ -1803,6 +1791,7 @@ function getEvenNumbers(start, end) {
     }
   }
   console.log(evenArray);
+  return evenArray;
 }
 
 getEvenNumbers(2, 5);
@@ -1858,7 +1847,6 @@ function findNumber(start, end, divisor) {
       return i;
     }
   }
-
   return null;
 }
 
@@ -1886,16 +1874,7 @@ console.log(findNumber(16, 35, 7));
 //В функции includes используется for, return, но не метод массива includes
 
 function includes(array, value) {
-  // for (a of array) {
-  //   if (a === value) {
-  //     console.log(true);
-  //     return true;
-  //   }
-  // }
-  // console.log(false);
-  // return false;
-
-  for (let i = 0; i < array.length; i++){
+  for (let i = 0; i < array.length; i++) {
     if (array[i] === value) {
       return true;
     }
@@ -1904,9 +1883,9 @@ function includes(array, value) {
 }
 console.log(includes([1, 2, 3, 4, 5], 3));
 console.log(includes([1, 2, 3, 4, 5], 17));
-console.log(includes(['Earth', 'Mars', 'Venus', 'Jupiter', 'Saturn'], 'Jupiter'));
-console.log(includes(['Earth', 'Mars', 'Venus', 'Jupiter', 'Saturn'], 'Uranus'));
-
-
-
-
+console.log(
+  includes(['Earth', 'Mars', 'Venus', 'Jupiter', 'Saturn'], 'Jupiter')
+);
+console.log(
+  includes(['Earth', 'Mars', 'Venus', 'Jupiter', 'Saturn'], 'Uranus')
+);
