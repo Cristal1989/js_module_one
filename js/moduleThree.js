@@ -649,3 +649,81 @@ console.log(tag); //#User
 console.log(folovers); //50
 console.log(userViews); //15
 console.log(userLikes); //10
+
+// ================================= Деструктурицация массивов ===================
+
+const rgb = [200, 255, 100];
+const [red, green, blue] = rgb;
+
+console.log(`R: ${red}, G: ${green}, B: ${blue}`); //R: 200, G: 255, B: 100
+
+// =====================
+
+const rgb = [200, 255, 100];
+let red, green, blue;
+[red, green, blue] = rgb;
+
+console.log(`R: ${red}, G: ${green}, B: ${blue}`); //R: 200, G: 255, B: 100
+
+// ========================
+
+const rgb = [200, 255, 100];
+const [red, green, blue, alpha = 0.3] = rgb;
+
+console.log(`R: ${red}, G: ${green}, B: ${blue}, Alpha: ${alpha}`); //R: 200, G: 255, B: 100, Alpha: 0.3
+
+// =============================
+
+const rgb = [200, 255, 100];
+const [red, ...colors] = rgb;
+
+console.log(red); //200
+console.log(colors); //[ 255, 100 ]
+
+// =================================
+
+const rgb = [200, 255, 100];
+const [, , blue] = rgb;
+
+console.log(`B: ${blue}`); //B: 100
+
+// ============================================== Паттерн "Объект параметров" ====================
+
+function doStuffWithBook(title, numberOfPages, downloads, rating, public) {
+  // Что то делаем с параметрами
+  console.log(title);
+  console.log(numberOfPages);
+  // И так далее
+}
+
+doStuffWithBook('Kingdom', 250, 15, 9.8, true);
+
+// ======================
+
+function doStuffWithBook(book) {
+  // Делаем что то со свойствами объекта
+  console.log(book.title);
+  console.log(book.downloads);
+  console.log(book.rating);
+  // И так далее
+}
+
+// =================
+
+doStuffWithBook({ title: 'Ringdom', numberOfPages: 250, rating: 9.8 });
+console.log(doStuffWithBook);
+
+// ====================
+
+function doStuffWithBook(book) {
+  const { title, numberOfPages, rating } = book;
+  console.log(title);
+  console.log(rating);
+}
+
+// ====================
+
+function doStuffWithBook({ title, numberOfPages, rating }) {
+  console.log(title);
+  console.log(rating);
+}
