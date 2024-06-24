@@ -445,6 +445,367 @@
           // Функция вернула новый массив с измененными данными<br />
           console.log(doubledArr);//[ 8, 14, 2, 8, 20, 44, 100]<br />
         </p>
+        <h3 class="title">Перебирающие массивы</h3>
+        <p>
+          В JS есть методы массивов пришедших из функциональных языков.
+          Большинство из них это чистые функции. Они создают новый массив,
+          заполняют его, применяя к значению каждого элемента указанную callback
+          функцию, после чего возвращают этот новый массив
+        </p>
+        <p class="bg">arr.method(currentValue, index, array)</p>
+        <p>
+          Все перебирающие способы массива имеют схожий синтаксис. Исходящий
+          массив arr, вызов метода method() и callback функция callback как
+          аргумент метода
+        </p>
+        <p class="bg">
+          arr.method((item, idx, array) => { <br />
+          // Логика, которая будет применяться на каждой итерации <br />
+          })<br />
+        </p>
+        <p>
+          Все параметры кроме значения элемента item необязательны. Названия
+          параметров могут быть любые, но есть неофициальные договоренности.
+        </p>
+        <p class="bg">
+          arr.method(item => { <br />
+          // Логика, которая будет применяться на каждой итерации <br />
+          })<br />
+        </p>
+        <h3 class="title">Метод map()</h3>
+        <p>
+          Метод map(callback) используется для траснсформации массива. Он
+          использует callback функцию для каждого элемента исходного массива, а
+          результат ее работы записывает в новый массив, который будет являться
+          выполнением метода
+        </p>
+        <p class="bg">
+          arr.map((element, idx, array) => {<br />
+          // Тело callback функции<br />
+          })<br />
+        </p>
+        <ul>
+          <li>Поэлементно перебирает оригинальный массив</li>
+          <li>Не изменяет оригинальный массив</li>
+          <li>Результат работы callback функции записывает в новый массив</li>
+          <li>Возвращает новый массив одинаковой длинны</li>
+        </ul>
+        <p>
+          Его можно использовать для того, чтобы изменить каждый элемент
+          массива. Оригинальный массив используется в качестве эталлона. На
+          основе которого можно сделать другую коллекцию
+        </p>
+        <p class="bg">
+          const planets = ['Earth', 'Venus', 'Jupiter', 'Mars'];<br /><br />
+
+          const planetsInUpperCase = planets.map(planet =>
+          planet.toUpperCase());<br />
+          console.log(planetsInUpperCase); //[ 'EARTH', 'VENUS', 'JUPITER',
+          'MARS' ]<br /><br />
+
+          const planetsInLowerCase = planets.map(planet =>
+          planet.toLowerCase());<br />
+          console.log(planetsInLowerCase); //[ 'earth', 'venus', 'jupiter',
+          'mars' ]<br /><br />
+
+          // Оригинальный массив<br />
+          console.log(planets);//[ 'Earth', 'Venus', 'Jupiter', 'Mars' ]<br />
+        </p>
+        <p>
+          Использование анонимных стрелочных функций с неявным возвратом
+          существенно сокращает шум объявления callback функций, что делает код
+          более чистым, простым для восприятия
+        </p>
+        <h3 class="title">Массив объектов</h3>
+        <p>
+          Мы уже знаем, что повседневная задача это манипуляция массивом
+          объектов. Например получить массив значений свойства из всех объектов.
+          У нас есть массив студентов, а нужно получить отдельный массив их имен
+        </p>
+        <p class="bg">
+          const students = [<br />
+          {<br />
+          name: 'Ann',<br />
+          score: 5,<br />
+          },<br />
+          {<br />
+          name: 'Vasya',<br />
+          score: 23,<br />
+          },<br />
+          {<br />
+          name: 'Petya',<br />
+          score: 1,<br />
+          },<br />
+          {<br />
+          name: 'Ivan',<br />
+          score: 45,<br />
+          },<br />
+          {<br />
+          name: 'Polina',<br />
+          score: 30,<br />
+          },<br />
+          ];<br />
+          const names = students.map(student => student.name);<br />
+          console.log(names); //[ 'Ann', 'Vasya', 'Petya', 'Ivan', 'Polina' ]<br /><br />
+
+          const scores = students.map(student => student.score);<br />
+          console.log(scores); //[ 5, 23, 1, 45, 30 ]<br />
+        </p>
+        <p>
+          Используя метод map() мы можем перебирать массив объектов в callback
+          функции и вернуть значения свойства каждого из них
+        </p>
+        <h3 class="title">Метод flatMap()</h3>
+        <p>
+          Метод flatMap(callback) - это аналогичный метод map() но применяется в
+          случаях когда результат - это многомерный массив, который необходимо
+          "разгладить"
+        </p>
+        <p class="bg">
+          arr.flatMap((element, idx, array) => {<br />
+          // Тело callback функции<br />
+          })<br />
+        </p>
+        <p>
+          В массиве students хранится список студентов со списком предметов,
+          посещаемых студентом, в свойстве courses. Несколько студентов может
+          посещать один и тот же предмет. Необходимо составить список всех
+          предметов посещаемых этой группой студентов, пока еще даже
+          повторяющихся
+        </p>
+        <p class="bg">
+          const students = [<br />
+          {<br />
+          name: 'Ann',<br />
+          score: 5,<br />
+          courses: ['Math', 'Physic'],<br />
+          },<br />
+          {<br />
+          name: 'Vasya',<br />
+          score: 23,<br />
+          courses: ['Drawing', 'Swimming', 'Math'],<br />
+          },<br />
+          {<br />
+          name: 'Petya',<br />
+          score: 1,<br />
+          courses: ['Math', 'Flying', 'Drawing'],<br />
+          },<br />
+          {<br />
+          name: 'Ivan',<br />
+          score: 45,<br />
+          courses: ['Swimming', 'Physic', 'Flying'],<br />
+          },<br />
+          {<br />
+          name: 'Polina',<br />
+          score: 30,<br />
+          courses: ['Math', 'Physic', 'Swimming', 'Flying', 'Drawing'],<br />
+          },<br />
+          ];<br /><br />
+
+          students.map(student => student.courses);<br />
+          const allCourses = students.flatMap(student => student.courses);<br />
+          console.table(students.flatMap(student => student.courses));<br />
+          //['Math', 'Physic',<br />
+          //'Drawing', 'Swimming',<br />
+          //'Math', 'Math',<br />
+          //'Flying', 'Drawing',<br />
+          //'Swimming', 'Physic',<br />
+          //'Flying', 'Math',<br />
+          //'Physic', 'Swimming',<br />
+          //'Flying', 'Drawing']<br />
+        </p>
+        <h3 class="title">Метод filter()</h3>
+        <p>
+          Метод filter(callback) - используется для единственной операции -
+          фильтрации массива, т.е когда необходимо выбрать более одного элемента
+          из коллекции по определенному критерию.
+        </p>
+        <p class="bg">
+          arr.filter((element, idx, array) => {<br />
+          // Тело callback функции<br />
+          })
+        </p>
+        <ul>
+          <li>Не изменяет оригинальный массив</li>
+          <li>Поименно перебирает оригинальный массив</li>
+          <li>Возвращает новый массив</li>
+          <li>
+            Добавляет в возвращаемый массив элементы, удовлетворяющие условиям
+            callback функции
+          </li>
+          <li>
+            Если callback вернет true - элемент добавляется в возвращаемый
+            массив
+          </li>
+          <li>
+            Если callback вернет false - элемент не добавляется в возвращаемый
+            массив
+          </li>
+          <li>
+            Если ни один из элементов не удовлетворил условие - возвращает
+            пустой массив
+          </li>
+        </ul>
+        <p class="bg">
+          const values = [3, 19, -5, 55, -34, 105, -38]; <br />
+          const positiveValues = values.filter(value => value >= 0);<br />
+          console.log(positiveValues); //[ 3, 19, 55, 105 ]<br /><br />
+
+          const negativeValues = values.filter(value => value < 0);<br />
+          console.log(negativeValues); //[ -5, -34, -38 ]<br /><br />
+
+          const nullValues = values.filter(value => value > 1000);<br />
+          console.log(nullValues); //[]<br /><br />
+
+          // Исходный массив<br />
+          console.log(values);//[3, 19, -5, 55, -34, 105, -38]<br />
+        </p>
+        <p>
+          То есть метод filter() вызывает callback функцию для каждого элемента
+          исходного массива и если результат ее выполнения true добавляет
+          текущий элемент в новый массив.
+        </p>
+        <h3 class="title">Фильтрация уникальных элементов</h3>
+        <p>
+          Используя метод filter() можно выполнить фильтрацию массива таким
+          образом, что на нем останутся только уникальные элементы. Этот пример
+          работает только с массивом примитивных значений - не объектов. <br />
+          Вернемся в группу студентов и массив всех посещаемых предметов,
+          который мы получим через метод flatMap(). <br />
+          Переменной allCourses равняется массив всех посещаемых предметов,
+          которые могут повторяться. Задача состоит в том чтобы создать новый
+          массив, в котором будут состоять только уникальные предметы без
+          повторений
+        </p>
+        <p class="bg">
+          const students = [ <br />
+          {<br />
+          name: 'Ann',<br />
+          score: 5,<br />
+          courses: ['Math', 'Physic'],<br />
+          },<br />
+          {<br />
+          name: 'Vasya',<br />
+          score: 23,<br />
+          courses: ['Drawing', 'Swimming', 'Math'],<br />
+          },<br />
+          {<br />
+          name: 'Petya',<br />
+          score: 1,<br />
+          courses: ['Math', 'Flying', 'Drawing'],<br />
+          },<br />
+          {<br />
+          name: 'Ivan',<br />
+          score: 45,<br />
+          courses: ['Swimming', 'Physic', 'Flying'],<br />
+          },<br />
+          {<br />
+          name: 'Polina',<br />
+          score: 30,<br />
+          courses: ['Math', 'Physic', 'Swimming', 'Flying', 'Drawing'],<br />
+          },<br />
+          ];<br /><br />
+
+          const allCourses = students.flatMap(student => student.courses);<br />
+          const uniqueCourses = allCourses.filter((course, idx, arr) => {<br />
+          return arr.indexOf(course) === idx;<br />
+          });<br />
+          console.log(uniqueCourses);//[ 'Math', 'Physic', 'Drawing',
+          'Swimming', 'Flying' ]
+        </p>
+        <p>
+          Используя arr.indexOf(course) ипользуем поиск первого совпадения
+          текущего элемента course и получаем его индекс в оригинальном массиве
+          всех курсов. В параметре idx сохраняется индекс текущего элемента
+          course перебирая массив методом filter() <br />
+          Если результат indexOf() и значение idx равны - это уникальный
+          элемент, потому что такие значения встречаются в массиве впервые и на
+          текущей итерации фильтр обрабатывает именно его
+        </p>
+        <p class="bg">
+          ['Math', 'Physic', <br />
+          'Drawing', 'Swimming',<br />
+          'Math', 'Math',<br />
+          'Flying', 'Drawing',<br />
+          'Swimming', 'Physic',<br />
+          'Flying', 'Math',<br />
+          'Physic', 'Swimming',<br />
+          'Flying', 'Drawing']<br />
+        </p>
+        <p>Для элемента Math под индексом 0:</p>
+        <ul>
+          <li>indexOf() вернет 0, потому что ищет первое совпадение</li>
+          <li>Значение параметра idx будет 0</li>
+          <li>Они равны, так что это будет уникальный элемент</li>
+        </ul>
+        <p>Для элемента Math под индексом 4:</p>
+        <ul>
+          <li>indexOf() вернет 0, потому что ищет первое совпадение</li>
+          <li>Значение параметра idx будет 4</li>
+          <li>Они не равны, так что это будет не уникальный элемент</li>
+        </ul>
+        <p>
+          <b>Массив объектов</b> <br />
+          При работе с массивом объектов выполняется фильтрация по определенному
+          свойству в итоге образуется новый массив отфильтрованых объектов
+          <br />
+          К примеру у нас есть массив студентов с баллами за тест. Необходимо
+          отфильтровать лучших (балл выше 80) и худших (балл ниже 50) и средних
+          студентов(от 50 до 80)
+        </p>
+        <p class="bg">
+          const LOW_SCORE = 50; <br />
+          const HIGH_SCORE = 80;<br /><br />
+
+          const students = [<br />
+          {<br />
+          name: 'Ann',<br />
+          score: 55,<br />
+          },<br />
+          {<br />
+          name: 'Vasya',<br />
+          score: 83,<br />
+          },<br />
+          {<br />
+          name: 'Petya',<br />
+          score: 15,<br />
+          },<br />
+          {<br />
+          name: 'Ivan',<br />
+          score: 45,<br />
+          },<br />
+          {<br />
+          name: 'Polina',<br />
+          score: 90,<br />
+          },<br />
+          {<br />
+          name: 'Alina',<br />
+          score: 64,<br />
+          },<br />
+          ];<br /><br />
+
+          // Высший балл<br />
+          const bestScore = students.filter(student => student.score >=
+          HIGH_SCORE);<br />
+          console.log(bestScore); //[ { name: 'Vasya', score: 83 }, { name:
+          'Polina', score: 90 } ]<br /><br />
+
+          // Средний балл<br />
+          // const mediumScore = students.filter(student => student.score <
+          HIGH_SCORE && student.score<br />
+          // >= LOW_SCORE);<br />
+          const mediumScore = students.filter(<br />
+          ({ score }) => score >= LOW_SCORE && score < HIGH_SCORE<br />
+          );<br />
+          console.log(mediumScore); //[ { name: 'Ann', score: 55 }, { name:
+          'Alina', score: 64 } ]<br /><br />
+
+          // Низший балл<br />
+          const worstScore = students.filter(student => student.score <
+          LOW_SCORE);<br />
+          console.log(worstScore); //[ { name: 'Petya', score: 15 }, { name:
+          'Ivan', score: 45 } ]<br />
+        </p>
       </section>
     </main>
     <script src="./js/moduleFour.js"></script>

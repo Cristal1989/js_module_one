@@ -220,8 +220,8 @@ console.log(numArr); //[ 8, 14, 2, 8, 20, 44, 100]
 
 const multiply = (arr, value) => {
   let newArr = [];
-  arr.forEach(element => {
-    newArr.push(element * value);
+  arr.forEach(num => {
+    newArr.push(num * value);
   });
   return newArr;
 };
@@ -233,3 +233,191 @@ const doubledArr = multiply(numArr, 2);
 console.log(numArr); //[4, 7, 1, 4, 10, 22, 50]
 // Функция вернула новый массив с измененными данными
 console.log(doubledArr); //[ 8, 14, 2, 8, 20, 44, 100]
+
+// =================================== Метод map() =======================
+
+const planets = ['Earth', 'Venus', 'Jupiter', 'Mars'];
+
+const planetsInUpperCase = planets.map(planet => planet.toUpperCase());
+console.log(planetsInUpperCase); //[ 'EARTH', 'VENUS', 'JUPITER', 'MARS' ]
+
+const planetsInLowerCase = planets.map(planet => planet.toLowerCase());
+console.log(planetsInLowerCase); //[ 'earth', 'venus', 'jupiter', 'mars' ]
+
+// Оригинальный массив
+console.log(planets); //[ 'Earth', 'Venus', 'Jupiter', 'Mars' ]
+
+// ===================================== Массив объектов ===================
+
+const students = [
+  {
+    name: 'Ann',
+    score: 5,
+  },
+  {
+    name: 'Vasya',
+    score: 23,
+  },
+  {
+    name: 'Petya',
+    score: 1,
+  },
+  {
+    name: 'Ivan',
+    score: 45,
+  },
+  {
+    name: 'Polina',
+    score: 30,
+  },
+];
+const names = students.map(student => student.name);
+console.log(names); //[ 'Ann', 'Vasya', 'Petya', 'Ivan', 'Polina' ]
+
+const scores = students.map(student => student.score);
+console.log(scores); //[ 5, 23, 1, 45, 30 ]
+
+// ===================================== Метод flatMap() ====================
+
+const students = [
+  {
+    name: 'Ann',
+    score: 5,
+    courses: ['Math', 'Physic'],
+  },
+  {
+    name: 'Vasya',
+    score: 23,
+    courses: ['Drawing', 'Swimming', 'Math'],
+  },
+  {
+    name: 'Petya',
+    score: 1,
+    courses: ['Math', 'Flying', 'Drawing'],
+  },
+  {
+    name: 'Ivan',
+    score: 45,
+    courses: ['Swimming', 'Physic', 'Flying'],
+  },
+  {
+    name: 'Polina',
+    score: 30,
+    courses: ['Math', 'Physic', 'Swimming', 'Flying', 'Drawing'],
+  },
+];
+
+students.map(student => student.courses);
+const allCourses = students.flatMap(student => student.courses);
+// console.table(students.flatMap(student => student.courses));
+// ['Math',     'Physic',
+// 'Drawing',  'Swimming',
+// 'Math',     'Math',
+// 'Flying',   'Drawing',
+// 'Swimming', 'Physic',
+// 'Flying',   'Math',
+// 'Physic',   'Swimming',
+// 'Flying',   'Drawing']
+const uniqueCourses = allCourses.filter((course, idx, arr) => {
+  arr.indexOf(course) === idx;
+});
+console.log(uniqueCourses);
+
+// ================================ Метод filter() =============================
+
+const values = [3, 19, -5, 55, -34, 105, -38];
+const positiveValues = values.filter(value => value >= 0);
+console.log(positiveValues); //[ 3, 19, 55, 105 ]
+
+const negativeValues = values.filter(value => value < 0);
+console.log(negativeValues); //[ -5, -34, -38 ]
+
+const nullValues = values.filter(value => value > 1000);
+console.log(nullValues); //[]
+
+// Исходный массив
+console.log(values); //[3, 19, -5, 55, -34, 105, -38]
+
+// =======================================
+
+const students = [
+  {
+    name: 'Ann',
+    score: 5,
+    courses: ['Math', 'Physic'],
+  },
+  {
+    name: 'Vasya',
+    score: 23,
+    courses: ['Drawing', 'Swimming', 'Math'],
+  },
+  {
+    name: 'Petya',
+    score: 1,
+    courses: ['Math', 'Flying', 'Drawing'],
+  },
+  {
+    name: 'Ivan',
+    score: 45,
+    courses: ['Swimming', 'Physic', 'Flying'],
+  },
+  {
+    name: 'Polina',
+    score: 30,
+    courses: ['Math', 'Physic', 'Swimming', 'Flying', 'Drawing'],
+  },
+];
+
+const allCourses = students.flatMap(student => student.courses);
+const uniqueCourses = allCourses.filter((course, idx, arr) => {
+  return arr.indexOf(course) === idx;
+});
+console.log(uniqueCourses); //[ 'Math', 'Physic', 'Drawing', 'Swimming', 'Flying' ]
+
+// ======================== Массив объектов =================
+
+const LOW_SCORE = 50;
+const HIGH_SCORE = 80;
+
+const students = [
+  {
+    name: 'Ann',
+    score: 55,
+  },
+  {
+    name: 'Vasya',
+    score: 83,
+  },
+  {
+    name: 'Petya',
+    score: 15,
+  },
+  {
+    name: 'Ivan',
+    score: 45,
+  },
+  {
+    name: 'Polina',
+    score: 90,
+  },
+  {
+    name: 'Alina',
+    score: 64,
+  },
+];
+
+// Высший балл
+const bestScore = students.filter(student => student.score >= HIGH_SCORE);
+console.log(bestScore); //[ { name: 'Vasya', score: 83 }, { name: 'Polina', score: 90 } ]
+
+// Средний балл
+// const mediumScore = students.filter(student => student.score < HIGH_SCORE && student.score
+//   >= LOW_SCORE);
+const mediumScore = students.filter(
+  ({ score }) => score >= LOW_SCORE && score < HIGH_SCORE
+);
+console.log(mediumScore); //[ { name: 'Ann', score: 55 }, { name: 'Alina', score: 64 } ]
+
+// Низший балл
+const worstScore = students.filter(student => student.score < LOW_SCORE);
+console.log(worstScore); //[ { name: 'Petya', score: 15 }, { name: 'Ivan', score: 45 } ]

@@ -626,14 +626,7 @@ const products = [
 
 function getAllPropValues(propName) {
   let values = [];
-  for (let product of products) {
-    // if (propName === product.name) {
-    //   values.push(product.name);
-    // } else if (propName === product.price) {
-    //   values.push(product.price);
-    // } else if (propName === product.quantity) {
-    //   values.push(product.quantity);
-    // }
+  for (const product of products) {
     for (const obj in product) {
       if (obj === propName) {
         values.push(product[obj]);
@@ -666,7 +659,34 @@ const products = [
   { name: 'Grip', price: 1200, quantity: 9 },
 ];
 
-function calculateTotalPrice(productName) {}
+const summ = product => product.price * product.quantity;
+
+function calculateTotalPrice(productName) {
+  const product = products.find(item => item.name === productName);
+  if (product) {
+    return summ(product);
+  } else {
+    return `Product ${productName} not found`;
+  }
+}
+console.log(calculateTotalPrice('Radar'));
+
+// const summ = product => product.price * product.quantity;
+// function calculateTotalPrice(productName) {
+//   for (const product of products) {
+//     const prodValue = Object.values(product);
+//     for (const nameFind in product) {
+//       if (prodValue.includes(productName)) {
+//         // summ(product);
+//         return product.price * product.quantity;
+//       }
+//       return 0;
+//     }
+//   }
+// }
+
+// console.log(calculateTotalPrice('Radar'));
+// console.log(calculateTotalPrice('Blaster'));
 
 //=== === ===
 //=== 21  ===
@@ -693,11 +713,13 @@ const highTemperatures = {
   tomorrow: 33,
 };
 
-const yesterday = highTemperatures.yesterday;
-const today = highTemperatures.today;
-const tomorrow = highTemperatures.tomorrow;
+// const yesterday = highTemperatures.yesterday;
+// const today = highTemperatures.today;
+// const tomorrow = highTemperatures.tomorrow;
+const { yesterday, today, tomorrow } = highTemperatures;
 
 const meanTemperature = (yesterday + today + tomorrow) / 3;
+console.log(meanTemperature);
 
 //=== === ===
 //=== 22  ===
@@ -726,10 +748,16 @@ const highTemperatures = {
   tomorrow: 33,
 };
 
-const yesterday = highTemperatures.yesterday;
-const today = highTemperatures.today;
-const tomorrow = highTemperatures.tomorrow;
-const icon = highTemperatures.icon;
+// const yesterday = highTemperatures.yesterday;
+// const today = highTemperatures.today;
+// const tomorrow = highTemperatures.tomorrow;
+// const icon = highTemperatures.icon;
+const {
+  yesterday,
+  today,
+  tomorrow,
+  icon = 'https://www.flaticon.com/svg/static/icons/svg/2204/2204346.svg',
+} = highTemperatures;
 
 const meanTemperature = (yesterday + today + tomorrow) / 3;
 
@@ -758,12 +786,19 @@ const highTemperatures = {
   tomorrow: 33,
 };
 
-const highYesterday = highTemperatures.yesterday;
-const highToday = highTemperatures.today;
-const highTomorrow = highTemperatures.tomorrow;
-const highIcon = highTemperatures.icon;
+// const highYesterday = highTemperatures.yesterday;
+// const highToday = highTemperatures.today;
+// const highTomorrow = highTemperatures.tomorrow;
+// const highIcon = highTemperatures.icon;
+const {
+  yesterday: highYesterday,
+  today: highToday,
+  tomorrow: highTomorrow,
+  icon: highIcon = 'https://www.flaticon.com/svg/static/icons/svg/2204/2204346.svg',
+} = highTemperatures;
 
 const meanTemperature = (highYesterday + highToday + highTomorrow) / 3;
+console.log(meanTemperature);
 
 //=== === ===
 //=== 24  ===
@@ -792,9 +827,12 @@ const hexColors = [];
 const rgbColors = [];
 
 for (const color of colors) {
-  hexColors.push(color.hex);
-  rgbColors.push(color.rgb);
+  const { hex, rgb } = color;
+  hexColors.push(hex);
+  rgbColors.push(rgb);
 }
+console.log(hexColors);
+console.log(rgbColors);
 
 //=== === ===
 //=== 25  ===
@@ -831,13 +869,24 @@ const forecast = {
   },
 };
 
-const highToday = forecast.today.high;
-const lowToday = forecast.today.low;
-const todayIcon = forecast.today.icon;
+// const highToday = forecast.today.high;
+// const lowToday = forecast.today.low;
+// const todayIcon = forecast.today.icon;
 
-const highTomorrow = forecast.tomorrow.high;
-const lowTomorrow = forecast.tomorrow.low;
-const tomorrowIcon = forecast.tomorrow.icon;
+// const highTomorrow = forecast.tomorrow.high;
+// const lowTomorrow = forecast.tomorrow.low;
+// const tomorrowIcon = forecast.tomorrow.icon;
+
+const {
+  today: { low: lowToday, high: highToday, icon: todayIcon },
+  tomorrow: {
+    low: lowTomorrow,
+    high: highTomorrow,
+    icon: tomorrowIcon = 'https://www.flaticon.com/svg/static/icons/svg/2204/2204346.svg',
+  },
+} = forecast;
+
+console.log(highTomorrow);
 
 //=== === ===
 //=== 26  ===
@@ -862,13 +911,25 @@ const tomorrowIcon = forecast.tomorrow.icon;
 
 //type code ↓
 function calculateMeanTemperature(forecast) {
-  const todayLow = forecast.today.low;
-  const todayHigh = forecast.today.high;
-  const tomorrowLow = forecast.tomorrow.low;
-  const tomorrowHigh = forecast.tomorrow.high;
+  // const todayLow = forecast.today.low;
+  // const todayHigh = forecast.today.high;
+  // const tomorrowLow = forecast.tomorrow.low;
+  // const tomorrowHigh = forecast.tomorrow.high;
+
+  const {
+    today: { low: todayLow, high: todayHigh },
+    tomorrow: { low: tomorrowLow, high: tomorrowHigh },
+  } = forecast;
 
   return (todayLow + todayHigh + tomorrowLow + tomorrowHigh) / 4;
 }
+
+console.log(
+  calculateMeanTemperature({
+    today: { low: 28, high: 32 },
+    tomorrow: { low: 25, high: 29 },
+  })
+);
 
 //=== === ===
 //=== 27  ===
@@ -887,8 +948,11 @@ function calculateMeanTemperature(forecast) {
 
 //type code ↓
 const scores = [89, 64, 42, 17, 93, 51, 26];
-const bestScore = scores;
-const worstScore = scores;
+const bestScore = Math.max(...scores);
+const worstScore = Math.min(...scores);
+
+console.log(bestScore);
+console.log(worstScore);
 
 //=== === ===
 //=== 28  ===
@@ -919,9 +983,16 @@ const worstScore = scores;
 const firstGroupScores = [64, 42, 93];
 const secondGroupScores = [89, 14, 51, 26];
 const thirdGroupScores = [29, 47, 18, 97, 81];
-const allScores = [];
-const bestScore = allScores;
-const worstScore = allScores;
+const allScores = [
+  ...firstGroupScores,
+  ...secondGroupScores,
+  ...thirdGroupScores,
+];
+const bestScore = Math.max(...allScores);
+const worstScore = Math.min(...allScores);
+
+console.log(bestScore);
+console.log(worstScore);
 
 //=== === ===
 //=== 29  ===
@@ -957,7 +1028,8 @@ const overrideSettings = {
   withPassword: true,
   timePerQuestion: 30,
 };
-const finalSettings = {};
+const finalSettings = { ...defaultSettings, ...overrideSettings };
+console.log(finalSettings);
 
 //=== === ===
 //=== 30  ===
@@ -984,7 +1056,18 @@ function makeTask(data) {
   const completed = false;
   const category = 'General';
   const priority = 'Normal';
+
+  return { ...{ category, priority, completed }, ...data };
 }
+console.log(makeTask({ text: 'Buy bread' }));
+console.log(makeTask({}));
+console.log(
+  makeTask({
+    category: 'Homemade',
+    priority: 'Low',
+    text: 'Take out the trash',
+  })
+);
 
 //=== === ===
 //=== 31  ===
@@ -1001,7 +1084,16 @@ function makeTask(data) {
 //Вызов add(74, 11, 62, 46, 12, 36) возвращает 241
 
 //type code ↓
-function add() {}
+const add = (...args) => {
+  let summ = 0;
+  for (let i = 0; i < args.length; i++) {
+    summ += args[i];
+  }
+  return summ;
+};
+
+console.log(add(15, 27));
+console.log(add(74, 11, 62, 46, 12, 36));
 
 //=== === ===
 //=== 32  ===
@@ -1020,11 +1112,18 @@ function addOverNum(...args) {
   let total = 0;
 
   for (const arg of args) {
-    total += arg;
+    if (args[0] < arg) {
+      total += arg;
+    }
   }
 
   return total;
 }
+
+console.log(addOverNum(50, 15, 27));
+console.log(addOverNum(10, 12, 4, 11, 48, 10, 8));
+console.log(addOverNum(15, 32, 6, 13, 19, 8));
+console.log(addOverNum(20, 74, 11, 62, 46, 12, 36));
 
 //=== === ===
 //=== 33  ===
@@ -1043,10 +1142,19 @@ function addOverNum(...args) {
 //Вызов findMatches([63, 11, 8, 29], 4, 7, 16) возвращает []
 
 //type code ↓
-function findMatches() {
+function findMatches(...args) {
   const matches = [];
+  for (arg of args) {
+    if (args[0].includes(arg)) {
+      matches.push(arg);
+    }
+  }
   return matches;
 }
+
+console.log(findMatches([1, 2, 3, 4, 5], 1, 8, 2, 7));
+console.log(findMatches([4, 89, 17, 36, 2], 8, 17, 89, 27, 2));
+console.log(findMatches([63, 11, 8, 29], 4, 7, 16));
 
 //=== === ===
 //=== 34  ===
@@ -1070,12 +1178,24 @@ function findMatches() {
 const bookShelf = {
   books: ['The last kingdom', 'The guardian of dreams'],
   getBooks() {
-    return 'Returning all books';
+    return console.log('Returning all books');
   },
   addBook(bookName) {
-    return `Adding book ${bookName}`;
+    return console.log(`Adding book ${bookName}`);
+  },
+  removeBook(bookName) {
+    return console.log(`Deleting book ${bookName}`);
+  },
+  updateBook(oldName, newName) {
+    return console.log(`Updating book ${oldName} to ${newName}`);
   },
 };
+
+bookShelf.getBooks();
+bookShelf.addBook('Haze');
+bookShelf.removeBook('Red sunset');
+bookShelf.updateBook('Sands of dune', 'Dune');
+console.log(bookShelf);
 
 //=== === ===
 //=== 35  ===
@@ -1092,8 +1212,17 @@ const bookShelf = {
 //type code ↓
 const bookShelf = {
   books: ['The last kingdom', 'Haze', 'The guardian of dreams'],
-  updateBook(oldName, newName) {},
+  updateBook(oldName, newName) {
+    const indexBook = bookShelf.books.indexOf(oldName);
+    bookShelf.books.splice(indexBook, 1, newName);
+    // return bookShelf.books;
+  },
 };
+
+bookShelf.updateBook('Haze', 'Dungeon chronicles');
+console.log(bookShelf.books);
+bookShelf.updateBook('The last kingdom', 'Dune');
+console.log(bookShelf.books);
 
 //=== === ===
 //=== 36  ===
@@ -1106,7 +1235,9 @@ const bookShelf = {
 //Значение свойства atTheOldToad.potions это массив []
 
 //type code ↓
-const atTheOldToad = {};
+const atTheOldToad = {
+  potions: [],
+};
 
 //=== === ===
 //=== 37  ===
@@ -1123,7 +1254,12 @@ const atTheOldToad = {};
 //type code ↓
 const atTheOldToad = {
   potions: ['Speed potion', 'Dragon breath', 'Stone skin'],
+  getPotions() {
+    return Object.values(this.potions);
+  },
 };
+
+console.log(atTheOldToad.getPotions());
 
 //=== === ===
 //=== 38  ===
@@ -1141,8 +1277,14 @@ const atTheOldToad = {
 //type code ↓
 const atTheOldToad = {
   potions: ['Speed potion', 'Dragon breath', 'Stone skin'],
-  addPotion(potionName) {},
+  addPotion(potionName) {
+    this.potions.push(potionName);
+    return this.potions;
+  },
 };
+
+console.log(atTheOldToad.addPotion('Invisibility'));
+console.log(atTheOldToad.addPotion('Power potion'));
 
 //=== === ===
 //=== 39  ===
@@ -1160,8 +1302,15 @@ const atTheOldToad = {
 //type code ↓
 const atTheOldToad = {
   potions: ['Speed potion', 'Dragon breath', 'Stone skin'],
-  removePotion(potionName) {},
+  removePotion(potionName) {
+    const indexPotion = this.potions.indexOf(potionName);
+    this.potions.splice(indexPotion, 1);
+    return this.potions;
+  },
 };
+
+console.log(atTheOldToad.removePotion('Dragon breath'));
+console.log(atTheOldToad.removePotion('Speed potion'));
 
 //=== === ===
 //=== 40  ===
@@ -1179,8 +1328,15 @@ const atTheOldToad = {
 //type code ↓
 const atTheOldToad = {
   potions: ['Speed potion', 'Dragon breath', 'Stone skin'],
-  updatePotionName(oldName, newName) {},
+  updatePotionName(oldName, newName) {
+    const indexPotion = this.potions.indexOf(oldName);
+    this.potions.splice(indexPotion, 1, newName);
+    return this.potions;
+  },
 };
+
+console.log(atTheOldToad.updatePotionName('Dragon breath', 'Polymorth'));
+console.log(atTheOldToad.updatePotionName('Stone skin', 'Invisibility'));
 
 //=== === ===
 //=== 41  ===
@@ -1226,7 +1382,10 @@ const atTheOldToad = {
     { name: 'Stone skin', price: 520 },
   ],
   getPotions() {
-    return this.potions;
+    // return this.potions;
+    for (potion of this.potions) {
+      return potion;
+    }
   },
   addPotion(newPotion) {
     if (this.potions.includes(newPotion)) {
@@ -1254,3 +1413,5 @@ const atTheOldToad = {
     this.potions.splice(potionIndex, 1, newName);
   },
 };
+
+console.log(atTheOldToad.getPotions());
