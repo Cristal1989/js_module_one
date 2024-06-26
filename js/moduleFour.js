@@ -421,3 +421,218 @@ console.log(mediumScore); //[ { name: 'Ann', score: 55 }, { name: 'Alina', score
 // Низший балл
 const worstScore = students.filter(student => student.score < LOW_SCORE);
 console.log(worstScore); //[ { name: 'Petya', score: 15 }, { name: 'Ivan', score: 45 } ]
+
+// ===================================== Метод find() =============================
+
+const colorPeakerOptions = [
+  {
+    label: 'red',
+    color: '#f44336',
+  },
+  {
+    label: 'green',
+    color: '#a44336',
+  },
+  {
+    label: 'blue',
+    color: '#b44336',
+  },
+  {
+    label: 'pink',
+    color: '#c44336',
+  },
+  {
+    label: 'indigo',
+    color: '#d44336',
+  },
+];
+
+colorPeakerOptions.find(option => option.label === 'red');
+console.table(colorPeakerOptions.find(option => option.label === 'red')); //{ label: 'red', color: '#f44336' }
+colorPeakerOptions.find(option => option.label === 'green');
+colorPeakerOptions.find(option => option.label === 'blue');
+
+// ====================== Метод findIndex() ===============================
+
+const colorPeakerOptions = [
+  {
+    label: 'red',
+    color: '#f44336',
+  },
+  {
+    label: 'green',
+    color: '#a44336',
+  },
+  {
+    label: 'blue',
+    color: '#b44336',
+  },
+  {
+    label: 'pink',
+    color: '#c44336',
+  },
+  {
+    label: 'indigo',
+    color: '#d44336',
+  },
+];
+
+colorPeakerOptions.findIndex(option => option.label);
+console.log(colorPeakerOptions.findIndex(option => option.label)); //0
+colorPeakerOptions.findIndex(option => option.label === 'red');
+console.log(colorPeakerOptions.findIndex(option => option.label === 'red')); //0
+colorPeakerOptions.findIndex(option => option.label === 'white');
+console.log(colorPeakerOptions.findIndex(option => option.label === 'white')); //-1
+
+// =============================== Метод every() =============================
+
+// Все элементы >= 0 - true
+[1, 2, 3, 4, 5].every(value => value >= 0); //true
+
+// Все элементы >= 0 - false
+[1, 2, 3, 4, 5, -1].every(value => value >= 0); // false
+
+// ================== Массив объектов =================
+
+const fruits = [
+  {
+    name: 'Apple',
+    amount: 25,
+  },
+  {
+    name: 'Pear',
+    amount: 0,
+  },
+  {
+    name: 'Banana',
+    amount: 42,
+  },
+  {
+    name: 'Grapefruit',
+    amount: 4,
+  },
+];
+
+// Every первое true если только всех фруктов будет болье 0 штук
+const allAvailable = fruits.every(fruit => fruit.amount > 0); // false
+
+// Some первое true если хотя бы один фрукт будет больще 0 штук
+const someAvailable = fruits.some(fruit => fruit.amount > 0); // true
+
+// =========================== Метод reduce() ================================
+
+const total = [22, 33, 50, 150, 20].reduce((previousValue, number) => {
+  return previousValue + number;
+}, -100);
+console.log(total); // 175
+
+// ======================== Массив объектов =====================
+
+const students = [
+  {
+    name: 'Ann',
+    score: 55,
+  },
+  {
+    name: 'Vasya',
+    score: 83,
+  },
+  {
+    name: 'Petya',
+    score: 15,
+  },
+  {
+    name: 'Ivan',
+    score: 45,
+  },
+  {
+    name: 'Polina',
+    score: 90,
+  },
+  {
+    name: 'Alina',
+    score: 64,
+  },
+];
+
+// Название аккумулятора может быть произвольным, это просто параметр функции
+const totalScore = students.reduce((total, student) => {
+  return total + student.score;
+}, 0);
+const avgScore = totalScore / students.length;
+
+console.log(avgScore.toFixed(1)); //58.7
+
+// ===============================================
+
+const tweets = [
+  {
+    id: '000',
+    likes: 4,
+    tags: ['Not JS', 'JS'],
+  },
+  {
+    id: '001',
+    likes: 14,
+    tags: ['Not JS', 'JS', 'CSS'],
+  },
+  {
+    id: '002',
+    likes: 6,
+    tags: ['HTML', 'JS'],
+  },
+  {
+    id: '003',
+    likes: 22,
+    tags: ['Not JS', 'React'],
+  },
+  {
+    id: '004',
+    likes: 7,
+    tags: ['React', 'CSS', 'HTML'],
+  },
+];
+
+// Пройдемся по всем элементам коллекции и присвоим значение свойства likes к аккумулятору начального значения, который укажем 0
+const likes = tweets.reduce((totalLikes, tweet) => totalLikes + tweet.likes, 0);
+console.log(likes); // 53
+
+// Может подсчет лайков не одиночная операция, поэтому напишем функцию для подсчета лайков из коллекции
+const countLikes = tweets =>
+  tweets.reduce((totalLikes, tweet) => totalLikes + tweet.likes, 0);
+console.log(countLikes(tweets)); // 53
+
+// ===========
+// const tags = tweets.reduce((allTags, tweet) => {
+//   allTags.push(...tweet.tags);
+//   // allTags.
+//   return allTags;
+// }, []);
+// console.log(tags);
+
+// =============
+
+const getTags = tweets =>
+  tweets.reduce((allTags, tweet) => {
+    allTags.push(...tweet.tags);
+    return allTags;
+  }, []);
+const tags = getTags(tweets);
+console.log(tags);
+
+// Вынесем callback функцию отдельно, а в reduce() передадим ссылку на нее. Это стандартная практика если callback функция достаточно большая
+// Если в объекте - аккумуляторе аккум отсутствует свое свойство с ключем tag то создаем ее и записываем ей значение 0
+// В другом случае увеличиваем значение на 1
+
+const getTagStats = (acc, tag) => {
+  if (!acc.hasOwnProperty(tag)) {
+    acc[tag] = 0;
+  }
+  acc[tag] += 1;
+  return acc;
+};
+
+// Начальное значение аккума - это пустой объект
+const countTags = tags => tags.reduce(getTagStats, {});
+const tagCount = countTags(tags);
+console.log(tagCount); // { 'Not JS': 3, JS: 3, CSS: 2, HTML: 2, React: 2 }

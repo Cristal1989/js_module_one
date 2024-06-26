@@ -806,6 +806,459 @@
           console.log(worstScore); //[ { name: 'Petya', score: 15 }, { name:
           'Ivan', score: 45 } ]<br />
         </p>
+        <h3 class="title">Метод find()</h3>
+        <p>
+          Если метод filter(callback) используется для поиска удовлетворительных
+          условий элемента то метод find() позволяет найти и вернуть первый
+          подходящий элемент, после чего переборка массива прекращается
+        </p>
+        <p class="bg">
+          arr.find((element, idx, array) => {<br />
+          // Тело callback функции<br />
+          })
+        </p>
+        <ul>
+          <li>Не изменяет оригинальный массив</li>
+          <li>Поэлементно перебирает оригинальный массив</li>
+          <li>
+            Возвращает первый удовлетворяющее условие элемент, т.е когда
+            callback возвращает true
+          </li>
+          <li>
+            Если ни один элемент не удовлетворил условие, т.е для всех элементов
+            callback вернул false, метод возвращает undefind
+          </li>
+        </ul>
+        <p>
+          Метод find() используется для одной задачи - поиска элемента по
+          уникальному значению свойств, например поиск пользотеля по почте, авто
+          по серийному номеру, книги по названию и т.д
+        </p>
+        <p class="bg">
+          const colorPeakerOptions = [ <br />
+          { <br />
+          label: 'red', <br />
+          color: '#f44336', <br />
+          }, <br />
+          { <br />
+          label: 'green', <br />
+          color: '#a44336', <br />
+          }, <br />
+          { <br />
+          label: 'blue', <br />
+          color: '#b44336', <br />
+          }, <br />
+          { <br />
+          label: 'pink', <br />
+          color: '#c44336', <br />
+          }, <br />
+          { <br />
+          label: 'indigo', <br />
+          color: '#d44336', <br />
+          }, <br />
+          ]; <br />
+          <br />
+
+          colorPeakerOptions.find(option => option.label === 'red'); <br />
+          console.table(colorPeakerOptions.find(option => option.label ===
+          'red')); //{ label: 'red', color: '#f44336' } <br />
+          colorPeakerOptions.find(option => option.label === 'green'); <br />
+          colorPeakerOptions.find(option => option.label === 'blue'); <br />
+        </p>
+        <h3 class="title">Метод findIndex()</h3>
+        <p>
+          Метод findIndex(callback) - это современная замена метода indexOf().
+          Позволяет выполнять поиск по более сложным условиям чем просто
+          равенство. Используется как в массиве примитивов и как в массиве
+          объектов.
+        </p>
+        <p class="bg">
+          arr.findIndex((element, idx, array) => {<br />
+          // Тело callback функции<br />
+          })
+        </p>
+        <ul>
+          <li>Не изменяет оригинальный массив</li>
+          <li>Поэлементно перебирает оригинальный массив</li>
+          <li>
+            Возвращает индекс первого элемента, удовлетворяющего условие, тюе
+            когда callback возвращает true
+          </li>
+          <li>
+            Если ни один из элементов не удовлетворяет условиям, т.е callback
+            вернул false, метод возвращает -1
+          </li>
+        </ul>
+        <p class="bg">
+          const colorPeakerOptions = [ <br />
+          {<br />
+          label: 'red',<br />
+          color: '#f44336',<br />
+          },<br />
+          {<br />
+          label: 'green',<br />
+          color: '#a44336',<br />
+          },<br />
+          {<br />
+          label: 'blue',<br />
+          color: '#b44336',<br />
+          },<br />
+          {<br />
+          label: 'pink',<br />
+          color: '#c44336',<br />
+          },<br />
+          {<br />
+          label: 'indigo',<br />
+          color: '#d44336',<br />
+          },<br />
+          ];<br /><br />
+
+          colorPeakerOptions.findIndex(option => option.label);<br />
+          console.log(colorPeakerOptions.findIndex(option =>
+          option.label));//0<br />
+          colorPeakerOptions.findIndex(option => option.label === 'red');<br />
+          console.log(colorPeakerOptions.findIndex(option => option.label ===
+          'red'));//0<br />
+          colorPeakerOptions.findIndex(option => option.label === 'white');<br />
+          console.log(colorPeakerOptions.findIndex(option => option.label ===
+          'white'));//-1<br />
+        </p>
+        <h3 class="title">Метод every() и some()</h3>
+        <p>
+          <b>Метод every()</b><br />
+          Проверяет проходят ли все элементы массива тест callback функции,
+          возвращает true или false
+        </p>
+        <p class="bg">
+          arr.every((element, idx, array) => {<br />
+          // Тело callback функции<br />
+          })
+        </p>
+        <ul>
+          <li>Не изменяет оригинальный массив</li>
+          <li>Поэлементно перебирает оригинальный массив</li>
+          <li>
+            Возвращает true если все элементы массива удовлетворяют условие
+          </li>
+          <li>
+            Возвращает false если хотя бы один элемент не удовлетворяет условие.
+          </li>
+          <li>
+            Переборка массива прекращается если callback возвращает false.
+          </li>
+        </ul>
+        <p class="bg">
+          // Все элементы >= 0 - true
+          <br />
+          [1, 2, 3, 4, 5].every(value => value >= 0);//true<br /><br />
+
+          // Все элементы >= 0 - false<br />
+          [1, 2, 3, 4, 5, -1].every(value => value >= 0);// false<br />
+        </p>
+        <p>
+          <b>Метод some()</b><br />
+          Проверяет подходит ли хотя бы один элемент массива, возвращает true or
+          false.
+        </p>
+        <p class="bg">
+          arr.some((element, idx, array) => {<br />
+          // Тело callback функции<br />
+          })
+        </p>
+        <ul>
+          <li>Не изменяет оригинальный массив</li>
+          <li>Поэлементно перебирает оригинальный массив</li>
+          <li>
+            Возвращает true если все элементы массива удовлетворяют условие
+          </li>
+          <li>
+            Возвращает false если хотя бы один элемент не удовлетворяет условие.
+          </li>
+          <li>Переборка массива прекращается если callback возвращает true.</li>
+        </ul>
+        <p class="bg">
+          <br />
+          [1, 2, 3, 4, 5].some(value => value >= 0);//true<br /><br />
+
+          [1, -2, -3, -4, -5, -1].some(value => value >= 0);// true<br />
+        </p>
+        <p>
+          <b>Массив объектов</b><br />
+          При работе с массивом объектов проверяется значение определенного
+          свойства. Например у нас есть массив объектов фруктов, необходимо
+          узнать есть ли фрукты в наличии и если ли в наличии хотя бы какие
+          нибудь фрукты, т.е > 0 штук
+        </p>
+        <p class="bg">
+          const fruits = [ <br />
+          {<br />
+          name: "Apple",<br />
+          amount: 25,<br />
+          },<br />
+          {<br />
+          name: "Pear",<br />
+          amount: 0,<br />
+          },<br />
+          {<br />
+          name: "Banana",<br />
+          amount: 42,<br />
+          },<br />
+          {<br />
+          name: "Grapefruit",<br />
+          amount: 4,<br />
+          }<br />
+          ];<br /><br />
+
+          // Every первое true если только всех фруктов будет болье 0 штук<br />
+          const allAvailable = fruits.every(fruit => fruit.amount > 0);//
+          false<br /><br />
+
+          // Some первое true если хотя бы один фрукт будет больще 0 штук<br />
+          const someAvailable = fruits.some(fruit => fruit.amount > 0);//
+          true<br />
+        </p>
+        <h3 class="title">Метод reduce()</h3>
+        <p>
+          Метод reduce(callback, initialValue) используется для последовательной
+          обработки каждого элемента массива с сохранением промежуточного
+          результата как аккумулятор. Несколько сложнее других методов для
+          условий, но результат тго стоит
+        </p>
+        <p class="bg">
+          arr.reduce((previousValue, element, idx, array) => {<br />
+          // Тело callback функции<br />
+          }, initialValue)
+        </p>
+        <ul>
+          <li>Не изменяет оригинальный массив</li>
+          <li>Поэлементно перебирает оригинальный массив</li>
+          <li>Возвращает все что угодно</li>
+          <li>Делает все что угодно</li>
+          <li>
+            Легче всего передавать его работу на примере подсчета суммы
+            элементов массива
+          </li>
+        </ul>
+        <p class="bg">
+          const total = [22, 33, 50, 150, 20].reduce((previousValue, number) =>
+          { <br />
+          return previousValue + number;<br />
+          }, -100);<br />
+          console.log(total);// 175<br />
+        </p>
+        <p>
+          Первый параметр callback функции previousValue - это аккумулятор, т.е
+          промежуточный результат. Значение, которое вернет callback функции на
+          текущей итерации будет являться значением этого параметра на след
+          итерации. <br />
+          Вторым аргументом reduce можно передать необязательное начальное
+          значение аккумулятора - параметр initialValue
+        </p>
+        <p class="bg">
+          Сначала метод reduse создает внутренюю переменную - аккумулятор и
+          присваивает ей значение - параметр initialValue или первого элемента
+          массива, который перебирается. Если initialValue не задано
+          previousValue = 0. <br />
+          Потом callback функция вызывается для каждого элемента массива.
+          Поточное значение параметра prettyValue это то что вернула callback
+          функция на прошлой итерации
+        </p>
+        <ul>
+          <li>
+            Итерация 1 -> previousValue = 0 -> number = 2 -> return 0+2 ->
+            return 2
+          </li>
+          <li>
+            Итерация 2 -> previousValue = 2 -> number = 4 -> return 4+2 ->
+            return 6
+          </li>
+          <li>
+            Итерация 3 -> previousValue = 6 -> number = 3 -> return 6+3 ->
+            return 9
+          </li>
+          <li>
+            Итерация 4 -> previousValue = 9 -> number = 4 -> return 9+4 ->
+            return 13
+          </li>
+          <li>
+            Итерация 5 -> previousValue = 13 -> number = 5 -> return 13+5 ->
+            return 18
+          </li>
+        </ul>
+        <p>
+          После завершения перебирания всего массива метод reduce() возвращает
+          значения всего аккумулятора. Результат - сумма всех чисел - 18. <br />
+          Т.е метод reduce() используется когда необходимо взять "многое" и
+          привести к "одному". В повседневных задачах его применение сводится к
+          работе с числами.
+        </p>
+        <p>
+          <b>Массив объектов</b><br />
+          При работе с массивом объектов выполняется редуцирование по
+          определенному свойству. К примеру у нас есть массив студентов с
+          баллами за тест, необходимо получить средний балл
+        </p>
+        <p class="bg">
+          const students = [ <br />
+          {<br />
+          name: 'Ann',<br />
+          score: 55,<br />
+          },<br />
+          {<br />
+          name: 'Vasya',<br />
+          score: 83,<br />
+          },<br />
+          {<br />
+          name: 'Petya',<br />
+          score: 15,<br />
+          },<br />
+          {<br />
+          name: 'Ivan',<br />
+          score: 45,<br />
+          },<br />
+          {<br />
+          name: 'Polina',<br />
+          score: 90,<br />
+          },<br />
+          {<br />
+          name: 'Alina',<br />
+          score: 64,<br />
+          },<br />
+          ];<br /><br />
+
+          // Название аккумулятора может быть произвольным, это просто параметр
+          функции<br />
+          const totalScore = students.reduce((total, student) => {<br />
+          return total + student.score;<br />
+          }, 0);<br />
+          const avgScore = totalScore / students.length;<br /><br />
+
+          console.log(avgScore.toFixed(1));//58.7<br />
+        </p>
+        <p>
+          <b>Продвинутый reduce()</b><br />
+          Допустим у нас есть следующая задача - из массива постов твиттера
+          отдельного пользователя необходимо посчитать сумму всех лайков. Можно
+          выбрать цикл for или forEach. Каждое из этих решений потребует
+          написание доп кода, а можно использовать reduce()
+        </p>
+        <p class="bg">
+          const tweets = [ <br />
+          {<br />
+          id: '000',<br />
+          likes: 4,<br />
+          tags: ['Not JS', 'JS'],<br />
+          },<br />
+          {<br />
+          id: '001',<br />
+          likes: 14,<br />
+          tags: ['Not JS', 'JS', 'CSS'],<br />
+          },<br />
+          {<br />
+          id: '002',<br />
+          likes: 6,<br />
+          tags: ['HTML', 'JS'],<br />
+          },<br />
+          {<br />
+          id: '003',<br />
+          likes: 22,<br />
+          tags: ['Not JS', 'React'],<br />
+          },<br />
+          {<br />
+          id: '004',<br />
+          likes: 7,<br />
+          tags: ['React', 'CSS', 'HTML'],<br />
+          },<br />
+          ];<br /><br />
+
+          // Пройдемся по всем элементам коллекции и присвоим значение свойства
+          likes к аккумулятору начального значения, который укажем 0<br />
+          const likes = tweets.reduce((totalLikes, tweet) => totalLikes +
+          tweet.likes, 0);<br />
+          console.log(likes);// 53<br /><br />
+
+          // Может подсчет лайков не одиночная операция, поэтому напишем функцию
+          для подсчета лайков из коллекции const countLikes = tweets =>
+          tweets.reduce((totalLikes, tweet) => totalLikes + tweet.likes, 0);<br />
+          console.log(countLikes(tweets));// 53<br />
+        </p>
+        <p>
+          Зматели ли свойство tags у каждого поста. Продолжая тему reduce() мы
+          соберем все теги, встречающиеся в каждом посте
+        </p>
+        <p class="bg">
+          const tweets = [ <br />
+          {<br />
+          id: '000',<br />
+          likes: 4,<br />
+          tags: ['Not JS', 'JS'],<br />
+          },<br />
+          {<br />
+          id: '001',<br />
+          likes: 14,<br />
+          tags: ['Not JS', 'JS', 'CSS'],<br />
+          },<br />
+          {<br />
+          id: '002',<br />
+          likes: 6,<br />
+          tags: ['HTML', 'JS'],<br />
+          },<br />
+          {<br />
+          id: '003',<br />
+          likes: 22,<br />
+          tags: ['Not JS', 'React'],<br />
+          },<br />
+          {<br />
+          id: '004',<br />
+          likes: 7,<br />
+          tags: ['React', 'CSS', 'HTML'],<br />
+          },<br />
+          ];<br /><br />
+          // Пройдемся по всем элементам коллекции и присвоим значение свойства
+          tags к аккумулятору, начальное значение которое укажум пустым массивом
+          <br />
+          // На каждой итерации пишем в аккумулятор пишем все элементы
+          tweet.tags и возвращаем его <br />
+          const tags = tweets.reduce((allTags, tweet) => {<br />
+          allTags.push(...tweet.tags);<br />
+          return allTags;<br />
+          }, []);<br />
+          console.log(tags);<br />
+        </p>
+        <p>
+          После того, как мы собрали все теги с постов, хорошо бы посчитать
+          кол-во уникальных тегов в массиве и снова reduce() пригодится
+        </p>
+        <p class="bg">
+          const getTags = tweets => <br />
+          tweets.reduce((allTags, tweet) => {<br />
+          allTags.push(...tweet.tags);<br />
+          return allTags;<br />
+          }, []);<br />
+          const tags = getTags(tweets);<br />
+          console.log(tags);<br /><br />
+
+          // Вынесем callback функцию отдельно, а в reduce() передадим ссылку на
+          нее. Это стандартная практика если callback функция достаточно
+          большая<br />
+          // Если в объекте - аккумуляторе аккум отсутствует свое свойство с
+          ключем tag то создаем ее и записываем ей значение 0<br />
+          // В другом случае увеличиваем значение на 1<br /><br />
+
+          const getTagStats = (acc, tag) => {<br />
+          if (!acc.hasOwnProperty(tag)) {<br />
+          acc[tag] = 0;<br />
+          }<br />
+          acc[tag] += 1;<br />
+          return acc;<br />
+          };<br /><br />
+
+          // Начальное значение аккума - это пустой объект<br />
+          const countTags = tags => tags.reduce(getTagStats, {});<br />
+          const tagCount = countTags(tags);<br />
+          console.log(tagCount);// { 'Not JS': 3, JS: 3, CSS: 2, HTML: 2, React:
+          2 }<br />
+        </p>
       </section>
     </main>
     <script src="./js/moduleFour.js"></script>
