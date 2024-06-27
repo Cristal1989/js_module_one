@@ -595,20 +595,23 @@ const tweets = [
 
 // Пройдемся по всем элементам коллекции и присвоим значение свойства likes к аккумулятору начального значения, который укажем 0
 const likes = tweets.reduce((totalLikes, tweet) => totalLikes + tweet.likes, 0);
-console.log(likes); // 53
+// console.log(likes); // 53
 
 // Может подсчет лайков не одиночная операция, поэтому напишем функцию для подсчета лайков из коллекции
 const countLikes = tweets =>
   tweets.reduce((totalLikes, tweet) => totalLikes + tweet.likes, 0);
-console.log(countLikes(tweets)); // 53
+// console.log(countLikes(tweets)); // 53
 
 // ===========
 // const tags = tweets.reduce((allTags, tweet) => {
 //   allTags.push(...tweet.tags);
-//   // allTags.
 //   return allTags;
 // }, []);
 // console.log(tags);
+// const filterTag = tags.filter((tag, idx, arr) => {
+//   return arr.indexOf(tag) === idx;
+// });
+// console.log(filterTag);
 
 // =============
 
@@ -621,7 +624,7 @@ const tags = getTags(tweets);
 console.log(tags);
 
 // Вынесем callback функцию отдельно, а в reduce() передадим ссылку на нее. Это стандартная практика если callback функция достаточно большая
-// Если в объекте - аккумуляторе аккум отсутствует свое свойство с ключем tag то создаем ее и записываем ей значение 0
+// Если в объекте - аккумуляторе acc отсутствует свое свойство с ключем tag то создаем ее и записываем ей значение 0
 // В другом случае увеличиваем значение на 1
 
 const getTagStats = (acc, tag) => {
@@ -636,3 +639,122 @@ const getTagStats = (acc, tag) => {
 const countTags = tags => tags.reduce(getTagStats, {});
 const tagCount = countTags(tags);
 console.log(tagCount); // { 'Not JS': 3, JS: 3, CSS: 2, HTML: 2, React: 2 }
+
+======================================= sort() ==========================
+
+const letters = ['r', 'T', 'A', 'b', 'c', 'C'];
+const a = letters.sort();
+console.log(letters);
+
+// ======================
+
+const scores = [32,44,72,12,38,93];
+const copyScores = [...scores].sort();
+
+console.table(`Scores: ${scores},\nCopy Scores: ${copyScores}`);//Scores: 32,44,72,12,38,93, Copy Scores: 12,32,38,44,72,93
+
+// ==================
+const scores = [32,44,72,12,38,93];
+const copyScores = [...scores].sort((a, b) => a-b);
+console.log(copyScores);//[ 12, 32, 38, 44, 72, 93 ]
+const copyScores1 = [...scores].sort((a, b) => b-a);
+console.log(copyScores1);//[ 93, 72, 44, 38, 32, 12 ]
+
+// ================================ localCompare()====================
+
+'a'.localCompare("b");//-1
+'b'.localCompare("a");//1
+'a'.localCompare("a");//0
+'b'.localCompare("b");//0
+
+// ========================
+
+const students = ["Vasya", "Petya", "Vanya", "Vova", "Julia", "Max"];
+const inAlphaOrder = [...students].sort((a,b) => a.localeCompare(b));
+console.log(inAlphaOrder);//[ 'Julia', 'Max', 'Petya', 'Vanya', 'Vasya', 'Vova' ]
+
+const inBetaOrder = [...students].sort((a,b) => b.localeCompare(a));
+console.log(inBetaOrder);//[ 'Vova', 'Vasya', 'Vanya', 'Petya', 'Max', 'Julia' ]
+
+// ================================ Сортировка объектов ==================
+
+const students = [
+  {
+    name: 'Ann',
+    score: 55,
+  },
+  {
+    name: 'Vasya',
+    score: 83,
+  },
+  {
+    name: 'Petya',
+    score: 15,
+  },
+  {
+    name: 'Ivan',
+    score: 45,
+  },
+  {
+    name: 'Polina',
+    score: 90,
+  },
+  {
+    name: 'Alina',
+    score: 64,
+  },
+];
+
+const aaNamesStudents = [...students].sort((a,b) => a.name.localeCompare(b.name));
+console.log(aaNamesStudents);
+
+// ==================================================== Цепочка методов ==================
+
+const students = [
+  {
+    name: 'Ann',
+    score: 5,
+    courses: ['Math', 'Physic'],
+  },
+  {
+    name: 'Vasya',
+    score: 23,
+    courses: ['Drawing', 'Swimming', 'Math'],
+  },
+  {
+    name: 'Petya',
+    score: 1,
+    courses: ['Math', 'Flying', 'Drawing'],
+  },
+  {
+    name: 'Ivan',
+    score: 45,
+    courses: ['Swimming', 'Physic', 'Flying'],
+  },
+  {
+    name: 'Polina',
+    score: 30,
+    courses: ['Math', 'Physic', 'Swimming', 'Flying', 'Drawing'],
+  },
+];
+
+// Необходимо получить массив их имен, осортировать по росту баллов за тест. С этой целью отсортируем копию массива методом sort()
+// После чего методом map() создадим массив значений свойства name из отсортированого массива
+
+// const sortByScore = [...students].sort((a,b) => a.score - b.score);
+// const names = sortByScore.map(student => student.name);
+// console.log(names);//[ 'Petya', 'Ann', 'Vasya', 'Polina', 'Ivan' ]
+
+// Проблема в том то у нас появляется промежуточные переменные после каждой операции кроме финальной
+// Переменная sortByScore излишняя и необходима только для хранения промежуточного результата
+
+// Избавится от таких мертвых переменных можно с помощью группировки вызова методов в цепочке. Каждый последующий метод будет выполнятся на основе результата предыдущей работы
+
+const names = [...students].sort((a,b)=>a.score - b.score).map(student => student.name);
+console.log(names);//[ 'Petya', 'Ann', 'Vasya', 'Polina', 'Ivan' ]
+
+// ================
+
+const uniqueSortedCourse = students.flatMap(student => student.courses).filter((course, idx, arr) => arr.indexOf(course) === idx).sort((a,b) => a.localeCompare(b));
+console.log(uniqueSortedCourse);//[ 'Drawing', 'Flying', 'Math', 'Physic', 'Swimming' ]
+

@@ -555,6 +555,24 @@
           Используя метод map() мы можем перебирать массив объектов в callback
           функции и вернуть значения свойства каждого из них
         </p>
+        <p class="bg">
+          const kvArray = [ <br />
+          { key: 1, value: 10 },<br />
+          { key: 2, value: 20 },<br />
+          { key: 3, value: 30 },<br />
+          ];<br /><br />
+
+          const reformattedArray = kvArray.map(({ key, value }) => ({ [key]:
+          value }));<br /><br />
+
+          console.log(reformattedArray); // [{ 1: 10 }, { 2: 20 }, { 3: 30 }]<br />
+          console.log(kvArray);<br />
+          // [<br />
+          // { key: 1, value: 10 },<br />
+          // { key: 2, value: 20 },<br />
+          // { key: 3, value: 30 }<br />
+          // ]<br />
+        </p>
         <h3 class="title">Метод flatMap()</h3>
         <p>
           Метод flatMap(callback) - это аналогичный метод map() но применяется в
@@ -1258,6 +1276,271 @@
           const tagCount = countTags(tags);<br />
           console.log(tagCount);// { 'Not JS': 3, JS: 3, CSS: 2, HTML: 2, React:
           2 }<br />
+        </p>
+        <h3 class="title">Метод sort()</h3>
+        <p>
+          Метод sort() сортирует элементы массива, но в отличае от других
+          методов перехода он сортирует исходный массив
+        </p>
+        <ul>
+          <li>Сортирует и изменяет исходный массив</li>
+          <li>Возвращает измененный массив, т.е ссылку но на отсортированый</li>
+          <li>По умолчанию сортирует по росту</li>
+          <li>
+            Сортировка производится путем приведения к строке и сравнения
+            порядковых номеров в таблице unicode
+          </li>
+          <li>Такой массив чисел будет отсортирован по росту</li>
+        </ul>
+        <p class="bg">
+          const scores = [32,44,72,12,38,93]; <br />
+          scores.sort(); <br />
+          console.log(scores);// [12,32,38,44,72,93]
+        </p>
+        <p>
+          Но поскольку по умолчанию значение приводится к строке, стандартная
+          сортировка чисел работает необычно, поэтому мы рассмотрим как задавать
+          свой порядок сортировки
+        </p>
+        <p class="bg">
+          // Массив строк сортируем по алфавиту <br />
+          const students = ["Vasya", "Petya", "Vanya"];<br />
+          students.sort();<br />
+          console.log(students)// [ 'Petya', 'Vanya', 'Vasya' ]
+        </p>
+        <p>В то же время порядковый номер заглавных меньше чем у строчных</p>
+        <p class="bg">
+          const letters = ["r", "T", "A", "b", "c", "C"]; <br />
+          letters.sort(); <br />
+          console.log(letters);//[ 'A', 'C', 'T', 'b', 'c', 'r' ]
+        </p>
+        <p>
+          Из-за сортировки исходного массива нарушается принцип чистоты функции
+          и нельзя удобно создать несколько производных коллекций на основе
+          исходных. Например создать коллукцию, отсортированую по росту, а
+          другую по убыванию, поэтому перед сортировкой производят копию
+          исходного массива и сортируют уже ее
+        </p>
+        <p class="bg">
+          const scores = [32,44,72,12,38,93];<br />
+          const copyScores = [...scores].sort();<br /><br />
+
+          console.table(`Scores: ${scores},\nCopy Scores:
+          ${copyScores}`);//Scores: 32,44,72,12,38,93, Copy Scores:
+          12,32,38,44,72,93
+        </p>
+        <p>
+          <b>Свой порядок сортировки чисел</b><br />
+          Для указания своего порядка сортировки метода sort(compareFunction)
+          следует передать callback функцию с 2 параметрами. Эта функция
+          сравнение (compare и function), порядок сортировки зависит от ее
+          результата. Метод sort() будет вызывать ее для двух случайных
+          элементов
+        </p>
+        <p class="bg">
+          const arr.sort((a, b) =>{ <br />
+          // Тело функции<br />
+          })
+        </p>
+        <ul>
+          <li>а - первый элемент для сравнения</li>
+          <li>b - второй элемент для сравнения</li>
+          <li>
+            Если вызов compareFunction(a, b) возвращает любое отрицательное
+            значение, т.е a < b, сортировка поставит а перед b. Это сортировка
+            по росту
+          </li>
+        </ul>
+        <p class="bg">
+          const scores = [32,44,72,12,38,93];<br />
+          const copyScores = [...scores].sort((a, b) => a-b);<br /><br />
+          console.log(copyScores);//[ 12, 32, 38, 44, 72, 93 ]<br /><br />
+          const copyScores = [...scores].sort((a, b) => b-a);<br />
+          console.log(copyScores);<br />//[ 93, 72, 44, 38, 32, 12 ]
+        </p>
+        <p>
+          Если вызов compareFunction вернет 0, сортировка оставит a и b
+          неизменными по отношению друг у другу, но отсортирует их по отношению
+          к другим элементам. Но вообще не важно что возвращать если их взаимный
+          порядок не суть важный.
+        </p>
+        <p>
+          <b>Свой порядок сортировки строк</b><br />
+          Для сортировки строк в алфавитном порядке по возрастанию или убыванию
+          используется метод строк localeCompare()
+        </p>
+        <p class="bg">firstString.localeCompare(secondString);</p>
+        <p>
+          Он вызывается на строке, которую нужно сравнить firstString с тем что
+          был передан ему в качестве аргумента - secondString
+        </p>
+        <p class="bg">
+          'a'.localeCompare("b");//-1 <br />
+          'b'.localeCompare("a");//1<br />
+          'a'.localeCompare("a");//0<br />
+          'b'.localeCompare("b");//0<br />
+        </p>
+        <ul>
+          <li>
+            Возвращает отрицательное значение если firstString должен быть перед
+            secondString
+          </li>
+          <li>
+            Возвращает положительное значение больше 0 если firstString должен
+            быть после secondString
+          </li>
+          <li>Если строки равны то возвращает 0</li>
+          <li>
+            Это удобно использовать для сортировки строк, поскольку метод sort()
+            ожидает такие же методы от callback функции
+          </li>
+        </ul>
+        <p class="bg">
+          const students = ["Vasya", "Petya", "Vanya", "Vova", "Julia", "Max"];
+          <br />
+          const inAlphaOrder = [...students].sort((a,b) =>
+          a.localeCompare(b));<br />
+          console.log(inAlphaOrder);//[ 'Julia', 'Max', 'Petya', 'Vanya',
+          'Vasya', 'Vova' ]<br /><br />
+
+          const inBetaOrder = [...students].sort((a,b) =>
+          b.localeCompare(a));<br />
+          console.log(inBetaOrder);//[ 'Vova', 'Vasya', 'Vanya', 'Petya', 'Max',
+          'Julia' ]<br />
+        </p>
+        <p>
+          <b>Сортировка объектов</b><br />
+          При работе с массивом объектов сортировка выполняется по числовому или
+          строковому значению определенного свойства. К примеру у нас есть
+          группа студентов с баллами за тест, необходимо отсортировать массив
+          объектов по возрастанию и убыванию баллов по имени студентов
+        </p>
+        <p class="bg">
+          const students = [ <br />
+          {<br />
+          name: 'Ann',<br />
+          score: 55,<br />
+          },<br />
+          {<br />
+          name: 'Vasya',<br />
+          score: 83,<br />
+          },<br />
+          {<br />
+          name: 'Petya',<br />
+          score: 15,<br />
+          },<br />
+          {<br />
+          name: 'Ivan',<br />
+          score: 45,<br />
+          },<br />
+          {<br />
+          name: 'Polina',<br />
+          score: 90,<br />
+          },<br />
+          {<br />
+          name: 'Alina',<br />
+          score: 64,<br />
+          },<br />
+          ];<br /><br />
+
+          const aaNamesStudents = [...students].sort((a,b) =>
+          a.name.localeCompare(b.name));<br />
+          console.log(aaNamesStudents);
+        </p>
+        <p>
+          <b>Цепочки методов</b><br />
+          У нас есть массив объектов с именами, баллами и посещаемыми предметами
+          каждого студента
+        </p>
+        <p class="bg">
+          const students = [ <br />
+          {<br />
+          name: 'Ann',<br />
+          score: 5,<br />
+          courses: ['Math', 'Physic'],<br />
+          },<br />
+          {<br />
+          name: 'Vasya',<br />
+          score: 23,<br />
+          courses: ['Drawing', 'Swimming', 'Math'],<br />
+          },<br />
+          {<br />
+          name: 'Petya',<br />
+          score: 1,<br />
+          courses: ['Math', 'Flying', 'Drawing'],<br />
+          },<br />
+          {<br />
+          name: 'Ivan',<br />
+          score: 45,<br />
+          courses: ['Swimming', 'Physic', 'Flying'],<br />
+          },<br />
+          {<br />
+          name: 'Polina',<br />
+          score: 30,<br />
+          courses: ['Math', 'Physic', 'Swimming', 'Flying', 'Drawing'],<br />
+          },<br />
+          ];<br /><br />
+
+          // Необходимо получить массив их имен, осортировать по росту баллов за
+          тест. С этой целью отсортируем копию массива методом sort()<br />
+          // После чего методом map() создадим массив значений свойства name из
+          отсортированого массива<br />
+
+          const sortByScore = [...students].sort((a,b) => a.score - b.score);<br />
+          const names = sortByScore.map(student => student.name);<br />
+          console.log(names);//[ 'Petya', 'Ann', 'Vasya', 'Polina', 'Ivan' ]<br /><br />
+
+          // Проблема в том то у нас появляется промежуточные переменные после
+          каждой операции кроме финальной<br />
+          // Переменная sortByScore излишняя и необходима только для хранения
+          промежуточного результата<br /><br />
+
+          // Избавится от таких мертвых переменных можно с помощью группировки
+          вызова методов в цепочке. Каждый последующий метод будет выполнятся на
+          основе результата предыдущей работы<br /><br />
+
+          const names = [...students].sort((a,b)=>a.score - b.score).map(student
+          => student.name);<br />
+          console.log(names);//[ 'Petya', 'Ann', 'Vasya', 'Polina', 'Ivan' ]<br />
+        </p>
+        <ul>
+          <li>Делаем копию исходного массива перед сортировкой массива</li>
+          <li>На копию вызываем метод sort()</li>
+          <li>К результату работы метода sort() применяем метод map()</li>
+          <li>Переменной names присваиваем результат работы метода map()</li>
+        </ul>
+        <p>
+          Получим массив уникальных посещаемых предметов, отсортированых по
+          алфавиту
+        </p>
+        <b class="bg">
+          const uniqueSortedCourse = students.flatMap(student =>
+          student.courses).filter((course, idx, arr) => arr.indexOf(course) ===
+          idx).sort((a,b) => a.localeCompare(b)); <br />
+          console.log(uniqueSortedCourse);//[ 'Drawing', 'Flying', 'Math',
+          'Physic', 'Swimming' ]
+        </b>
+        <ul>
+          <li>
+            На исходном массиве вызываем flatMap() и производим разглаженный
+            массив всех курсов
+          </li>
+          <li>
+            К результату метода flatMap() применяем метод filter() для
+            фильтрации уникальных элементов
+          </li>
+          <li>В результате метода filter() вызываем sort()</li>
+          <li>
+            В переменной uniqueSortedCourse присваиваем результат работы метода
+            sort()
+          </li>
+        </ul>
+        <p>
+          Цепочка методов может быть произвольной длинны, но обычно не больше 3х
+          методов. Во первых перебирающие методы используются для сравнительно
+          простых операций над коллекцией. Во вторых вызов каждого последующего
+          метода это доп переборка массива, что при большом кол-ве может
+          сказаться на производительности
         </p>
       </section>
     </main>

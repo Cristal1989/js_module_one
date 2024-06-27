@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/style.css" />
+    <title>Module 5</title>
+  </head>
+  <body>
+    <section class="container">
+      <h3 class="title">Ключевое слово this. Прототипы и классы</h3>
+      <p>
+        <b>Контекст выполнения функции</b><br />
+        Можно с уверенностью сказать что ключевое свойство this одно из самых
+        запутанных концепций в JS. Новички часто подставляют this методом
+        научного тыка до тех пор пока скрипт не сработает. Контекст в JS похож
+        на Контекст в предложении
+      </p>
+      <ul>
+        <li>Петя бежит быстро, потому что Петя пытается поймать поезд</li>
+        <li>Петя бежит быстро, потому что он пытается поймать поезд</li>
+      </ul>
+      <p>
+        Второе предложение звечит более локанично. Мы можем сказать что контекст
+        предложения это Петя, потому что он в центре внимания в это конкретное
+        время в предложении, даже местоимение кто касается Пети. <br />
+        И точно так же объект может являться текущем контекстом выполнения
+        функции
+      </p>
+      <p class="bg">
+        //Петя бежит быстро, потому что Петя пытается поймать поезд <br />
+        const petya = {<br />
+        username: "Petya",<br />
+        showName() {<br />
+        console.log(petya.username);<br />
+        }<br />
+        };<br /><br />
+
+        console.log(petya.showName());//"Petya"
+      </p>
+      <p>
+        Обращение к свойствам объекта внутри метода используется имя самого
+        объекта аналогично использованию Петя вместо "он". <br />
+        Внутри функции можно использовать зарезервированое ключевое слово this.
+        При выполнение функции в this записывается ссылка на объект, в контексте
+        которого она была вызвана. Таким образом в теле функции мы может
+        получить доступ к свойствам и методам объекта.
+      </p>
+      <p class="bg">
+        // Петя бежит быстро, потому что он (this) пытается поймать поезд<br /><br />
+
+        const petya = {<br />
+        username: 'Petya',<br />
+        showName() {<br />
+        console.log(this.username);<br />
+        },<br />
+        };<br />
+        console.log(petya.showName()); //"Petya"<br />
+      </p>
+      <p>Рассмотрим пример с коллекцией книг</p>
+      <p class="bg">
+        const bookShelf = { <br />
+        author: ['Stiven King', 'Boris Akunin'],<br />
+        getAuthor() {<br />
+        return this.author;<br />
+        },<br />
+        addAuthor(newAuthor) {<br />
+        this.author.push(newAuthor);<br />
+        },<br />
+        };<br /><br />
+
+        console.log(bookShelf.getAuthor()); //[ 'Stiven King', 'Boris Akunin'
+        ]<br />
+        bookShelf.addAuthor('Doncova');<br />
+        console.log(bookShelf.getAuthor()); //[ 'Stiven King', 'Boris Akunin',
+        'Doncova' ]<br />
+      </p>
+      <p>
+        Методы getAuthor() и addAuthor() это функции(методы объекта), вызываемые
+        в контексте объекта bookShelf. Во время их выполнения в this
+        записываемой ссылке на объект bookShelf и мы можем обратиться к его
+        свойствам и методам
+      </p>
+    </section>
+  </body>
+</html>

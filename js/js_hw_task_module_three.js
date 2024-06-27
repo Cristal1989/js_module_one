@@ -1375,6 +1375,7 @@ console.log(atTheOldToad.updatePotionName('Stone skin', 'Invisibility'));
 //Для исходного объекта после вызова метода atTheOldToad.updatePotionName("Stone skin", "Invulnerability potion"), в свойстве potions будет массив [{ name: "Speed potion", price: 460 }, { name: "Dragon breath", price: 780 }, { name: "Invulnerability potion", price: 520 } ]
 
 //type code ↓
+
 const atTheOldToad = {
   potions: [
     { name: 'Speed potion', price: 460 },
@@ -1382,10 +1383,12 @@ const atTheOldToad = {
     { name: 'Stone skin', price: 520 },
   ],
   getPotions() {
-    // return this.potions;
-    for (potion of this.potions) {
-      return potion;
-    }
+    return this.potions;
+  },
+  getPotionsOne() {
+    return atTheOldToad.potions.map(({ name, price }) => ({
+      [name]: price,
+    }));
   },
   addPotion(newPotion) {
     if (this.potions.includes(newPotion)) {
@@ -1414,4 +1417,5 @@ const atTheOldToad = {
   },
 };
 
-console.log(atTheOldToad.getPotions());
+// console.log(atTheOldToad.getPotions());
+// console.log(atTheOldToad.getPotionsOne());
