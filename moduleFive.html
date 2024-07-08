@@ -433,6 +433,375 @@
         делать очень много, но его использование будут связаны с большим трудом
         и риском ошибиться, перепутав что-то.
       </p>
+      <h3 class="title">Прототипное наследование</h3>
+      <p>
+        ООП в JS построен на прототипном наследовании. Объекты можно
+        организовать в цепочке таким образом чтобы производился автоматический
+        поиск свойства в другом объекте, не найденом в одном объекте. Связующем
+        звеном выступает спец скрытое свойство [[Prototype]], которое в консоли
+        браузера отображается как __proto__. <br />
+        <b>Прототип объекта</b> <br />
+        Метод Object.create(obj) задает и возвращает новый объект, связывая его
+        с объектом obj
+      </p>
+      <p class="bg">
+        const animal = { <br />
+        legs: 4,<br />
+        };<br /><br />
+
+        const dog = Object.create(animal);<br />
+        dog.name = 'Sharik';<br />
+        console.log(dog); //{ name: 'Sharik' }<br />
+        console.log(animal.isPrototypeOf(dog));//true<br />
+      </p>
+      <p>
+        Объект на который указывает ссылка в proto называется прототипом. В
+        нашем примере объект animal это прототип для объекта dog.метод
+        isPrototypeOf(), проверяет является ли объект animal прототипом для dog
+        и возвращает true или false
+      </p>
+      <p class="bg">
+        console.log(dog.hasOwnProperty('name'));//true<br />
+        console.log(dog.name);//Sharik<br />
+        console.log(dog.hasOwnProperty('legs'));//false<br />
+        console.log(dog.legs);//4<br />
+      </p>
+      <p>
+        Обращение dog.name работает очевидным образом, возвращает собственное
+        свойство name объекта dog. Обращаясь к dog.legs инторпритатор ищет
+        свойство legs в объекте dog, не находит и продолжает поиск в объекте по
+        ссылке с dog.__proto__, т.е в этом случае в объекте animal - его
+        прототипе. <br />
+        Т.е прототип это резервное хранилище свойств и методов объекта,
+        автоматически используемое при их поиске. Объект выстапующий прототипом
+        может так же иметь свой прототип, следующий - свой и т.д. <br />
+        Поиск свойства выполняется до первого совпадения. Интерпритатор ищет
+        свойство по имени в объекте, если не находит то обращается к свойству
+        __proto__, т.е переходит по ссылке к объекту прототипу, а затем к
+        прототипу прототипа. Если интерпритатор дойдет до конца цепочки и не
+        найдет свойства с таким именем - вернет undefind. <br />
+        В спецификации свойства __proto__ обозначен как [[Prototype]]. В этом
+        случае важны двойные квадратные скобки, они указывают на то что это
+        внутренние служебные свойства. <br />
+        <b>Метод hasOwnProperty()</b><br />
+        После того как мы узнали о способе поиска объекта должно быть понятно
+        почему цикл for..in не различает свойство объекта и его прототипа
+      </p>
+      <p class="bg">
+        const animal = { <br />
+        eats: true,<br />
+        };<br />
+        const dog = Object.create(animal);<br />
+        dog.bargs = true;<br />
+        for (const key in dog) {<br />
+        console.log(key); //bargs;eats<br />
+        }
+      </p>
+      <p>
+        Именно по этому мы используем метод obj.hasOwnProperty(prop)
+        возвращающий true если свойство prop принадлежит объекту obj а не его
+        прототипу, иначе false.
+      </p>
+      <p class="bg">
+        const animal = { <br />
+        eats: true,<br />
+        };<br />
+        const dog = Object.create(animal);<br />
+        dog.bargs = true;<br />
+        for (const key in dog) {<br />
+        if (!dog.hasOwnProperty(key)) continue;<br />
+        console.log(key);//bargs<br />
+        }<br />
+      </p>
+      <p>
+        Метод Object.keys(obj) вернет массив только собственных ключей объекта
+        obj, поэтому на практике используют именно его, а не for..in
+      </p>
+      <p class="bg">
+        const animal = { <br />
+        eats: true,<br />
+        };<br />
+        const dog = Object.create(animal);<br />
+        dog.bargs = true;<br />
+        const dogKeys = Object.keys(dog);<br />
+        console.log(dogKeys);//[ 'bargs' ]
+      </p>
+      <h3 class="title">Классы</h3>
+      <p>
+        Синтексис литерала объекта позволяет создать один объект. Однако часто
+        нужно создать много однотипных объектов с одинаковым набором свойств, но
+        рызными значениями и методами для взаимодействия с ними. Все это нужно
+        делать динамически во время выполнения программы. С этой целью
+        используют классы - специальный синтаксис объявления функции для
+        создания объекта <br />
+        <b>Объявление класса</b><br />
+        Объявление класса начинается с ключевого слова class, после которого
+        стоит имя класса и фигурные скобки - его тело. Классы принято называть
+        заглавной буквой а в названии отоброжать тип создаваемого объекта
+        (существительное)
+      </p>
+      <p class="bg">
+        class User { <br />
+        // Тело класса<br />
+        }<br />
+        const mango = new User();<br />
+        console.log(mango);//User {}<br />
+      </p>
+      <p>
+        Результат вызова new User() который называется экземпляром класса, т.к
+        содержит данные и поведение описываемые классом <br />
+        Метод построения класса зависит от того, что нам нужно, в нашем случае
+        класс - это пользователь, поэтому мы добавим в него поля для имени и
+        почты. <br />
+        <b>Конструктор класса </b><br />
+        Для инициализации экземпляра в классе есть метод constructor(). Если не
+        объявлен - создается конструктор по умолчанию - пустая функция, не
+        изменяющая экземпляр.
+      </p>
+      <p class="bg">
+        class User { <br />
+        // Синтаксис объявления метода класса<br />
+        constructor(name, email) {<br />
+        // Инициализация свойства экземпляра<br />
+        this.name = name;<br />
+        this.email = email;<br />
+        }<br />
+        }<br />
+        const mango = new User('Mango', 'mango123@gmail.com');<br />
+        console.log(mango); //User { name: 'Mango', email: 'mango123@gmail.com'
+        }<br />
+        const apple = new User('Aplpe', 'mapple23@gmail.com');<br />
+        console.log(apple);//User { name: 'Aplpe', email: 'mapple23@gmail.com'
+        }<br />
+      </p>
+      <p>
+        Вызов класса с оператором new приводит к созданию нового объекта и
+        вызову конструктора в контексте этого объекта. Т.е this внутри
+        контруктора будет ссылаться на вновь созданный объект. Это позволяет
+        добавлять каждому объекту свойства с одинаковыми именами но разными
+        значениями. <br />
+        Свойство name и email называются публичными свойствами, потому что они
+        будут собственными свойствами объекта экземпляра и к ним можно юудет
+        получить доступ обративщись через точку. <br />
+        <b>Объект параметров</b><br />
+        Класс может воспринимать огромное колличество входных данных для
+        параметров грядущего объекта. Поэтому к ним можно применить паттерн
+        "объект параметров", передавая один объект с логически именуемыми
+        свойствами в место несвязаного набора аргументов
+      </p>
+      <p class="bg">
+        class User { <br />
+        // Диструктуризация объекта<br />
+        constructor({ name, email }) {<br />
+        this.name = name;<br />
+        this.email = email;<br />
+        }<br />
+        }<br />
+        const mango = new User({ name: 'Mango', email: 'mango123@gmail.com'
+        });<br />
+        console.log(mango);//User { name: 'Mango', email: 'mango123@gmail.com'
+        }<br />
+      </p>
+      <p>
+        <b>Методы класса</b><br />
+        Для работы с свойствами будущего экземпляра используется методы класса
+        функций, которые будут доступны экземпляру в его прототипе
+      </p>
+      <p class="bg">
+        class User { <br />
+        constructor({ name, email }) {<br />
+        this.name = name;<br />
+        this.email = email;<br />
+        }<br />
+        // Метод getEmail()<br />
+        getEmail() {<br />
+        return this.email;<br />
+        }<br />
+        // Метод changeEmail()<br />
+        changeEmail(newEmail) {<br />
+        this.email = newEmail;<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        <b>Личные свойства </b><br />
+        Инкапсуляция - это концепция, которая позволяет скрыть внутренние детали
+        класса. Ползователь класса должен получать доступ только к публичному
+        интерфейсу - набору публичных свойств и методов класса. <br />
+        В классах инкапсуляция реализуется приватными способами, доступ к
+        которым можно получить только в середине класса. <br />
+        Допустип что почта пользователя не должна быть доступна к прямому
+        изменению извне - т.е приватная. Добавляя к имени свойству символ #, мы
+        делаем его приватным, а объявление приватного свойства к инициализации
+        конструктора обязательна
+      </p>
+      <p class="bg">
+        class User { <br />
+        // Необязательное объявление публичных свойств<br />
+        name;<br />
+        // Обязательное объявление приватных свойств<br />
+        #email;<br /><br />
+
+        constructor({ name, email }) {<br />
+        this.name = name;<br />
+        this.email = email;<br />
+        }<br />
+        getEmail() {<br />
+        return this.#email;<br />
+        }<br />
+        changeEmail(newEmail) {<br />
+        this.#email = newEmail;<br />
+        }<br />
+        }<br />
+        const mango = new User({<br />
+        name: 'Mango',<br />
+        email: 'mango123@gmail.com',<br />
+        });<br />
+        mango.changeEmail('mango123@outlook.com');<br />
+        console.log(mango.getEmail());//mango123@outlook.com<br />
+        console.log(mango.#email); // Ошибка, т.к это приватное свойство<br />
+      </p>
+      <p>
+        Методы класса тоже могут быть приватными, т.е доступные только в теле
+        класса, для этого перед именем необходимо поставить символ # <br />
+        <b>Геттеры и сеттеры</b><br />
+        Геттеры и сеттеры это кротчайший синтаксис объявления метода для
+        взаимодействия с свойствами. Геттер и сеттер имеют обычное публичное
+        свойство класса, но позволяют изменить другие свойства удобными
+        способами <br />
+        Геттер выполняется при попытке получить значение свойства, а сеттер при
+        способе его изменения <br />
+        Геттеры и сеттеры уместно использовать для простых операций чтения и
+        изменения значения свойств особенно приватных, как и публичных
+        интерфейсов. Для работы с свойствами которые сохраняют массив или объект
+        они не подойдут.
+      </p>
+      <p class="bg">
+        class User { <br />
+        #email;<br />
+        constructor({ name, email }) {<br />
+        this.name = name;<br />
+        this.email = email;<br />
+        }<br />
+        // Геттер email <br />
+        get email() {<br />
+        return this.#email;<br />
+        }<br />
+        // Сеттер email<br />
+        set email(newEmail) {<br />
+        this.#email = newEmail;<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        Мы объявили геттер и сетте email поставив перед именем ключевое свойство
+        get и set. Внутри этих методов мы либо возвращаем значение частного
+        свойства #email либо изменяем его значение. Геттер и сеттер используется
+        в паре и обязаны именоваться идентично
+      </p>
+      <p class="bg">
+        class User { <br />
+        #email;<br />
+        constructor({ name, email }) {<br />
+        this.name = name;<br />
+        this.email = email;<br />
+        }<br />
+        // Геттер email<br />
+        get email() {<br />
+        return this.#email;<br />
+        }<br />
+        // Сеттер email<br />
+        set email(newEmail) {<br />
+        this.#email = newEmail;<br />
+        }<br />
+        }<br /><br />
+
+        const mango = new User({<br />
+        name: 'Mango',<br />
+        email: 'mango@gmail.com',<br />
+        });<br />
+        console.log(mango.email); //mango@gmail.com<br />
+        mango.email = 'mango.outlook.com';<br />
+        console.log(mango.email);//mango.outlook.com<br />
+      </p>
+      <p>
+        Обращаясь к mango.email вызывается геттер get email(){...} и выполняется
+        его код. При попытке записи mango.email = 'mango.outlook.com';
+        вызывается сеттер set email(newEmail){...} и строка "mango.outlook.com"
+        будет являться значением параметра newEmail <br />
+        Приимущество в том что это методы, а значит во время записи можно
+        выполнить дополнительный код, например с любыми проверками, в отличии от
+        выполнения этой операции непосредственно со свойствами.
+      </p>
+      <p class="bg">
+        class User { <br />
+        #email;<br />
+        constructor({ name, email }) {<br />
+        this.name = name;<br />
+        this.email = email;<br />
+        }<br />
+        get email() {<br />
+        return this.#email;<br />
+        }<br />
+        set email(newEmail) {<br />
+        if (newEmail === '') {<br />
+        console.error('Ошибка, почта не может быть пустой');<br />
+        return;<br />
+        }<br />
+        this.#email = newEmail;<br />
+        }<br />
+        }<br />
+        const mango = new User({<br />
+        name: 'Mango',<br />
+        email: '',<br />
+        });<br />
+        console.log(mango.email);<br />
+      </p>
+      <p>
+        <b>Статические свйоства</b><br />
+        Помимо публичных и частных свойств будущего экземпляра в классе можно
+        объявить его собственные свойства доступные только классу, но не
+        экъемпляру - cтатические свойства (static). Они полезны для хранения
+        информации, относящихся к классу <br />
+        Добавим пользователькому классу частное свойство role определяющее набор
+        прав, например админ, редактор, обычный пользователь и т.д. Возможные
+        роли пользователей будем сохранять как статические свйоства roles -
+        объекты со свойствами. <br />
+        Статические хар-ки объявляются в теле класса, перед именованием свойства
+        добаляется ключевое слово static
+      </p>
+      <p class="bg">
+        class User{ <br />
+        // Объявление и инициализация статического свойства<br />
+        static Roles = {<br />
+        ADMIN: 'Admin',<br />
+        EDITOR: "Editor",<br />
+        }<br />
+        #email;<br />
+        #role;<br />
+        constructor({email, role}){<br />
+        this.#email = email;<br />
+        this.#role = role;<br />
+        }<br />
+        get role(){<br />
+        return this.#role;<br />
+        }<br />
+        set role(newRole){<br />
+        this.#role = newRole;<br />
+        }<br />
+        }<br /><br />
+
+        const mango = new User({<br />
+        email: "mango@gmail.com",<br />
+        role: User.Roles.ADMIN,<br />
+        });<br />
+        console.log(mango.Roles);//undefined<br />
+        console.log(User.Roles);//{ ADMIN: 'Admin', EDITOR: 'Editor' }<br /><br />
+
+        console.log(mango.role);//Admin<br />
+        mango.role = User.Roles.EDITOR;<br />
+        console.log(mango.role);//Editor<br />
+      </p>
     </section>
   </body>
 </html>

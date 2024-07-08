@@ -55,15 +55,13 @@ function makePizza(pizzaName, callback) {
   console.log(`Pizza ${pizzaName} is being prepared, please wait...`);
   callback(pizzaName);
 }
-makePizza("Royal Grand", function deliverPizza(pizzaName) {
+makePizza('Royal Grand', function deliverPizza(pizzaName) {
   console.log(`Delivering pizza ${pizzaName}.`);
 });
 
-makePizza("Ultracheese", function eatPizza(pizzaName) {
+makePizza('Ultracheese', function eatPizza(pizzaName) {
   console.log(`Eating pizza ${pizzaName}`);
 });
-
-
 
 // // ==================================================
 // // ===================== Task 4 =====================
@@ -119,12 +117,9 @@ pizzaPalace.order('Big Mike', makePizza, onOrderError);
 
 let result = 0;
 const calculateTotalPrice = orderedItems => {
-  orderedItems.forEach(orderItem => 
-    result += orderItem);
+  orderedItems.forEach(orderItem => (result += orderItem));
   return result;
 };
-
-console.log(calculateTotalPrice([12, 85, 37, 4]));
 
 // //
 // // ==================================================
@@ -151,14 +146,12 @@ const filterArray = (numbers, value) => {
       filterNumbers.push(number);
     }
   });
-return filterNumbers;
-}
+  return filterNumbers;
+};
 
 console.log(filterArray([1, 2, 3, 4, 5], 5));
 console.log(filterArray([12, 24, 8, 41, 76], 20));
 console.log(filterArray([12, 24, 8, 41, 76], 38));
-
-
 
 // //
 // // ==================================================
@@ -184,14 +177,17 @@ const getCommonElements = (firstArray, secondArray) => {
     if (secondArray.includes(first)) {
       filterArr.push(first);
     }
-  })
+  });
   return filterArr;
+};
+
+const getCommon = (firstAr, secondAr) => {
+  firstAr.reduce((mas, ))
 }
 
 console.log(getCommonElements([1, 2, 3], [2, 1, 17, 19]));
 console.log(getCommonElements([1, 2, 3], [2, 4]));
 console.log(getCommonElements([1, 2, 3], [10, 20, 30]));
-
 
 // //
 // // ==================================================
@@ -209,7 +205,7 @@ console.log(getCommonElements([1, 2, 3], [10, 20, 30]));
 
 const calculateTotalPrice = (quantity, pricePerItem) => {
   return quantity * pricePerItem;
-}
+};
 
 console.log(calculateTotalPrice(3, 400));
 // //
@@ -229,7 +225,6 @@ console.log(calculateTotalPrice(3, 400));
 
 const calculateTotalPrice = (quantity, pricePerItem) => quantity * pricePerItem;
 
-
 // //
 // // ==================================================
 // // ===================== Task 10 ====================
@@ -248,9 +243,9 @@ const calculateTotalPrice = (quantity, pricePerItem) => quantity * pricePerItem;
 
 const calculateTotalPrice = orderItems => {
   let result = 0;
-  orderItems.forEach(orderItem => result += orderItem);
+  orderItems.forEach(orderItem => (result += orderItem));
   return result;
-}
+};
 
 console.log(calculateTotalPrice([12, 85, 37, 4]));
 
@@ -279,9 +274,8 @@ const filterArray = (numbers, value) => {
       filterNumbers.push(number);
     }
   });
-return filterNumbers;
-}
-
+  return filterNumbers;
+};
 
 // //
 // // ==================================================
@@ -308,9 +302,9 @@ const getCommonElements = (firstArray, secondArray) => {
     if (secondArray.includes(first)) {
       filterArr.push(first);
     }
-  })
+  });
   return filterArr;
-}
+};
 
 // //
 // // ==================================================
@@ -332,14 +326,14 @@ const getCommonElements = (firstArray, secondArray) => {
 const changeEven = (numbers, value) => {
   const arrEven = [];
   numbers.forEach(number => {
-    if (number % 2 === 0){
-    arrEven.push(number + value)
-  } else {
-    arrEven.push(number)
-  }
-});
-return arrEven;
-}
+    if (number % 2 === 0) {
+      arrEven.push(number + value);
+    } else {
+      arrEven.push(number);
+    }
+  });
+  return arrEven;
+};
 
 console.log(changeEven([1, 2, 3, 4, 5], 10));
 console.log(changeEven([44, 13, 81, 92, 36, 54], 100));
@@ -357,7 +351,7 @@ console.log(changeEven([44, 13, 81, 92, 36, 54], 100));
 // Значение переменной planetsLengths это массив [5, 4, 5, 7]
 // Для перебора массива планет использован метод map()
 
-const planets = ["Earth", "Mars", "Venus", "Jupiter"];
+const planets = ['Earth', 'Mars', 'Venus', 'Jupiter'];
 const planetsLengths = planets.map(planet => planet.length);
 
 console.log(planetsLengths);
@@ -377,26 +371,25 @@ console.log(planetsLengths);
 
 const books = [
   {
-    title: "The Last Kingdom",
-    author: "Bernard Cornwell",
+    title: 'The Last Kingdom',
+    author: 'Bernard Cornwell',
     rating: 8.38,
   },
   {
-    title: "Beside Still Waters",
-    author: "Robert Sheckley",
+    title: 'Beside Still Waters',
+    author: 'Robert Sheckley',
     rating: 8.51,
   },
   {
-    title: "The Dream of a Ridiculous Man",
-    author: "Fyodor Dostoevsky",
+    title: 'The Dream of a Ridiculous Man',
+    author: 'Fyodor Dostoevsky',
     rating: 7.75,
   },
-  { title: "Redder Than Blood", author: "Tanith Lee", rating: 7.94 },
-  { title: "Enemy of God", author: "Bernard Cornwell", rating: 8.67 },
+  { title: 'Redder Than Blood', author: 'Tanith Lee', rating: 7.94 },
+  { title: 'Enemy of God', author: 'Bernard Cornwell', rating: 8.67 },
 ];
 
 const titles = books.map(book => book.title);
-
 
 //
 // ==================================================
@@ -413,19 +406,19 @@ const titles = books.map(book => book.title);
 
 const books = [
   {
-    title: "The Last Kingdom",
-    author: "Bernard Cornwell",
-    genres: ["adventure", "history"],
+    title: 'The Last Kingdom',
+    author: 'Bernard Cornwell',
+    genres: ['adventure', 'history'],
   },
   {
-    title: "Beside Still Waters",
-    author: "Robert Sheckley",
-    genres: ["fiction"],
+    title: 'Beside Still Waters',
+    author: 'Robert Sheckley',
+    genres: ['fiction'],
   },
   {
-    title: "Redder Than Blood",
-    author: "Tanith Lee",
-    genres: ["horror", "mysticism"],
+    title: 'Redder Than Blood',
+    author: 'Tanith Lee',
+    genres: ['horror', 'mysticism'],
   },
 ];
 
@@ -449,7 +442,6 @@ console.log(genres);
 
 // Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
-
 const getUserNames = users => users.map(user => user.name);
 
 //
@@ -464,7 +456,6 @@ const getUserNames = users => users.map(user => user.name);
 // Для перебора параметра users используется метод map()
 // Вызов функции с указанным массивом пользователей возвращает массив ["moorehensley@indexia.com", "sharlenebush@tubesys.com", "rossvazquez@xinware.com", "elmahead@omatom.com", "careybarr@nurali.com", "blackburndotson@furnigeer.com", "shereeanthony@kog.com"]
 // Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
-
 
 const getUserEmails = users => users.map(user => user.email);
 
@@ -485,7 +476,7 @@ const getUserEmails = users => users.map(user => user.email);
 
 const numbers = [17, 24, 82, 61, 36, 18, 47, 52, 73];
 const evenNumbers = numbers.filter(number => number % 2 === 0);
-const oddNumbers = numbers.filter(number => number % 2 !== 0)
+const oddNumbers = numbers.filter(number => number % 2 !== 0);
 
 console.log(evenNumbers);
 console.log(oddNumbers);
@@ -508,26 +499,26 @@ console.log(oddNumbers);
 
 const books = [
   {
-    title: "The Last Kingdom",
-    author: "Bernard Cornwell",
-    genres: ["adventure", "history"],
+    title: 'The Last Kingdom',
+    author: 'Bernard Cornwell',
+    genres: ['adventure', 'history'],
   },
   {
-    title: "Beside Still Waters",
-    author: "Robert Sheckley",
-    genres: ["fiction", "mysticism"],
+    title: 'Beside Still Waters',
+    author: 'Robert Sheckley',
+    genres: ['fiction', 'mysticism'],
   },
   {
-    title: "Redder Than Blood",
-    author: "Tanith Lee",
-    genres: ["horror", "mysticism", "adventure"],
+    title: 'Redder Than Blood',
+    author: 'Tanith Lee',
+    genres: ['horror', 'mysticism', 'adventure'],
   },
 ];
 const allGenres = books.flatMap(book => book.genres);
 const uniqueGenres = allGenres.filter((allGenre, idx, arr) => {
-  if (arr.indexOf(allGenre) === idx){
+  if (arr.indexOf(allGenre) === idx) {
     return allGenre;
-  };
+  }
 });
 
 console.log(uniqueGenres);
@@ -555,30 +546,34 @@ console.log(uniqueGenres);
 
 const books = [
   {
-    title: "The Last Kingdom",
-    author: "Bernard Cornwell",
+    title: 'The Last Kingdom',
+    author: 'Bernard Cornwell',
     rating: 8.38,
   },
   {
-    title: "Beside Still Waters",
-    author: "Robert Sheckley",
+    title: 'Beside Still Waters',
+    author: 'Robert Sheckley',
     rating: 8.51,
   },
   {
-    title: "The Dream of a Ridiculous Man",
-    author: "Fyodor Dostoevsky",
+    title: 'The Dream of a Ridiculous Man',
+    author: 'Fyodor Dostoevsky',
     rating: 7.75,
   },
-  { title: "Redder Than Blood", author: "Tanith Lee", rating: 7.94 },
-  { title: "Enemy of God", author: "Bernard Cornwell", rating: 8.67 },
+  { title: 'Redder Than Blood', author: 'Tanith Lee', rating: 7.94 },
+  { title: 'Enemy of God', author: 'Bernard Cornwell', rating: 8.67 },
 ];
 
 const MIN_RATING = 8;
-const AUTHOR = "Bernard Cornwell";
+const AUTHOR = 'Bernard Cornwell';
 
-const topRatedBooks = books.map(book => book.rating).filter(rating => rating > MIN_RATING);
+const topRatedBooks = books
+  .map(book => book.rating)
+  .filter(rating => rating > MIN_RATING);
 console.log(topRatedBooks);
-const booksByAuthor = books.filter(book => book.author === AUTHOR).map(book => book.title)
+const booksByAuthor = books
+  .filter(book => book.author === AUTHOR)
+  .map(book => book.title);
 console.log(booksByAuthor);
 
 //
@@ -597,8 +592,8 @@ console.log(booksByAuthor);
 // Если значение параметра color это любая другая строка, функция возвращает пустой массив
 // Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
-
-const getUsersWithEyeColor = (users, color) => users.filter(user => user.eyeColor === color);
+const getUsersWithEyeColor = (users, color) =>
+  users.filter(user => user.eyeColor === color);
 
 //
 // ==================================================
@@ -615,13 +610,12 @@ const getUsersWithEyeColor = (users, color) => users.filter(user => user.eyeColo
 // Если значение параметров minAge и maxAge равны 80 и 100 соотвественно, функция возвращает пустой массив
 // Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
-
 const getUsersWithAge = (users, minAge, maxAge) => {
   filter.users(user => {
     if (user.age > minAge && user.age < maxAge) {
       return user;
     }
-  })
+  });
 };
 
 //
@@ -639,16 +633,14 @@ const getUsersWithAge = (users, minAge, maxAge) => {
 // Если значение параметра friendName это строка "Adrian Cross", функция возвращает пустой массив
 // Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
+const getUsersWithFriend = (users, friendName) =>
+  users.filter(user => {
+    if (user.friends.includes(friendName)) {
+      return user;
+    }
+  });
 
-
-
-const getUsersWithFriend = (users, friendName) => users.filter(user => {
-  if (user.friends.includes(friendName)) {
-    return user;
-  }
-})
-
-console.log(getUsersWithFriend(users, "Misha"));
+console.log(getUsersWithFriend(users, 'Misha'));
 
 //
 // ==================================================
@@ -664,28 +656,28 @@ console.log(getUsersWithFriend(users, "Misha"));
 
 const users = [
   {
-    name: "Petya",
+    name: 'Petya',
     isActive: false,
-    friends: ["Borya", "Misha", "Pasha"],
+    friends: ['Borya', 'Misha', 'Pasha'],
   },
   {
-    name: "Ann",
+    name: 'Ann',
     isActive: true,
-    friends: ["Borya", "Masha", "Pasha"],
+    friends: ['Borya', 'Masha', 'Pasha'],
   },
   {
-    name: "Polya",
+    name: 'Polya',
     isActive: true,
-    friends: ["Max", "Misha", "Pasha"],
+    friends: ['Max', 'Misha', 'Pasha'],
   },
-]
+];
 const allFriends = users.flatMap(user => user.friends);
-const getFriends = (users) => allFriends.filter((allFriend, idx, arr) => {
-  if (arr.indexOf(allFriend) === idx) {
-    return allFriend;
-  }
-})
-
+const getFriends = users =>
+  allFriends.filter((allFriend, idx, arr) => {
+    if (arr.indexOf(allFriend) === idx) {
+      return allFriend;
+    }
+  });
 
 console.log(getFriends(users));
 
@@ -701,24 +693,23 @@ console.log(getFriends(users));
 // Вызов функции с указанным массивом пользователей возвращает массив объектов пользователей с именами Sharlene Bush, Elma Head, Carey Barr и Sheree Anthony
 // Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
-
 const users = [
   {
-    name: "Ann",
-    isActive: true
+    name: 'Ann',
+    isActive: true,
   },
   {
-    name: "Petya",
-    isActive: false
+    name: 'Petya',
+    isActive: false,
   },
   {
-    name: "Polya",
-    isActive: true
+    name: 'Polya',
+    isActive: true,
   },
-]
+];
 
 // const getActiveUsers = (users) => users.filter(user => user.isActive === true).map(user => user.name);
-const getActiveUsers = users => users.filter(user => user.isActive)
+const getActiveUsers = users => users.filter(user => user.isActive);
 console.log(getActiveUsers(users));
 
 //
@@ -735,8 +726,7 @@ console.log(getActiveUsers(users));
 // Вызов функции с указанным массивом пользователей возвращает массив объектов пользователей с именами Moore Hensley, Ross Vazquez и Blackburn Dotson
 // Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
-
-const getActiveUsers = users => users.filter(user => !user.isActive)
+const getActiveUsers = users => users.filter(user => !user.isActive);
 
 //
 // ==================================================
@@ -780,12 +770,10 @@ const books = [
 const BOOK_TITLE = 'The Dream of a Ridiculous Man';
 const AUTHOR = 'Robert Sheckley';
 
-
 const bookWithTitle = books.find(book => book.title === BOOK_TITLE);
 console.log(bookWithTitle);
 const bookByAuthor = books.find(book => book.author === AUTHOR);
 console.log(bookByAuthor);
-
 
 //
 // ==================================================
@@ -808,8 +796,8 @@ console.log(bookByAuthor);
 
 // Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
-
-const getUserWithEmail = (users, email) => users.find(user => user.mail === email);
+const getUserWithEmail = (users, email) =>
+  users.find(user => user.mail === email);
 
 //
 // ==================================================
@@ -857,7 +845,6 @@ console.log(findOdd(secondArray));
 console.log(findEven(thirdArray));
 console.log(findOdd(thirdArray));
 
-
 // const eachElementInFirstIsEven = firstArray;
 // const eachElementInFirstIsOdd = firstArray;
 
@@ -881,19 +868,19 @@ console.log(findOdd(thirdArray));
 
 const users = [
   {
-    name: "Ann",
-    isActive: true
+    name: 'Ann',
+    isActive: true,
   },
   {
-    name: "Petya",
-    isActive: true
+    name: 'Petya',
+    isActive: true,
   },
   {
-    name: "Polya",
-    isActive: true
+    name: 'Polya',
+    isActive: true,
   },
-]
-const isEveryUserActive = (users) => users.every(user => user.isActive);
+];
+const isEveryUserActive = users => users.every(user => user.isActive);
 console.log(isEveryUserActive(users));
 
 //
@@ -929,7 +916,6 @@ console.log(isEveryUserActive(users));
 // Значение переменной anyElementInThirdIsOdd это буль true
 // Для перебора массивов использован метод some()
 
-
 const firstArray = [26, 94, 36, 18];
 const secondArray = [17, 61, 23];
 const thirdArray = [17, 26, 94, 61, 36, 23, 18];
@@ -942,7 +928,6 @@ console.log(findEven(secondArray));
 console.log(findOdd(secondArray));
 console.log(findEven(thirdArray));
 console.log(findOdd(thirdArray));
-
 
 const anyElementInFirstIsEven = firstArray;
 const anyElementInFirstIsOdd = firstArray;
@@ -965,8 +950,7 @@ const anyElementInThirdIsOdd = thirdArray;
 // Вызов функции с указанным массивом пользователей возвращает true
 // Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
-
-const isAnyUserActive = users => users.some(user => user.isActive)
+const isAnyUserActive = users => users.some(user => user.isActive);
 
 //
 // ==================================================
@@ -989,7 +973,7 @@ const players = {
   mango: 1270,
   poly: 468,
   ajax: 710,
-  kiwi: 244
+  kiwi: 244,
 };
 const playtimes = Object.values(players); // [1270, 468, 710, 244]
 
@@ -1013,21 +997,17 @@ const averagePlayTime = totalPlayTime / playtimes.length;
 // Для перебора массива players используется метод reduce()
 
 const players = [
-  { name: "Mango", playtime: 1270, gamesPlayed: 4 },
-  { name: "Poly", playtime: 469, gamesPlayed: 2 },
-  { name: "Ajax", playtime: 690, gamesPlayed: 3 },
-  { name: "Kiwi", playtime: 241, gamesPlayed: 1 },
+  { name: 'Mango', playtime: 1270, gamesPlayed: 4 },
+  { name: 'Poly', playtime: 469, gamesPlayed: 2 },
+  { name: 'Ajax', playtime: 690, gamesPlayed: 3 },
+  { name: 'Kiwi', playtime: 241, gamesPlayed: 1 },
 ];
 
-console.log([...players]);
+const allPlayTime = players.reduce((total, player) => {
+  return total + player.playtime / player.gamesPlayed;
+}, 0);
 
-const allPlayTime = players.reduce((acc, player) => {
-  return {
-    
-  }
-}, {})
-
-const totalAveragePlaytimePerGame = players;
+console.log(allPlayTime);
 
 //
 // ==================================================
@@ -1042,8 +1022,8 @@ const totalAveragePlaytimePerGame = players;
 // Вызов функции с указанным массивом пользователей возвращает число 20916
 // Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
-
-const calculateTotalBalance = users => users.reduse((acc, user) => acc+user.balance);
+const calculateTotalBalance = users =>
+  users.reduse((acc, user) => acc + user.balance, 0);
 
 //
 // ==================================================
@@ -1060,25 +1040,24 @@ const calculateTotalBalance = users => users.reduse((acc, user) => acc+user.bala
 
 const users = [
   {
-    name: "Petya",
+    name: 'Petya',
     isActive: false,
-    friends: ["Borya", "Misha", "Pasha"],
+    friends: ['Borya', 'Misha', 'Pasha'],
   },
   {
-    name: "Ann",
+    name: 'Ann',
     isActive: true,
-    friends: ["Borya", "Masha", "Pasha"],
+    friends: ['Borya', 'Masha', 'Pasha'],
   },
   {
-    name: "Polya",
+    name: 'Polya',
     isActive: true,
-    friends: ["Max", "Misha", "Pasha"],
+    friends: ['Max', 'Misha', 'Pasha'],
   },
-]
+];
 
-// const allFriends = users.map(user => user.friends)
-
-const getTotalFriendCount = users => users.reduce((acc, user) => user.friends[acc], []);
+const getTotalFriendCount = users =>
+  users.reduce((acc, user) => acc + user.friends.length, 0);
 console.log(getTotalFriendCount(users));
 
 //
@@ -1086,274 +1065,411 @@ console.log(getTotalFriendCount(users));
 // ===================== Task 38 =====================
 // ==================================================
 //
-Дополни код так, чтобы в переменной ascendingReleaseDates получилась отсортированная по возрастанию копия массива releaseDates, а в переменной alphabeticalAuthors копия массива имён авторов authors отсортированная в по алфавиту.
+// Дополни код так, чтобы в переменной ascendingReleaseDates получилась отсортированная по возрастанию копия массива releaseDates, а в переменной alphabeticalAuthors копия массива имён авторов authors отсортированная в по алфавиту.
 
-Объявлена переменная releaseDates
-Значение переменной releaseDates это массив [2016, 1967, 2008, 1984, 1973, 2012, 1997]
-Объявлена переменная authors
-Значение переменной authors это массив ["Tanith Lee", "Bernard Cornwell", "Robert Sheckley", "Fyodor Dostoevsky"]
-Объявлена переменная ascendingReleaseDates
-Значение переменной ascendingReleaseDates это массив [1967, 1973, 1984, 1997, 2008, 2012, 2016]
-Объявлена переменная alphabeticalAuthors
-Значение переменной alphabeticalAuthors это массив ["Bernard Cornwell", "Tanith Lee", "Robert Sheckley", "Fyodor Dostoevsky"]
-Использован метод sort()
+// Объявлена переменная releaseDates
+// Значение переменной releaseDates это массив [2016, 1967, 2008, 1984, 1973, 2012, 1997]
+// Объявлена переменная authors
+// Значение переменной authors это массив ["Tanith Lee", "Bernard Cornwell", "Robert Sheckley", "Fyodor Dostoevsky"]
+// Объявлена переменная ascendingReleaseDates
+// Значение переменной ascendingReleaseDates это массив [1967, 1973, 1984, 1997, 2008, 2012, 2016]
+// Объявлена переменная alphabeticalAuthors
+// Значение переменной alphabeticalAuthors это массив ["Bernard Cornwell", "Tanith Lee", "Robert Sheckley", "Fyodor Dostoevsky"]
+// Использован метод sort()
 
 const releaseDates = [2016, 1967, 2008, 1984, 1973, 2012, 1997];
 const authors = [
-  "Tanith Lee",
-  "Bernard Cornwell",
-  "Robert Sheckley",
-  "Fyodor Dostoevsky",
+  'Tanith Lee',
+  'Bernard Cornwell',
+  'Robert Sheckley',
+  'Fyodor Dostoevsky',
 ];
 
-const ascendingReleaseDates = releaseDates;
-const alphabeticalAuthors = authors;
+const ascendingReleaseDates = [...releaseDates].sort();
+console.log(ascendingReleaseDates);
+const alphabeticalAuthors = [...authors].sort();
+console.log(alphabeticalAuthors);
 
 //
 // ==================================================
 // ===================== Task 39 ====================
 // ==================================================
 //
-Онлайн бибилиотеке необходимо отображать книги сортированные по дате издания, по её возрастанию или убыванию. Дополни код так, чтобы в переменной ascendingReleaseDates получилась отсортированная по возрастанию копия массива releaseDates, а в переменной descendingReleaseDates копия отсортированная по убыванию.
+// Онлайн бибилиотеке необходимо отображать книги сортированные по дате издания, по её возрастанию или убыванию. Дополни код так, чтобы в переменной ascendingReleaseDates получилась отсортированная по возрастанию копия массива releaseDates, а в переменной descendingReleaseDates копия отсортированная по убыванию.
 
-Объявлена переменная releaseDates
-Значение переменной releaseDates это массив [2016, 1967, 2008, 1984, 1973, 2012, 1997]
-Объявлена переменная ascendingReleaseDates
-Значение переменной ascendingReleaseDates это массив [1967, 1973, 1984, 1997, 2008, 2012, 2016]
-Объявлена переменная descendingReleaseDates
-Значение переменной descendingReleaseDates это массив [2016, 2012, 2008, 1997, 1984, 1973, 1967]
-Использован метод sort()
+// Объявлена переменная releaseDates
+// Значение переменной releaseDates это массив [2016, 1967, 2008, 1984, 1973, 2012, 1997]
+// Объявлена переменная ascendingReleaseDates
+// Значение переменной ascendingReleaseDates это массив [1967, 1973, 1984, 1997, 2008, 2012, 2016]
+// Объявлена переменная descendingReleaseDates
+// Значение переменной descendingReleaseDates это массив [2016, 2012, 2008, 1997, 1984, 1973, 1967]
+// Использован метод sort()
 
 const releaseDates = [2016, 1967, 2008, 1984, 1973, 2012, 1997];
 
-
-const ascendingReleaseDates = releaseDates;
-const descendingReleaseDates = releaseDates;
+const ascendingReleaseDates = [...releaseDates].sort();
+console.log(ascendingReleaseDates);
+const descendingReleaseDates = [...releaseDates].sort((a, b) => b - a);
+console.log(descendingReleaseDates);
+console.log(releaseDates);
 //
 // ==================================================
 // ===================== Task 40 ====================
 // ==================================================
 //
-Онлайн бибилиотеке необходимо отображать книги отсортированные по автору, в алфавитном и обратном алфавитном порядке. Дополни код так, чтобы в переменной authorsInAlphabetOrder получилась отсортированная по алфавиту копия массива authors, а в переменной authorsInReversedOrder копия отсортированная в обратном алфавитном порядке.
+// Онлайн бибилиотеке необходимо отображать книги отсортированные по автору, в алфавитном и обратном алфавитном порядке. Дополни код так, чтобы в переменной authorsInAlphabetOrder получилась отсортированная по алфавиту копия массива authors, а в переменной authorsInReversedOrder копия отсортированная в обратном алфавитном порядке.
 
-Объявлена переменная authors
-Значение переменной authors это массив ["Tanith Lee", "Bernard Cornwell", "Robert Sheckley", "Fyodor Dostoevsky", "Howard Lovecraft"]
-Объявлена переменная authorsInAlphabetOrder
-Значение переменной authorsInAlphabetOrder это массив ["Bernard Cornwell", "Fyodor Dostoevsky", "Howard Lovecraft", "Robert Sheckley", "Tanith Lee"]
-Объявлена переменная authorsInReversedOrder
-Значение переменной authorsInReversedOrder это массив ["Tanith Lee", "Robert Sheckley", "Howard Lovecraft", "Fyodor Dostoevsky", "Bernard Cornwell"]
-Использован метод sort()
+// Объявлена переменная authors
+// Значение переменной authors это массив ["Tanith Lee", "Bernard Cornwell", "Robert Sheckley", "Fyodor Dostoevsky", "Howard Lovecraft"]
+// Объявлена переменная authorsInAlphabetOrder
+// Значение переменной authorsInAlphabetOrder это массив ["Bernard Cornwell", "Fyodor Dostoevsky", "Howard Lovecraft", "Robert Sheckley", "Tanith Lee"]
+// Объявлена переменная authorsInReversedOrder
+// Значение переменной authorsInReversedOrder это массив ["Tanith Lee", "Robert Sheckley", "Howard Lovecraft", "Fyodor Dostoevsky", "Bernard Cornwell"]
+// Использован метод sort()
 
 const authors = [
-  "Tanith Lee",
-  "Bernard Cornwell",
-  "Robert Sheckley",
-  "Fyodor Dostoevsky",
-  "Howard Lovecraft",
+  'Tanith Lee',
+  'Bernard Cornwell',
+  'Robert Sheckley',
+  'Fyodor Dostoevsky',
+  'Howard Lovecraft',
 ];
 
-const authorsInAlphabetOrder = authors;
-const authorsInReversedOrder = authors;
+const authorsInAlphabetOrder = [...authors].sort();
+console.log(authorsInAlphabetOrder);
+const authorsInReversedOrder = [...authors].sort((a, b) => b.localeCompare(a));
+console.log(authorsInReversedOrder);
 
 //
 // ==================================================
 // ===================== Task 41 ====================
 // ==================================================
 //
-Дополни код так, чтобы:
+// Дополни код так, чтобы:
 
-В переменной sortedByAuthorName получился массив книг отсортированный по имени автора в алфавитном порядке.
-В переменной sortedByReversedAuthorName получился массив книг отсортированный по имени автора в обратном алфавитном порядке.
-В переменной sortedByAscendingRating получился массив книг отсортированный по возрастанию рейтинга.
-В переменной sortedByDescentingRating получился массив книг отсортированный по убыванию рейтинга.
-Объявлена переменная books
-Значение переменной books это исходный массив объектов книг
-Объявлена переменная sortedByAuthorName
-Значение переменной sortedByAuthorName это массив книг отсортированный по имени автора в алфавитном порядке
-Объявлена переменная sortedByReversedAuthorName
-Значение переменной sortedByReversedAuthorName это массив книг отсортированный по имени автора в обратном алфавитном порядке
-Объявлена переменная sortedByAscendingRating
-Значение переменной sortedByAscendingRating это массив книг отсортированный по возрастанию рейтинга
-Объявлена переменная sortedByDescentingRating
-Значение переменной sortedByDescentingRating это массив книг отсортированный по убыванию рейтинга
-Для перебора массива books используется метод sort()
+// В переменной sortedByAuthorName получился массив книг отсортированный по имени автора в алфавитном порядке.
+// В переменной sortedByReversedAuthorName получился массив книг отсортированный по имени автора в обратном алфавитном порядке.
+// В переменной sortedByAscendingRating получился массив книг отсортированный по возрастанию рейтинга.
+// В переменной sortedByDescentingRating получился массив книг отсортированный по убыванию рейтинга.
+// Объявлена переменная books
+// Значение переменной books это исходный массив объектов книг
+// Объявлена переменная sortedByAuthorName
+// Значение переменной sortedByAuthorName это массив книг отсортированный по имени автора в алфавитном порядке
+// Объявлена переменная sortedByReversedAuthorName
+// Значение переменной sortedByReversedAuthorName это массив книг отсортированный по имени автора в обратном алфавитном порядке
+// Объявлена переменная sortedByAscendingRating
+// Значение переменной sortedByAscendingRating это массив книг отсортированный по возрастанию рейтинга
+// Объявлена переменная sortedByDescentingRating
+// Значение переменной sortedByDescentingRating это массив книг отсортированный по убыванию рейтинга
+// Для перебора массива books используется метод sort()
 
 const books = [
   {
-    title: "The Last Kingdom",
-    author: "Bernard Cornwell",
+    title: 'The Last Kingdom',
+    author: 'Bernard Cornwell',
     rating: 8.38,
   },
   {
-    title: "Beside Still Waters",
-    author: "Robert Sheckley",
+    title: 'Beside Still Waters',
+    author: 'Robert Sheckley',
     rating: 8.51,
   },
   {
-    title: "The Dream of a Ridiculous Man",
-    author: "Fyodor Dostoevsky",
+    title: 'The Dream of a Ridiculous Man',
+    author: 'Fyodor Dostoevsky',
     rating: 7.75,
   },
-  { title: "Redder Than Blood", author: "Tanith Lee", rating: 7.94 },
-  { title: "Enemy of God", author: "Bernard Cornwell", rating: 8.67 },
+  { title: 'Redder Than Blood', author: 'Tanith Lee', rating: 7.94 },
+  { title: 'Enemy of God', author: 'Bernard Cornwell', rating: 8.67 },
 ];
 
-const sortedByAuthorName = books;
-const sortedByReversedAuthorName = books;
-const sortedByAscendingRating = books;
-const sortedByDescentingRating = books;
+const sortedByAuthorName = [...books].sort((a, b) =>
+  a.author.localeCompare(b.author)
+);
+// console.log(sortedByAuthorName);
+const sortedByReversedAuthorName = [...books].sort((a, b) =>
+  b.author.localeCompare(a.author)
+);
+// console.log(sortedByReversedAuthorName);
+const sortedByAscendingRating = [...books].sort((a, b) => a.rating - b.rating);
+console.log(sortedByAscendingRating);
+const sortedByDescentingRating = [...books].sort((a, b) => b.rating - a.rating);
 
 //
 // ==================================================
 // ===================== Task 42 ====================
 // ==================================================
 //
-Дополни функцию sortByAscendingBalance(users) так, чтобы она возвращала массив пользователей отсортированный по возрастанию их баланса (свойство balance).
+// Дополни функцию sortByAscendingBalance(users) так, чтобы она возвращала массив пользователей отсортированный по возрастанию их баланса (свойство balance).
 
-Объявлена переменная sortByAscendingBalance
-Переменной sortByAscendingBalance присвоена стрелочная функция с параметром (users)
-Значение параметра users не изменяется
-Вызов функции с указанным массивом пользователей возвращает новый массив пользователей отсортированный по возрастанию их баланса
-Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
-Для перебора параметра users использован метод sort()
+// Объявлена переменная sortByAscendingBalance
+// Переменной sortByAscendingBalance присвоена стрелочная функция с параметром (users)
+// Значение параметра users не изменяется
+// Вызов функции с указанным массивом пользователей возвращает новый массив пользователей отсортированный по возрастанию их баланса
+// Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
+// Для перебора параметра users использован метод sort()
 
+const users = [
+  {
+    name: 'Ann',
+    balance: 3,
+  },
+  {
+    name: 'Pet',
+    balance: 1,
+  },
+  {
+    name: 'Ken',
+    balance: 7,
+  },
+];
 
-const sortByAscendingBalance = users => {
-};
+const sortByAscendingBalance = users =>
+  [...users].sort((a, b) => a.balance - b.balance);
+
+console.log(sortByAscendingBalance(users));
 
 //
 // ==================================================
 // ===================== Task 43 ====================
 // ==================================================
 //
-Дополни функцию sortByDescendingFriendCount(users) так, чтобы она возвращала массив пользователей отсортированный по убыванию количества их друзей (свойство friends).
+// Дополни функцию sortByDescendingFriendCount(users) так, чтобы она возвращала массив пользователей отсортированный по убыванию количества их друзей (свойство friends).
 
-Объявлена переменная sortByDescendingFriendCount
-Переменной sortByDescendingFriendCount присвоена стрелочная функция с параметром (users)
-Значение параметра users не изменяется
-Для перебора параметра users использован метод sort()
-Вызов функции с указанным массивом пользователей возвращает новый массив пользователей отсортированный по убыванию количества их друзей
-Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
+// Объявлена переменная sortByDescendingFriendCount
+// Переменной sortByDescendingFriendCount присвоена стрелочная функция с параметром (users)
+// Значение параметра users не изменяется
+// Для перебора параметра users использован метод sort()
+// Вызов функции с указанным массивом пользователей возвращает новый массив пользователей отсортированный по убыванию количества их друзей
+// Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
+const users = [
+  {
+    name: 'Petya',
+    isActive: false,
+    friends: ['Borya', 'Misha'],
+  },
+  {
+    name: 'Ann',
+    isActive: true,
+    friends: ['Borya', 'Masha', 'Pasha'],
+  },
+  {
+    name: 'Polya',
+    isActive: true,
+    friends: ['Max', 'Misha', 'Pasha', 'Katya'],
+  },
+];
 
-const sortByDescendingFriendCount = users => {   
-};
+const sortByDescendingFriendCount = users =>
+  [...users].sort((a, b) => a.friends.length - b.friends.length);
+
+console.log(sortByDescendingFriendCount(users));
 
 //
 // ==================================================
 // ===================== Task 44 ====================
 // ==================================================
 //
-Дополни функцию sortByName(users) так, чтобы она возвращала массив пользователей отсортированный по их имени (свойство name) в алфавитном порядке.
+// Дополни функцию sortByName(users) так, чтобы она возвращала массив пользователей отсортированный по их имени (свойство name) в алфавитном порядке.
 
-Объявлена переменная sortByName
-Переменной sortByName присвоена стрелочная функция с параметром (users)
-Значение параметра users не изменяется
-Для перебора параметра users использован метод sort()
-Вызов функции с указанным массивом пользователей возвращает новый массив пользователей отсортированный по имени в алфавитном порядке
-Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
+// Объявлена переменная sortByName
+// Переменной sortByName присвоена стрелочная функция с параметром (users)
+// Значение параметра users не изменяется
+// Для перебора параметра users использован метод sort()
+// Вызов функции с указанным массивом пользователей возвращает новый массив пользователей отсортированный по имени в алфавитном порядке
+// Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
-
-const sortByName = users => {   
-};
+const sortByName = users =>
+  [...users].sort((a, b) => a.name.localeCompare(b.name));
 
 //
 // ==================================================
 // ===================== Task 45 ====================
 // ==================================================
 //
-Дополни код так, чтобы в переменной names получился массив имён авторов в алфавитном порядке, рейтинг книг которых больше значения переменной MIN_BOOK_RATING.
+// Дополни код так, чтобы в переменной names получился массив имён авторов в алфавитном порядке, рейтинг книг которых больше значения переменной MIN_BOOK_RATING.
 
-Объявлена переменная books
-Значение переменной books это исходный массив объектов
-Объявлена переменная MIN_BOOK_RATING
-Значение переменной MIN_BOOK_RATING это число 8
-Объявлена переменная names
-Значение переменной names это массив ["Bernard Cornwell", "Howard Lovecraft", "Robert Sheckley"]
-Нет объявленых переменных кроме books, MIN_BOOK_RATING и names
-Используется цепочка методов filter, map, sort
+// Объявлена переменная books
+// Значение переменной books это исходный массив объектов
+// Объявлена переменная MIN_BOOK_RATING
+// Значение переменной MIN_BOOK_RATING это число 8
+// Объявлена переменная names
+// Значение переменной names это массив ["Bernard Cornwell", "Howard Lovecraft", "Robert Sheckley"]
+// Нет объявленых переменных кроме books, MIN_BOOK_RATING и names
+// Используется цепочка методов filter, map, sort
 
 const books = [
   {
-    title: "The Last Kingdom",
-    author: "Bernard Cornwell",
+    title: 'The Last Kingdom',
+    author: 'Bernard Cornwell',
     rating: 8.38,
   },
   {
-    title: "Beside Still Waters",
-    author: "Robert Sheckley",
+    title: 'Beside Still Waters',
+    author: 'Robert Sheckley',
     rating: 8.51,
   },
   {
-    title: "The Dream of a Ridiculous Man",
-    author: "Fyodor Dostoevsky",
+    title: 'The Dream of a Ridiculous Man',
+    author: 'Fyodor Dostoevsky',
     rating: 7.75,
   },
-  { title: "Redder Than Blood", author: "Tanith Lee", rating: 7.94 },
+  { title: 'Redder Than Blood', author: 'Tanith Lee', rating: 7.94 },
   {
-    title: "The Dreams in the Witch House",
-    author: "Howard Lovecraft",
+    title: 'The Dreams in the Witch House',
+    author: 'Howard Lovecraft',
     rating: 8.67,
   },
 ];
 const MIN_BOOK_RATING = 8;
-const names = books;
+const names = [...books]
+  .filter(book => book.rating > MIN_BOOK_RATING)
+  .map(book => book.author)
+  .sort();
+console.log(names);
 
 //
 // ==================================================
 // ===================== Task 46 ====================
 // ==================================================
 //
-Дополни функцию getNamesSortedByFriendCount(users) так, чтобы она возвращала массив имён пользователей отсортированный по возрастанию количества их друзей (свойство friends).
+// Дополни функцию getNamesSortedByFriendCount(users) так, чтобы она возвращала массив имён пользователей отсортированный по возрастанию количества их друзей (свойство friends).
 
-Объявлена переменная getNamesSortedByFriendCount
-Переменной getNamesSortedByFriendCount присвоена стрелочная функция с параметром (users)
-В теле функции используется цепочка методов
-Значение параметра users не изменяется
-Вызов функции с указанным массивом пользователей возвращает массив ["Moore Hensley", "Sharlene Bush", "Elma Head", "Sheree Anthony", "Ross Vazquez", "Carey Barr", "Blackburn Dotson"]
-Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
+// Объявлена переменная getNamesSortedByFriendCount
+// Переменной getNamesSortedByFriendCount присвоена стрелочная функция с параметром (users)
+// В теле функции используется цепочка методов
+// Значение параметра users не изменяется
+// Вызов функции с указанным массивом пользователей возвращает массив ["Moore Hensley", "Sharlene Bush", "Elma Head", "Sheree Anthony", "Ross Vazquez", "Carey Barr", "Blackburn Dotson"]
+// Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
+const users = [
+  {
+    name: 'Petya',
+    isActive: false,
+    friends: ['Borya', 'Misha'],
+  },
+  {
+    name: 'Ann',
+    isActive: true,
+    friends: ['Borya', 'Masha', 'Pasha'],
+  },
+  {
+    name: 'Polya',
+    isActive: true,
+    friends: ['Max', 'Misha', 'Pasha', 'Katya'],
+  },
+];
 
-const getNamesSortedByFriendCount = users => {   
-};
+const getNamesSortedByFriendCount = users =>
+  [...users]
+    .sort((a, b) => a.friends.length - b.friends.length)
+    .flatMap(user => user.friends)
+    .filter((user, idx, arr) => {
+      if (arr.indexOf(user) === idx) {
+        return user;
+      }
+    });
+
+console.log(getNamesSortedByFriendCount(users));
 
 //
 // ==================================================
 // ===================== Task 47 ====================
 // ==================================================
 //
-Дополни функцию getSortedFriends(users) так, чтобы она возвращала массив уникальных имён друзей (свойство friends) отсортированный по алфавиту .
+// Дополни функцию getSortedFriends(users) так, чтобы она возвращала массив уникальных имён друзей (свойство friends) отсортированный по алфавиту .
 
-Объявлена переменная getSortedFriends
-Переменной getSortedFriends присвоена стрелочная функция с параметром (users)
-В теле функции используется цепочка методов в правильном порядке
-Значение параметра users не изменяется
-Вызов функции с указанным массивом пользователей возвращает массив ["Adrian Cross", "Aisha Tran", "Briana Decker", "Eddie Strong", "Goldie Gentry", "Jacklyn Lucas", "Jordan Sampson", "Linda Chapman", "Marilyn Mcintosh", "Naomi Buckner", "Padilla Garrison", "Sharron Pace", "Solomon Fokes"]
-Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
+// Объявлена переменная getSortedFriends
+// Переменной getSortedFriends присвоена стрелочная функция с параметром (users)
+// В теле функции используется цепочка методов в правильном порядке
+// Значение параметра users не изменяется
+// Вызов функции с указанным массивом пользователей возвращает массив ["Adrian Cross", "Aisha Tran", "Briana Decker", "Eddie Strong", "Goldie Gentry", "Jacklyn Lucas", "Jordan Sampson", "Linda Chapman", "Marilyn Mcintosh", "Naomi Buckner", "Padilla Garrison", "Sharron Pace", "Solomon Fokes"]
+// Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
+const users = [
+  {
+    name: 'Petya',
+    isActive: false,
+    friends: ['Borya', 'Misha'],
+  },
+  {
+    name: 'Ann',
+    isActive: true,
+    friends: ['Borya', 'Masha', 'Pasha'],
+  },
+  {
+    name: 'Polya',
+    isActive: true,
+    friends: ['Max', 'Misha', 'Pasha', 'Katya'],
+  },
+];
 
-const getSortedFriends = users => {   
-};
+const getSortedFriends = users =>
+  [...users]
+    .flatMap(user => user.friends)
+    .filter((user, idx, arr) => {
+      if (arr.indexOf(user) === idx) {
+        return user;
+      }
+    })
+    .sort();
+console.log(getSortedFriends(users));
 
 //
 // ==================================================
 // ===================== Task 48 ====================
 // ==================================================
 //
-Дополни функцию getTotalBalanceByGender(users, gender) так, чтобы она возвращала общий баланс пользователей (свойство balance), пол которых (свойство gender) совпадает со значением параметра gender.
+// Дополни функцию getTotalBalanceByGender(users, gender) так, чтобы она возвращала общий баланс пользователей (свойство balance), пол которых (свойство gender) совпадает со значением параметра gender.
 
-Объявлена переменная getTotalBalanceByGender
-Переменной getTotalBalanceByGender присвоена стрелочная функция с параметрами (users, gender)
-В теле функции используется цепочка методов в правильном порядке
-Значение параметра users не изменяется
-Если значение параметра gender это строка "male", функция возвращает число 12053
-Если значение параметра gender это строка "female", функция возвращает число 8863
-Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
+// Объявлена переменная getTotalBalanceByGender
+// Переменной getTotalBalanceByGender присвоена стрелочная функция с параметрами (users, gender)
+// В теле функции используется цепочка методов в правильном порядке
+// Значение параметра users не изменяется
+// Если значение параметра gender это строка "male", функция возвращает число 12053
+// Если значение параметра gender это строка "female", функция возвращает число 8863
+// Вызов функции со случайными, но валидными аргументами, возвращает правильное значение
 
+const users = [
+  {
+    name: 'Petya',
+    isActive: false,
+    friends: ['Borya', 'Misha'],
+    gender: 'male',
+    balance: 1100,
+  },
+  {
+    name: 'Ann',
+    isActive: true,
+    friends: ['Borya', 'Masha', 'Pasha'],
+    gender: 'female',
+    balance: 2300,
+  },
+  {
+    name: 'Polya',
+    isActive: true,
+    friends: ['Max', 'Misha', 'Pasha', 'Katya'],
+    gender: 'female',
+    balance: 500,
+  },
+  {
+    name: 'Vasya',
+    isActive: false,
+    friends: ['Katya'],
+    gender: 'male',
+    balance: 900,
+  },
+];
 
-const getSortedFriends = users => {   
-};
+const getSortedFriends = (users, gender) =>
+  [...users]
+    .filter(user => user.gender === gender)
+    .flatMap(user => user.balance)
+    .reduce((sum, bal) => sum + bal, 0);
+
+console.log(getSortedFriends(users, 'male'));
+console.log(getSortedFriends(users, 'female'));
 
 //
 //
-
