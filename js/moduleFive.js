@@ -419,3 +419,102 @@ console.log(User.Roles);//{ ADMIN: 'Admin', EDITOR: 'Editor' }
 console.log(mango.role);//Admin
 mango.role = User.Roles.EDITOR;
 console.log(mango.role);//Editor
+
+// ================================= Статические методы =======================
+
+class User {
+  static #takenEmails = [];
+  static isEmailTaken(email) {
+    return User.#takenEmails.includes(email)
+  }
+  #email;
+  constructor ({email}){
+    this.#email = email;
+    User.#takenEmails.push(email);
+  }
+}
+
+const mango = new User({email: "mango@gmail.com"});
+
+console.log(User.isEmailTaken("mango@outlook.com"));//false
+console.log(User.isEmailTaken("mango@gmail.com"));//true
+
+
+// ================================== Подражание классам ========================
+
+class User {
+  #email;
+  constructor(email){
+    this.#email = email;
+  }
+  get email(){
+    return this.#email;
+  }
+  set email(newEmail){
+    this.#email = newEmail;
+  }
+}
+
+class ContentEditor extends User{
+  // Тело класса ContentEditor
+}
+const editor = new ContentEditor("mango@gmail.com");
+console.log(editor);//ContentEditor {}
+console.log(editor.email);//mango@gmail.com
+
+// =================================== Конструктор дочернего класса =======================
+
+class User {
+  #email;
+  constructor(email){
+    this.#email = email;
+  }
+  get email(){
+    return this.#email
+  }
+  set email(newEmail){
+    this.#email = newEmail;
+  }
+}
+
+class ConstructorEditor extends User {
+  constructor({email, posts}){
+    // Вызов конструктора родительского класса User
+    super(email);
+    this.posts = posts;
+  }
+}
+const editor = new ConstructorEditor({email: "mango@gmail.com", posts: []});
+console.log(editor);//ConstructorEditor { posts: [] }
+console.log(editor.email);//mango@gmail.com
+
+// =================================== Методы дочернего класса ======================
+class User {
+  #email;
+  constructor(email){
+    this.#email = email;
+  }
+  get email(){
+    return this.#email
+  }
+  set email(newEmail){
+    this.#email = newEmail;
+  }
+}
+// Представим что выше есть объявление класса User
+
+class ConstructorEditor extends User {
+  constructor({email,posts}){
+    super(email);
+    this.posts = posts;
+  }
+  addPost(post){
+    this.posts.push(post);
+  }
+}
+const editor = new ConstructorEditor({email: "mango@email.com", posts: []});
+console.log(editor);//ConstructorEditor { posts: [] }
+console.log(editor.email);//mango@email.com
+
+editor.addPost("Post1");
+console.log(editor.posts);//[ 'Post1' ]

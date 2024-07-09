@@ -758,7 +758,7 @@
         console.log(mango.email);<br />
       </p>
       <p>
-        <b>Статические свйоства</b><br />
+        <b>Статические свойства</b><br />
         Помимо публичных и частных свойств будущего экземпляра в классе можно
         объявить его собственные свойства доступные только классу, но не
         экъемпляру - cтатические свойства (static). Они полезны для хранения
@@ -802,6 +802,155 @@
         mango.role = User.Roles.EDITOR;<br />
         console.log(mango.role);//Editor<br />
       </p>
+      <p>
+        Статические свойства так же могут быть приватными, т.е доступными внутри
+        класса, для этого имя свойства должно начинаться с # так же как частные
+        свойства. Обращение к частному статическому свойству вне тела класса
+        вызовет ошибку.
+        <br />
+        <b>Статические методы</b><br />
+        В классе можно объявить не только методы будущего экземпляра, а так же и
+        методы доступные классу - статические методы, которые могут быть как
+        публичные так и частные. Синтаксис объявления аналогичен статическим
+        свойствам за исключением того что значение будет метод
+      </p>
+      <p class="bg">
+        class User { <br />
+        static #takenEmails = [];<br />
+        static isEmailTaken(email) {<br />
+        return User.#takenEmails.includes(email)<br />
+        }<br />
+        #email;<br />
+        constructor ({email}){<br />
+        this.#email = email;<br />
+        User.#takenEmails.push(email);<br />
+        }<br />
+        }<br /><br />
+
+        const mango = new User({email: "mango@gmail.com"});<br /><br />
+
+        console.log(User.isEmailTaken("mango@outlook.com"));//false<br />
+        console.log(User.isEmailTaken("mango@gmail.com"));//true<br />
+      </p>
+      <p>
+        Особенности статических методов состоит в том, что при вызове ключевого
+        слова this ссылается на сам класс. Это означает что статический метод
+        может получить доступ к статическим свойствам класса но не к свойствам
+        экземпляра. Логично, потому что статические методы вызывают сам класс а
+        не экземпляр <br />
+        <b>Подражание классам</b>
+        <br />Ключевое слово extends позволяет реализовать подражание класса, а
+        когда один класс (дочерний, производный) подражает свойствам и методам
+        другого класса (родительского)
+      </p>
+      <p class="bg">
+        class Child extends Parent{ <br />
+        // тело<br />
+        }
+      </p>
+      <p>
+        В выражении class Child extends Parent дочерний класс Child следует
+        (расширяет) от родительского класса Parent <br />
+        Это означает что мы можем объявить базовый класс, который сохраняет
+        общие хар-ки и методы для группы производных классов, которые подражают
+        свойствам и методам родительского, но так же добавляют свои уникальные
+        <br />
+        Например в приложении есть пользователи с разными ролями - админ,
+        копирайтер и т.д. У каждого типа пользователя есть набо общих
+        характеристик, например почта и пароль, но так же есть уникальные <br />
+        Создав независимые классы для каждого типа пользователей мы получим
+        дублирование общих свойств и методов и если необходимо изменить,
+        например название свойства, прийдется проходить по всем классам, а это
+        неудобно и требует много времени. <br />
+        Вместо этого можно создать общий класс User который будет сохранять
+        набор общих свойств и методов, после чего создать классы для каждого
+        типа пользователя, которые подражают этому набору от класса User. При
+        необходимости изменить что либо общее достаточно будет изменить только
+        код класса User
+      </p>
+      <p class="bg">
+        class User { <br />
+        #email;<br />
+        constructor(email){<br />
+        this.#email = email;<br />
+        }<br />
+        get email(){<br />
+        return this.#email;<br />
+        }<br />
+        set email(newEmail){<br />
+        this.#email = newEmail;<br />
+        }<br />
+        }<br /><br />
+
+        class ContentEditor extends User{<br />
+        // Тело класса ContentEditor<br />
+        }<br />
+        const editor = new ContentEditor("mango@gmail.com");<br />
+        console.log(editor);//ContentEditor {}<br />
+        console.log(editor.email);//mango@gmail.com<br />
+      </p>
+      <p>
+        Класс contentEditor наследует от класса User его конструктор, геттер и
+        сеттер email, а так же одноименное публичное свойство. Важно помнить что
+        приватные свойства и методы родительского класса не наследуются дочерним
+        классом <br />
+        <b>Конструктор дочернего класса</b><br />
+        Прежде всего в конструкторе дочернего класса необходимо вызвать спец
+        функцию super(args) - это псевдоним контруктора родительского класса. В
+        противном случае при попытке обратиться к this в конструкторе дочернего
+        класса возникнет ошибка. Во время вызова конструктора родительского
+        класса передем ему необходимые аргументы для инициализации.
+      </p>
+      <p class="bg">
+        class User { <br />
+        #email;<br />
+        constructor(email){<br />
+        this.#email = email;<br />
+        }<br />
+        get email(){<br />
+        return this.#email<br />
+        }<br />
+        set email(newEmail){<br />
+        this.#email = newEmail;<br />
+        }<br />
+        }<br /><br />
+
+        class ConstructorEditor extends User {<br />
+        constructor({email, posts}){<br />
+        // Вызов конструктора родительского класса User<br />
+        super(email);<br />
+        this.posts = posts;<br />
+        }<br />
+        }<br />
+        const editor = new ConstructorEditor({email: "mango@gmail.com", posts:
+        []});<br />
+        console.log(editor);//ConstructorEditor { posts: [] }<br />
+        console.log(editor.email);//mango@gmail.com<br />
+      </p>
+      <p>
+        <b>Методы дочернего класса</b><br />
+        В дочернем классе можно объявлять методы доступные только в его
+        экземплярам
+      </p>
+      <p class="bg">
+        class ConstructorEditor extends User { <br />
+        constructor({email,posts}){<br />
+        super(email);<br />
+        this.posts = posts;<br />
+        }<br />
+        addPost(post){<br />
+        this.posts.push(post);<br />
+        }<br />
+        }<br />
+        const editor = new ConstructorEditor({email: "mango@email.com", posts:
+        []});<br />
+        console.log(editor);//ConstructorEditor { posts: [] }<br />
+        console.log(editor.email);//mango@email.com<br /><br />
+
+        editor.addPost("Post1");<br />
+        console.log(editor.posts);//[ 'Post1' ]<br />
+      </p>
     </section>
+    <script src="./js/moduleFive.js"></script>
   </body>
 </html>
