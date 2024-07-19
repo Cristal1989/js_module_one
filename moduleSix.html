@@ -163,7 +163,188 @@
         DOM коллекции такие как child nodes и children - псевдо массивы (node
         list), у них нет большинства методов массива
       </p>
+      <div class="dom">
+        <ul id="menu" class="menu">
+          <li class="menu__item">Home</li>
+          <li class="menu__item">About</li>
+          <li class="menu__item">Gallery</li>
+          <li>Blog</li>
+        </ul>
+      </div>
+      <h3 class="title">Поиск элементов</h3>
+      <p>
+        Итак мы уже знаем что такое DOM element - это объект со свойствами и
+        методами. Пришло время быстро находить элемент по произвольным css
+        селекторам. Группа методов elem.querySelector* - это современны стандарт
+        посика элемнтов. Они позволяют найти элемент или группу элементов css
+        селекторов любой сложности <br />
+        <b>element.querySelector("selector")</b><br />
+        Используется, если необходимо найти только один, чаще всего уникальный
+        элемент. Он возвращает первый найденый внутри элемент - element, который
+        соответствует css селектору selector. Если ничего не найдено вернет
+        null. <br />
+        <b>element.querySelectorAll("selector")</b><br />
+        Используется если необходимо найти коллекцию элементов, т.е получить
+        массив ссылок на элементы с одним и тем же селектором, например все
+        элементы классом menu__item. возвращает псевдомассив всех элементов
+        внутри element, соответствующих css селекторов selector. Если ничего не
+        найдено вернет пустой массив.
+      </p>
+      <h3 class="title">Свойства и атрибуты</h3>
+      <p>
+        В период постройки DOM некоторые стандартные HTML атрибуты становятся
+        свойствами элемента.
+      </p>
+      <ul>
+        <li>
+          <b>value</b> - содержит текущее текстовое содержимое элементов формы
+        </li>
+        <li><b>checked</b> - сохраняет состояние чекбокса или радиокнопки</li>
+        <li>
+          <b>name</b> - сохраняет значение, указанное в HTML атрибуте name
+        </li>
+        <li><b>src</b> - путь к сохранению тега img</li>
+      </ul>
+      <p class="bg">
+        <img
+          src="https://picsum.photos/id/9/320/240"
+          alt="laptop"
+          class="image"
+          width="300"
+        />
+      </p>
+      <h3 class="title">Свойство textContent</h3>
+      <p>
+        elem.textContent возвращает текстовое содержимое внутри элемента.
+        Доступен для чтения и записи. Не важно что textContent данные всегда
+        будут записаны в виде текста
+      </p>
+      <article class="article">
+        <h4 class="article__title">Lorem, ipsum dolor.</h4>
+        <p class="article__text">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque
+          incidunt cupiditate accusamus expedita veniam nemo ut qui fuga cumque
+          id.
+        </p>
+      </article>
+      <h3 class="title">Свойство classList</h3>
+      <p>
+        Свойство classList хранит объект с методами для работы с классами
+        элементов
+      </p>
+      <ul>
+        <li>
+          elem.classList.contains(class) return true or false. В наличии от
+          класса в элементе
+        </li>
+        <li>
+          elem.classList.add(class) - добавляет класс к списку классов элементов
+        </li>
+        <li>
+          elem.classList.remove(class) - удаляет класс из списка классов
+          элементов
+        </li>
+        <li>
+          elem.classList.toggle(class) - если отсутствует класс, то добавляет
+          его, а если присутствует то удаляет
+        </li>
+        <li>
+          elem.classList.replace(oldClass, newClass) - заменяет существующий
+          класс(oldClass) на указаный (newClass)
+        </li>
+      </ul>
+      <p class="bg">
+        <a href="#" class="link is-active">Random link</a>
+      </p>
+      <h3 class="title">Свойство style</h3>
+      <p>
+        Использется для чтения и изменения онлайн стилей. Возвразает объект
+        CSSStyleDeclaration, содержащий список всех свойств определенных только
+        в встроенных стилях элемента, а не во всех css. Во время записи свойство
+        записывается camelCase, т.е background-color превращается в
+        elem.style.backgroundColor
+      </p>
+      <p class="bg">
+        const button = document.querySelector(".btn"); <br />
+        button.style.backgroundColor = "blue";<br />
+        button.style.fontSize = "24px";<br />
+        button.style.textAlign = "center";<br />
+      </p>
+      <h3 class="title">Атрибуты</h3>
+      <p>
+        DOM элементам соответствуют HTML теги, которые содержат текстовые
+        атрибуты. Доступ к атрибутам устанавливается с помощью стандартных
+        методов. Эти методы работают со свойствами, которые находятся в HTML
+      </p>
+      <ul>
+        <li>
+          elem.hasAttribute(name) - проверяет наличие атрибута, возвращает true
+          or false
+        </li>
+        <li>
+          elem.getAttribute(name) - получает значение атрибута и возвращает его
+        </li>
+        <li>elem.setAttribute(name, value) - устанавливает атрибут</li>
+        <li>elem.removeAttribute(name) - удаляет атрибут</li>
+        <li>
+          elem.attributes - свойство возвращающее в объект все атрибуты элемента
+        </li>
+      </ul>
+      <p class="bg">
+        <img
+          src="https://picsum.photos/id/9/320/240"
+          alt="laptop"
+          class="img1"
+          width="300"
+        />
+        const img1 = document.querySelector('.img1'); <br />
+        console.log(img1.attributes);// {0:class,1:src,alt,length:1 }<br />
+        console.log(img1.hasAttribute("src"));// true<br />
+        console.log(img1.getAttribute("alt"));// "laptop"<br />
+        img1.setAttribute("alt", "tel")<br />
+        console.log(img1.getAttribute('alt'));// "tel"<br />
+      </p>
+      <h3 class="title">Data атрибуты</h3>
+      <p>
+        Позволяет добавить к тегу произвольный атрибут и получить его значение в
+        JS. Это возможность используется для упрощения написания кода, например
+        для привязки данных и индификатора к уникальному индификатору, для
+        указания типа действия кнопки и т.д
+      </p>
+      <p class="bg">
+        <button type="button" data-active="save">Save</button>
+        <button type="button" data-active="close">Close</button>
+      </p>
+      <p>
+        Для получения значения data атрибута используется свойство dataset,
+        после которого стоит имя атрибута. Т.е data - откидывается, а другая
+        часть имени записывается как имя свойства объекта
+      </p>
+      <p class="bg">
+        const saveBtn = document.querySelector('button[data-action="save"]');
+        <br />
+        console.log(seveBtn.dataset.action);//save<br /><br />
+
+        const closeBtn =
+        document.querySelector('button[data-action="close"]');<br />
+        console.log(closeBtn.dataset.action);//close<br />
+      </p>
+      <div class="editor">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni nam iste
+        iure totam quidem rem nesciunt non illo! Obcaecati quaerat aut mollitia
+        a assumenda quisquam voluptatibus numquam accusantium debitis
+        perferendis!
+        <div class="actions">
+          <button class="btn" type="button" data-action="save">
+            Save Text
+          </button>
+          <button class="btn" type="button" data-action="close">
+            Close editor
+          </button>
+        </div>
+      </div>
     </section>
     <script src="./js/moduleSix.js"></script>
+    <script src="./js/DOM.js"></script>
   </body>
 </html>
