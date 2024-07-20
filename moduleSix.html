@@ -343,6 +343,274 @@
           </button>
         </div>
       </div>
+      <h3 class="title">Создание и удаление элементов</h3>
+      <p>
+        DOM api позволяет нне только выбирать и изменять существующие, но и
+        удалять а так же создавать новые элементы, после чего добавлять их в
+        документ
+      </p>
+      <p class="bg">document.createElement(name_tag)</p>
+      <p>
+        Создает элемент с именем tag_name и возвращает ссылку на него как
+        результат своего исполнения. Tag_name это строка, указывающая тип
+        создаваемого элемента. Элемент создается в памяти, у DOM его еще нет.
+      </p>
+      <p class="bg">
+        const title = document.createElement('h1'); <br />
+        heading.textContent = 'This is title';<br /><br />
+
+        const image2 = document.createElement('img');<br />
+        image2.src = 'https://placeimg.com/640/480/nature';<br />
+        image2.alt = 'nature';
+      </p>
+      <h3>Добавление</h3>
+      <p>
+        Чтобы созданный элемент отображался на странице его необходимо добавить
+        к существующему элементу DOM. Предположим что добавляем к определенному
+        элементу element, для этого существуют методы
+      </p>
+      <ul>
+        <li>
+          <b>element.append(elem1, elem2, ...)</b> - добавляет один или
+          несколько элементов после всех детей элемета element
+        </li>
+        <li>
+          <b>element.prepend(elem1, elem2, ...)</b> - добавляет элемент перед
+          всеми детьми элемента element
+        </li>
+        <li>
+          <b>element.after(elem1, elem2, ...)</b> - добавляет один или несколько
+          элементов после элемента element
+        </li>
+        <li>
+          <b>element.before(elem1, elem2, ...)</b> - добавляет один или
+          несколько элементов перед элементом element
+        </li>
+      </ul>
+      <p>
+        Во всех этих el это элементы или строки в любом сочетании и колличестве.
+        Строки добавляются как текстовые узлы.
+      </p>
+      <div class="user">
+        <h1>User names</h1>
+        <ul class="usernames">
+          <li class="username__item">Petya</li>
+        </ul>
+      </div>
+      <p class="bg">
+        const list = document.querySelector('.usernames'); <br />
+        const listItem = document.createElement('li');<br /><br />
+
+        listItem.textContent = 'Vasya';<br />
+        list.append(listItem);<br /><br />
+
+        const firstItem = document.createElement('li');<br />
+        firstItem.textContent = 'Polya';<br />
+        list.prepend(firstItem);<br /><br />
+
+        const user = document.querySelector('.user');<br /><br />
+
+        const allList = document.querySelector('.username__item');<br />
+        allList.style.border = '1px dashed red';<br />
+      </p>
+      <h3 class="title">Удаление</h3>
+      <p class="bg">element.remove()</p>
+      <p>
+        Для того, чтобы удалить элемент используем метод remove(), он вызывается
+        на элемент elem, который нужно удалить
+      </p>
+      <article class="article1">
+        <h2 class="title1">Article title</h2>
+        <p class="text1">Lorem ipsum dolor sit amet.</p>
+        <a href="#" class="link">Read more</a>
+      </article>
+      <p class="bg">
+        const text1 = document.querySelector('.text1'); <br />
+        text1.remove();
+      </p>
+      <h3 class="title">Оптимизация работы с DOM</h3>
+      <p>
+        Современные браузеры пытаются оптимизировать процесс воспроизведения
+        страницы без вмешательства разработчика, однако изменение DOM дерева это
+        дорогостоющая операция, поэтому необходимо минимизировать количество
+        обращений к DOM. <br />
+        <b>repaint</b> происходит когда изменения коснулись стилей, влияющих на
+        внешний вид элементов, но не на геометрию, например opacity,
+        background-color, visability, outline. Браузер повторно создает элемент
+        с учетом нового стиля. Так же проверяется видимость других элементов,
+        один или более могут оказаться скрытыми под изменившем внешний элемент.
+        <br />
+        <b>reflow</b> происходит когда изменения влияют на содержимое, структуру
+        документа, положение элемента. Происходит перерасчет позиционирования и
+        размеров что приводит к повторному созданию части или всего документа.
+        Изменение размера одного родителького контейнера влияет на всех его
+        детей и предков. Оказывает значительно большее влияние на
+        производительность чем repaint. Все вышеперечисленные операции блокирует
+        браузер. Страница не может выполнять никаких других операций во время
+        когда происходит reflow или repaint
+      </p>
+      <ul>
+        Причины
+        <li>
+          Манипуляция с DOM(сложение, удаление, изменение, перестановка
+          элементов)
+        </li>
+        <li>Изменение содержимого, в частности текста в полях форм</li>
+        <li>Расчет или изменение css свойств</li>
+        <li>Добавление или удаление таблиц стилей</li>
+        <li>Манипуляция с атрибутами класса</li>
+        <li>Манипуляция с окном браузера (изменение размера, прокрутка)</li>
+        <li>Активация псевдоклассов, например ::hover</li>
+      </ul>
+      <h3 class="title">Свойство innerHTML</h3>
+      <p>
+        Еще один способ создать DOM элемент и поместить в дерево. Это позволит
+        использовать строки с тегами и позволит браузеру проделать всю тяжелую
+        работу. У такого подхода есть свои плюсы и минусы. <br />
+        <b>Чтение</b> <br />
+        Свойство innerHTML сохраняет содержимое HTML включая теги в виде строк.
+        Возвращаемое значение это всегда валидный HTML код.
+      </p>
+      <article class="article2">
+        <h2 class="title2">Article title</h2>
+        <p class="text2">
+          Lorem ipsum dolor sit amet consectetur
+          <strong>adipisicing</strong> elit. Aliquid inventore optio dignissimos
+          iusto dolor minus eum illo ratione nihil aliquam.
+        </p>
+        <a href="#" class="link2">Read more</a>
+      </article>
+      <p class="bg">
+        const article2 = document.querySelector('.article2'); <br />
+        console.log(article2.innerHTML);<br />
+        const title2 = document.querySelector('.article2', '.title2');<br />
+        console.log(title2.innerHTML);<br />
+        const text2 = document.querySelector('.article2', '.text2');<br />
+        console.log(text2.innerHTML);<br />
+        const link2 = document.querySelector('.article2', '.link2');<br />
+        console.log(link2.innerHTML);<br />
+      </p>
+      <p>
+        <b>Изменение</b><br />
+        Свойство innerHTML доступно и для чтения и для записи. Если записать в
+        нее строку с HTML тегами то браузер во время парсинга строчки превратят
+        их в валидные элементы и DOm добавит их в DOM дерево
+      </p>
+      <p class="bg">title2.innerHTML = 'This is <b>new</b> title';</p>
+      <p>
+        При таком подходе, в отличии от document.createElement() мы не получаем
+        ссылку на зозданый DOM элемент. Это первый шаг на пути к шаблонизации
+        создания большого колличества однотипной разметки и разными данными по
+        заранее определенному шаблону, например как списки товаров интернет
+        магазина <br />
+        Однотипная (шаблонная) разметка создается из массива данных. Прием
+        заключается в переборе этого масиива и составления одной строки с HTML
+        тегами, которую затем записываем в innerHTML.
+      </p>
+      <div>
+        <h2>Languages</h2>
+        <ul class="list3"></ul>
+      </div>
+      <p class="bg">
+        const languages = ['HTML', 'CSS', 'React', 'Node', 'JS', 'Vue']; <br />
+        const list3 = document.querySelector('.list3');<br />
+        const markUp = languages<br />
+        .map(language => ` &lt;li
+        class=&quot;list__item3&quot;&gt;${language}&lt;/li&gt; `)<br />
+        .join('');<br />
+        list3.innerHTML = markUp;<br />
+      </p>
+      <p>
+        <b>Добавление</b><br />
+        Изменение elem в innerHTML полностью удалит и повторно создаст все
+        потомки элемента elem. Если элемент по началу не был пуст, то возникнут
+        доп затраты на сереализацию существующей разметки (перезапись)
+      </p>
+      <p class="bg">
+        const newText = `&lt; p class=&quot;new__text&quot;&gt;Lorem ipsum dolor
+        sit amet consectetur adipisicing elit. Aspernatur est beatae facilis rem
+        id commodi sequi ad! Obcaecati, nulla iusto?&lt;/&gt;&lt; a
+        class=&quot;new__link&quot; href=&quot;#&quot;&gt;Read moreeeee&lt;
+        /a&gt;`; <br />
+        article2.innerHTML += newText;
+      </p>
+      <p>
+        <b>Метод insertAdjacentHTML()</b><br />
+        Это современный метод для добавления строки с HTML тегами перед, после
+        или в середину элементов. Решает проблему innerHTML с повторной
+        сериализацией содержимого элемента во время добавления разметки к уже
+        существующей
+      </p>
+      <p class="bg">elem.insertAdjacentHTML(position, string);</p>
+      <p>
+        Аргумент position это строка, позиция нашего элемента, принимает одно из
+        4 значений
+      </p>
+      <ul>
+        <li>beforebegin - перед elem</li>
+        <li>afterbegin - в середине elem</li>
+        <li>beforeend - в середине elem после всех детей</li>
+        <li>afterend - после elem</li>
+      </ul>
+      <div>
+        <ul class="list4">
+          <li class="list__item4">HTML</li>
+          <li class="list__item4">CSS</li>
+          <li class="list__item4">JS</li>
+        </ul>
+      </div>
+      <p class="bg">
+        const list4 = document.querySelector('.list4'); <br />
+        const newLanguages = ['React', 'Node', 'Vue'];<br />
+        const markUp2 = newLanguages<br />
+        .map(language =&gt; `&lt;li
+        class=&quot;list__item4&quot;&gt;${language}&lt;/li&gt;`)<br />
+        .join('');<br />
+        list4.insertAdjacentHTML('beforeend', markUp2);<br />
+        list4.insertAdjacentHTML('beforebegin',
+        '&lt;h2&gt;Languages&lt;/h2&gt;');
+      </p>
+      <h3 class="title">Подключение скриптов</h3>
+      <p>
+        Загрузка и исполнение скрипта обозначена в теге script без каких-либо
+        атрибутов, блокирует обработку HTML документа и построение DOM. Это
+        проблема.
+      </p>
+      <p class="bg">
+        &lt;script src=&quot;path-to-script.js&quot;&gt;&lt;/script&gt;
+      </p>
+      <p>
+        Когда анализатор втречает такой тег обработка HTML документа
+        приостанавливается и начинается загрузка файла скрипта, которая
+        определена в атрибуте src. После загрузки скрипта выполняется, и только
+        потом восстанавливается обработка HTML. Это называется блокирующий
+        скрипт <br />
+        <b>Атрибуты defer и async</b> <br />
+        Были введены чтобы разработчикам была возможность контролировать способ
+        загрузки скриптов и когда именно их выполнять <br />
+        <b>Атрибут defer</b>
+      </p>
+      <p class="bg">
+        &lt;script defer src=&quot;path-to-script.js&quot;&gt;&lt;/script&gt;
+      </p>
+      <p>
+        Указывает браузеру загрузку файла скрипта в фоновом режиме параллельно с
+        обработкой HTML документа и построению DOM. Скрипт будет выполнятся
+        только после того как HTML документ был обработан, а DOM построен. Такие
+        скрипты не блокируют построение DOM дерева, гарантировано выполняются в
+        таком порядке, в каком указано в HTML документе
+      </p>
+      <img src="./images/defer.jpg" alt="" class="img" />
+      <p><b>Атрибут async</b><br /></p>
+      <p class="bg">
+        &lt;script async src=&quot;path-to-script.js&quot;&gt;&lt;/script&gt;
+      </p>
+      <p>
+        Загрузка скрипта с атрибутом async не блокирует построение DOM, но он
+        выполняется сразу после загрузки. Это означает что такой скрипт может
+        заблокировать построение DOM и выполнятся в произвольном порядке.
+      </p>
+      <img src="./images/async.jpg" alt="" class="img" />
     </section>
     <script src="./js/moduleSix.js"></script>
     <script src="./js/DOM.js"></script>
