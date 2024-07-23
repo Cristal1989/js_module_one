@@ -146,5 +146,140 @@ const markUp2 = newLanguages
 list4.insertAdjacentHTML('beforeend', markUp2);
 list4.insertAdjacentHTML('beforebegin', '<h2>Languages</h2>');
 
-// 1. В чем разница function declaration и function expression
-// 1.2 Написать 2 задачи
+// ==================================== Метод addEventListener() ======================
+
+// const button = document.querySelector('.my__button');
+// // button.addEventListener('click', () => console.log('Hello world'));
+// const handelClick = () => console.log('Hello World');
+// button.addEventListener('click', handelClick);
+
+// ======================= btn
+
+const singleBtn = document.querySelector('#single');
+const handleClick = () => console.log('Single click');
+singleBtn.addEventListener('click', handleClick);
+
+const multipleBtn = document.querySelector('#multiple');
+const firstCallback = () => console.log('First callback');
+const secondCallback = () => console.log('Second callback');
+const thirdCallback = () => console.log('Third callback');
+multipleBtn.addEventListener('click', firstCallback);
+multipleBtn.addEventListener('click', secondCallback);
+multipleBtn.addEventListener('click', thirdCallback);
+
+// ============================================ Метод removeEventListener() ========================
+
+const addListenerBtn = document.querySelector('.add-js');
+const removeListenerBtn = document.querySelector('.remove-js');
+const btn1 = document.querySelector('.target-js');
+
+const handleClick1 = () => console.log('Event callback on click');
+
+addListenerBtn.addEventListener('click', () => {
+  btn1.addEventListener('click', handleClick1);
+  console.log('Click event listener added to btn');
+});
+removeListenerBtn.addEventListener('click', () => {
+  btn1.removeEventListener('click', handleClick1);
+  console.log('Click event listener remove from btn');
+});
+
+// ========================================== Ключевое слово this ==========================
+
+const mango = {
+  username: 'Mango',
+  showUserName() {
+    console.log(this);
+    console.log(`Мое имя пользователя: ${this.username}`);
+  },
+};
+const btn2 = document.querySelector('.btn2');
+// mango.showUserName();
+// Плохой пример. this будет ссылаться на btn2 если использовать showUserName() в качестве callback
+// btn2.addEventListener("click", mango.showUserName());
+
+// btn2.addEventListener('click', mango.showUserName.bind(mango));
+
+// ======================================= Объект событий ================================
+
+const handleClick3 = event => console.log(event);
+// button.addEventListener('click', handleClick3);
+
+// =============================
+
+const button3 = document.querySelector('.btn3');
+const handleClick4 = e => {
+  console.log('Event', e);
+  console.log('Event type', e.type);
+  console.log('Event current target', e.currentTarget);
+};
+button3.addEventListener('click', handleClick4);
+
+// ========================================== Действия браузера по умолчанию =======================
+
+const form = document.querySelector('.register__form');
+form.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const {
+    elements: { username, password },
+  } = e.currentTarget;
+  console.log(username.value, password.value);
+});
+
+// ========================================== События клавиатуры =============================
+
+document.addEventListener('keydown', e => console.log('Keydown', e));
+document.addEventListener('keyup', e => console.log('Keyup', e));
+
+// ===================================== Свойство key и code ================================
+
+document.addEventListener('keydown', e => {
+  console.log('Key', e.key);
+  console.log('Code', e.code);
+});
+
+// =============================================================
+
+const clearLogBtn = document.querySelector('.clear');
+const logList = document.querySelector('.log__list');
+let keyPressCounter = 1;
+
+console.log(clearLogBtn);
+
+document.addEventListener('keydown', logMessage);
+document.addEventListener('keyup', logMessage);
+
+clearLogBtn.addEventListener('click', reset);
+
+function logMessage({ type, key, code }) {
+  const markUp = `<div class="log__item">${keyPressCounter}
+  <ul>
+  <li>Event: ${type}</li>
+  <li>Key: ${key}</li>
+  <li>Code: ${code}</li>
+  </ul>
+  </div>`;
+  logList.insertAdjacentHTML('afterbegin', markUp);
+  if (type === 'keyup') {
+    incrementKeyPressCounter();
+  }
+}
+
+function reset() {
+  keyPressCounter = 1;
+  logList.innerHTML = '';
+}
+
+function incrementKeyPressCounter() {
+  keyPressCounter += 1;
+}
+
+// ========================================= Клавиши модификаторы =========================
+
+document.addEventListener('keydown', e => {
+  e.preventDefault();
+  if ((e.ctrlKey || e.metaKey) && e.code === 'KeyS') {
+    console.log('Ctrl+S or Command+S');
+  }
+});

@@ -611,6 +611,289 @@
         заблокировать построение DOM и выполнятся в произвольном порядке.
       </p>
       <img src="./images/async.jpg" alt="" class="img" />
+      <h3 class="title">События</h3>
+      <p>
+        События - это сигнал браузера о том, что на странице браузера что то
+        произошло. События используются для реакции на действия пользователя и
+        выполнение кода связаного с определенными событиями. Существует
+        множество видов событий: мышь клавиатуры, элементы форм, загрузки
+        изображений, буфер обмена, изменение стадий css анимаций или перехода,
+        изменение размеров окна и многое другое. <br />
+        Одно действие может вызывать несколько событий. К примеру клик вызывает
+        сначала mousedown а затем mouseup и click. В тех случаях когда одно
+        действие генерирует несколько событий их порядок фиксирован
+        mousedown->mouseup->click. Для того чтобы элемент реагировал на действие
+        пользователя, ему необходимо добавить слушателя (обработчика событий).
+        Т.е функция, которая будет вызвана, как только событие произошло. <br />
+        <b>Метод addEventListener()</b><br />
+        Добавляет слушателя событий на элемент
+      </p>
+      <p class="bg">element.addEventListener(event, handler, options)</p>
+      <ul>
+        <li>event - имя события, строка, например click</li>
+        <li>
+          handler - callback функция, которая будет вызвана при наступлении
+          события
+        </li>
+        <li>
+          options - необязательный объект параметров с расширеными настройками
+        </li>
+      </ul>
+      <p class="bg">
+        const button = document.querySelector('.my__button'); <br />
+        button.addEventListener('click', () => console.log('Hello world'));
+      </p>
+      <p>
+        Для callback желательно использовать отдельную функцию и передавать на
+        нее ссылку. Именуемая функция увеличивает читабельность кода
+      </p>
+      <p class="bg">
+        const handelClick = () => console.log("Hello World"); <br />
+        button.addEventListener("click", handelClick);
+      </p>
+      <p>
+        На одном элементе может находится любое колличество обработчиков
+        событий, даже событий одного типа. Callbacks будут вызываться в порядке
+        регистрации в коде
+      </p>
+      <div>
+        <button class="btn" id="single">Single click</button>
+        <button class="btn" id="multiple">Multiple click</button>
+      </div>
+      <p class="bg">
+        const singleBtn = document.querySelector('#single'); <br />
+        const handleClick = () => console.log('Single click');<br />
+        singleBtn.addEventListener('click', handleClick);<br /><br />
+
+        const multipleBtn = document.querySelector('#multiple');<br />
+        const firstCallback = () => console.log('First callback');<br />
+        const secondCallback = () => console.log('Second callback');<br />
+        const thirdCallback = () => console.log('Third callback');<br />
+        multipleBtn.addEventListener('click', firstCallback);<br />
+        multipleBtn.addEventListener('click', secondCallback);<br />
+        multipleBtn.addEventListener('click', thirdCallback);<br />
+      </p>
+      <p>
+        <b>Метод removeEventListener()</b><br />
+        Удаляет событие слушателя с элемента. Аргументы аналогичные
+        addEventListener()
+      </p>
+      <p class="bg">element.removeEventListener(event, handler, options)</p>
+      <p>
+        Для удаления нужно передать ссылку именну на ту callback функцию,
+        которая была назначена на addEventListener(). В таком случае для
+        callback используют отдельную функцию и передают ее по ссылке
+      </p>
+      <div>
+        <button class="btn add-js">Add</button>
+        <button class="btn remove-js">Remove</button>
+        <button class="btn target-js">Click</button>
+      </div>
+      <p class="bg">
+        const addListenerBtn = document.querySelector('.add-js'); <br />
+        const removeListenerBtn = document.querySelector('.remove-js');<br />
+        const btn1 = document.querySelector('.target-js');<br /><br />
+
+        const handleClick1 = () => console.log('Event callback on click');<br /><br />
+
+        addListenerBtn.addEventListener('click', () => {<br />
+        btn1.addEventListener('click', handleClick1);<br />
+        console.log('Click event listener added to btn');<br />
+        });<br />
+        removeListenerBtn.addEventListener('click', () => {<br />
+        btn1.removeEventListener('click', handleClick1);<br />
+        console.log('Click event listener remove from btn');<br />
+        });<br />
+      </p>
+      <p>
+        <b>Ключевое слово this</b><br />
+        Если callback будет использовать функцию this, по умолчанию контекст
+        внутри нее будет ссылаться на DOm элемент, на котором висит слушатель
+      </p>
+      <p class="bg">
+        const mango = { <br />
+        username: 'Mango',<br />
+        showUserName() {<br />
+        console.log(this);<br />
+        console.log(`Мое имя пользователя: ${this.username}`);<br />
+        },<br />
+        };<br />
+        const btn2 = document.querySelector('.btn2');<br />
+        mango.showUserName();<br />
+        // Плохой пример. this будет ссылаться на btn2 если использовать
+        showUserName() в качестве callback<br />
+        // btn2.addEventListener("click", mango.showUserName());<br /><br />
+
+        btn2.addEventListener('click', mango.showUserName.bind(mango));<br />
+      </p>
+      <p>
+        <b>Объект событий</b><br />
+        Чтобы обработать событие недостаточно знать о том, что это клик и
+        нажатие клавиш, могут потребоваться детали. К примеру текущее значение
+        тесктового поля, элемент, на котором произошло событие, встроенные
+        методы и другое. Каждое событие это объект, содержащий информацию о
+        деталях события и автоматически передается первым аргументам в
+        обработчик события. Все события происходят из базового класса Event
+      </p>
+      <p class="bg">
+        const handleClick3 = event => console.log(event); <br />
+        button.addEventListener("click", handleClick3);
+      </p>
+      <p>
+        Параметр event это и есть объект события, который автоматически
+        передается первым аргументом при вызове callback функции. Мы можем
+        называть его как угодно, но как правило его объявляют как: e, evt,
+        event. <br />
+        Некоторые свойства объекта событий
+      </p>
+      <ul>
+        <li>event.type - тип события</li>
+        <li>
+          event.currentTarget - элемент, на котором выполняется обработчик
+          событий
+        </li>
+      </ul>
+      <div>
+        <button class="btn btn3" type="button">Click</button>
+      </div>
+      <p class="bg">
+        const button3 = document.querySelector('.btn3'); <br />
+        const handleClick4 = e => {<br />
+        console.log('Event', e);<br />
+        console.log('Event type', e.type);<br />
+        console.log('Event current target', e.currentTarget);<br />
+        };<br />
+        button3.addEventListener('click', handleClick4);<br />
+      </p>
+      <p>
+        <b>Действия браузера по умолчанию</b><br />
+        Некоторые события вызывают действия браузера встроенные по умолчанию в
+        качестве реакции на определенный тип события. Например клик на ссылку
+        инициирует переход на новый адрес, указаный в href, а отправка формы
+        перезагружает страницу. Чаще это поведение нежелательно и его необходимо
+        отменить. Для отмены действий браузера по умолчанию у объекта событий
+        есть стандартный метод <b>preventDefault()</b>
+      </p>
+      <form class="register__form" autocomplete="off">
+        <input type="text" name="username" placeholder="Username" />
+        <input type="password" name="password" placeholder="Password" />
+        <button class="btn" type="submit">Register</button>
+      </form>
+      <p class="information">
+        const form = document.querySelector('.register__form'); <br />
+        form.addEventListener('submit', e => { <br />
+        e.preventDefault(); <br /><br />
+
+        const {<br />
+        elements: { username, password },<br />
+        } = e.currentTarget;<br />
+        console.log(username.value, password.value);<br />
+        });<br />
+      </p>
+      <h3 class="title">События клавиатуры</h3>
+      <p>
+        Существует 2 главных действия клавиатуры keydown и keyup. В отличае от
+        других событий клавиатуры обрабатывается на документе, а не на
+        конкретном элементе. Объект событий клавиатуры произошел от базового
+        класса KeybordEvent
+      </p>
+      <p class="bg">
+        document.addEventListener('keydown', e => console.log('Keydown', e));
+        <br />
+        document.addEventListener('keyup', e => console.log('Keyup', e));
+      </p>
+      <p>
+        Нажимая клавишу происходит keydown, после чего когда отпускаешь клавишу
+        происходит keyup. На практике в основном обрабатывается событие keydown,
+        посколько оно происходит быстрее keyup и пользователь раньше видит
+        результат нажатия. События keydown и keyup срабатывают при нажатии любой
+        клавиши, включая служебные ( Ctrl, Shift, Alt, Escape и т.п.).
+      </p>
+      <p class="information">
+        Раньше было еще 1 событие клавиатуры - keypress. Большинство постов на
+        форумах и блогах может еще использовать его, но будьте осторожны - оно
+        устарело и поддержка может прекратиться в любой момент.
+      </p>
+      <p>
+        <b>Свойство key и code</b><br />
+        Свойство key возвращает символ, сгенерированый нажатием клавиш учитывая
+        состояние клавиш модификаторов, например shift и текущий язык <br />
+        Свойство code возвращает код физической клавиши на клавиатуре и не
+        зависит от языка
+      </p>
+      <p class="bg">
+        document.addEventListener("keydown", e => { <br />
+        console.log("Key", e.key);<br />
+        console.log("Code", e.code);<br />
+        })
+      </p>
+      <p>
+        Наведите фокус в окно примера щелкнув мышью по нему, отслеживание
+        события клавиатуры находится на элементе document. Напечатайте что
+        нибудь и посмотрите результат
+      </p>
+      <div>
+        <button class="btn clear" type="button">Clear</button>
+        <div class="log__list"></div>
+      </div>
+      <p class="bg">
+        const clearLogBtn = document.querySelector('.clear'); <br />
+        const logList = document.querySelector('.log__list');<br />
+        let keyPressCounter = 1;<br /><br />
+
+        console.log(clearLogBtn);<br /><br />
+
+        document.addEventListener('keydown', logMessage);<br />
+        document.addEventListener('keyup', logMessage);<br /><br />
+
+        clearLogBtn.addEventListener('click', reset);<br /><br />
+
+        function logMessage({ type, key, code }) {<br />
+        const markUp = `&lt;div
+        class=&quot;log__item&quot;&gt;${keyPressCounter}<br />
+        &lt;ul&gt;<br />
+        &lt;li&gt;Event: ${type}&lt;/li&gt;<br />
+        &lt;li&gt;Key: ${key}&lt;/li&gt;<br />
+        &lt;li&gt;Code: ${code}&lt;/li&gt;<br />
+        &lt;/ul&gt;<br />
+        &lt;/div&gt;`;<br />
+        logList.insertAdjacentHTML('afterbegin', markUp);<br />
+        if (type === 'keyup') {<br />
+        incrementKeyPressCounter();<br />
+        }<br />
+        }<br /><br />
+
+        function reset() {<br />
+        keyPressCounter = 1;<br />
+        logList.innerHTML = '';<br />
+        }<br /><br />
+
+        function incrementKeyPressCounter() {<br />
+        keyPressCounter += 1;<br />
+        }<br />
+      </p>
+      <p>
+        <b>Клавиши модификаторы</b><br />
+        Для обработки клавиш комбинаций например ctrl+s или любой другой на
+        объекте событий имеется свойство ctrlKey, shiftKey, altKey, metaKey,
+        сохраняющаяя булевое значение, сигнализирущее о том, была ли зажата
+        клавиша модификатор
+      </p>
+      <p class="bg">
+        document.addEventListener("keydown", e => { <br />
+        e.preventDefault();<br />
+        if ((e.ctrlKey || e.metaKey) && e.code === "KeyS") {<br />
+        console.log("Ctrl+S or Command+S");<br />
+        }<br />
+        });
+      </p>
+      <p>
+        Некоторые комбинации клавиш могут конфликтовать поведением образователя
+        по умолчанию например ctrl+d. Необходимо стараться проэктировать систему
+        комбинации страницы чтобы она не пересекалась со встроеной в браузере.
+        Но в последнем случае поведение по умолчанию можно отменить вызвав
+        способ eventPreventDefault()
+      </p>
     </section>
     <script src="./js/moduleSix.js"></script>
     <script src="./js/DOM.js"></script>
