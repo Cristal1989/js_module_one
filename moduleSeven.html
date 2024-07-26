@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/style.css" />
+    <title>Module 7</title>
+  </head>
+  <body>
+    <section class="container">
+      <h3 class="title">Распространение событий</h3>
+      <p>
+        Распространение событий (event propagation) это термин, описывающий
+        жизненный цикл событий, который имеет три этапа - погружение, таргетиг,
+        всплывание. На практике чаще всего используют только фазу всплытия
+      </p>
+      <img src="./images/event-flow.jpg" alt="" class="img" />
+      <p>
+        Во время наступления события оно происходит через три обязательных фазы
+      </p>
+      <ul>
+        <li>
+          capturing phase (погружение) - событие начинается на window и
+          погружение проходит через все элементы предков до глубочайшего
+          целевого элемента на котором произошло действие, например click
+        </li>
+        <li>
+          target phase (таргетинг) - событие дошло до целевого элемента. Этот
+          этап содержит только уведомление элемента о том, что на нем произошло
+          действие
+        </li>
+        <li>
+          bubling phase (всплытие) - конечная фаза. Событие всплывает от
+          глубочайшего целевого элемента через все элементы предки до window
+        </li>
+      </ul>
+      <p>
+        <b>Всплытие событий</b><br />
+        Во время наступления событий обработчики сначала срабатывают на наиболее
+        вложенном элементе, на его родительском элементе, затем выше и т.д. Этот
+        процесс называется всплытием (event bubbling), потому что события
+        всплывают от внутреннего элемента вверх через всех предков до window
+      </p>
+      <img src="./images/event-bubling.jpg" alt="" class="img" />
+      <div id="parent">
+        parent
+        <div id="child">
+          child
+          <div id="descendant">descendant</div>
+        </div>
+      </div>
+      <p>
+        Всплывание гарантирует что click по #descendant вызова обработчика клика
+        если он есть, сначала на самом #descendant, затем на элементе #child,
+        далее на элементе #parent и т.д до самого window. Поэтому если в примере
+        кликнуть на #descedant последовательно выведутся alert для descedant =>
+        child => parent
+      </p>
+      <p class="bg">
+        const parent = document.querySelector('#parent'); <br />
+        const child = document.querySelector('#child');<br />
+        const descendant = document.querySelector('#descendant');<br /><br />
+
+        parent.addEventListener('click', () => console.log('Click on
+        parent'));<br />
+        child.addEventListener('click', () => console.log('Click on child'));<br />
+        descendant.addEventListener('click', () => console.log('Click on
+        descendant'));<br />
+      </p>
+      <h3 class="title">Свойство event.target</h3>
+      <p>
+        Не зависимо от того, где мы поймали событие, во время его всплытия,
+        всегда можно узнать где именно оно произошло. Самый глубокий элемент,
+        вызывающим собитие, называется целевым или исходным и доступен как
+        event.target
+      </p>
+      <ul>
+        <li>
+          event.target - это ссылка на исходный элемент, на котором произошло
+          событие в процессе всплывания оно - неизменно
+        </li>
+        <li>
+          event.currentTarget - это ссылка на текущий элемент, до которого дошло
+          всплытие, на нем выполняется обработчик событий
+        </li>
+      </ul>
+      <p>
+        Если слушатель события зарегестрирован на самом высоком элементе, то он
+        поймет все клики внутри, потому что событие будут всплывать в этот
+        элемент.
+      </p>
+      <p class="bg">
+        const parent = document.querySelector('#parent'); <br />
+        parent.addEventListener('click', e => {<br />
+        console.log('Event target: ', e.target);<br />
+        console.log('Current target: ', e.currentTarget);<br />
+        });
+      </p>
+      <p>
+        <b>Прекращение всплытия.</b> <br />Обычно события будут вплывать вверх к
+        элементу window, вызывая все обработчики на своем пути. Но любой
+        промежуточный обработчик может решить что событие полностью обработано и
+        остановить вплытие вызвав метод stopPropagation()
+      </p>
+      <p class="bg">
+        const parent = document.querySelector('#parent'); <br />
+        const child = document.querySelector('#child');<br />
+        const descendant = document.querySelector('#descendant');<br /><br />
+
+        parent.addEventListener('click', () => alert('Parent click'));<br />
+        child.addEventListener('click', () => alert('Child click'));<br />
+        descendant.addEventListener('clikc', e => {<br />
+        e.stopPropagation();<br />
+        alert('Descedant click handle');<br />
+        });<br />
+      </p>
+      <p>
+        Если элемент имеет несколько обработчиков на одно событие то даже в
+        случае прекращения всплывания все они будут выполнены. Т.е метод
+        stopPropagation() только препятствует продвижению события дальше. Если
+        необходимо полностью остановить обработку события используется метод
+        <b>stopImmediatePropagation()</b>. Он не только предотвращает всплытие
+        но и останавливает обработку события на текущем элементе
+      </p>
+      <p class="information">
+        Прекращение вплытия создает свои подводные камни, которые потом
+        приходится обходить, например аналитика использует вплытие, чтобы
+        отслеживать событие на странице.
+      </p>
+    </section>
+    <script src="./js/moduleSeven.js"></script>
+  </body>
+</html>

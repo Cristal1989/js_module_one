@@ -234,52 +234,114 @@ document.addEventListener('keyup', e => console.log('Keyup', e));
 
 // ===================================== Свойство key и code ================================
 
-document.addEventListener('keydown', e => {
-  console.log('Key', e.key);
-  console.log('Code', e.code);
-});
+// document.addEventListener('keydown', e => {
+//   console.log('Key', e.key);
+//   console.log('Code', e.code);
+// });
 
 // =============================================================
 
-const clearLogBtn = document.querySelector('.clear');
-const logList = document.querySelector('.log__list');
-let keyPressCounter = 1;
+// const clearLogBtn = document.querySelector('.clear');
+// const logList = document.querySelector('.log__list');
+// let keyPressCounter = 1;
 
-console.log(clearLogBtn);
+// console.log(clearLogBtn);
 
-document.addEventListener('keydown', logMessage);
-document.addEventListener('keyup', logMessage);
+// document.addEventListener('keydown', logMessage);
+// document.addEventListener('keyup', logMessage);
 
-clearLogBtn.addEventListener('click', reset);
+// clearLogBtn.addEventListener('click', reset);
 
-function logMessage({ type, key, code }) {
-  const markUp = `<div class="log__item">${keyPressCounter}
-  <ul>
-  <li>Event: ${type}</li>
-  <li>Key: ${key}</li>
-  <li>Code: ${code}</li>
-  </ul>
-  </div>`;
-  logList.insertAdjacentHTML('afterbegin', markUp);
-  if (type === 'keyup') {
-    incrementKeyPressCounter();
-  }
-}
+// function logMessage({ type, key, code }) {
+//   const markUp = `<div class="log__item">${keyPressCounter}
+//   <ul>
+//   <li>Event: ${type}</li>
+//   <li>Key: ${key}</li>
+//   <li>Code: ${code}</li>
+//   </ul>
+//   </div>`;
+//   logList.insertAdjacentHTML('afterbegin', markUp);
+//   if (type === 'keyup') {
+//     incrementKeyPressCounter();
+//   }
+// }
 
-function reset() {
-  keyPressCounter = 1;
-  logList.innerHTML = '';
-}
+// function reset() {
+//   keyPressCounter = 1;
+//   logList.innerHTML = '';
+// }
 
-function incrementKeyPressCounter() {
-  keyPressCounter += 1;
-}
+// function incrementKeyPressCounter() {
+//   keyPressCounter += 1;
+// }
 
 // ========================================= Клавиши модификаторы =========================
 
-document.addEventListener('keydown', e => {
-  e.preventDefault();
-  if ((e.ctrlKey || e.metaKey) && e.code === 'KeyS') {
-    console.log('Ctrl+S or Command+S');
-  }
+// document.addEventListener('keydown', e => {
+//   e.preventDefault();
+//   if ((e.ctrlKey || e.metaKey) && e.code === 'KeyS') {
+//     console.log('Ctrl+S or Command+S');
+//   }
+// });
+
+// ===================================== События элементов форм ==============================
+
+// const registerForm = document.querySelector('.form1');
+// registerForm.addEventListener('submit', handleSubmit);
+
+// function handleSubmit(e) {
+//   e.preventDefault();
+//   const form = e.target;
+//   const login = form.elements.login.value;
+//   const password = form.elements.password.value;
+//   if (login === '' || password === '') {
+//     return console.log('Заполните все поля');
+//   }
+//   console.log(`Login: ${login}, password: ${password}`);
+//   form.reset();
+// }
+
+// ============================================= Событие change ======================================
+
+const select = document.querySelector('.roll__name');
+const textSpan = document.querySelector('.text__span');
+const textValue = document.querySelector('.text__value');
+select.addEventListener('change', setOutput);
+
+function setOutput(e) {
+  const selectOptionsValue = e.currentTarget.value;
+  const selectOptionsIndex = e.currentTarget.selectedIndex;
+  const selectOptionsText = e.currentTarget.options[selectOptionsIndex].text;
+
+  textSpan.textContent = selectOptionsText;
+  textValue.textContent = selectOptionsValue;
+}
+
+// ====================================== Событие input ============================
+
+// const textInput = document.querySelector('.text__input');
+// const output = document.querySelector('.output');
+
+// textInput.addEventListener(
+//   'input',
+//   e => (output.textContent = e.currentTarget.value)
+// );
+
+// ===================================== Событие focus и blur ===========================
+
+const textInput = document.querySelector('.text__input1');
+const setFocusBtn = document.querySelector('[data-action="set"]');
+const removeFocusBtn = document.querySelector('[data-action="remove"]');
+
+setFocusBtn.addEventListener('click', () => {
+  textInput.focus();
+});
+removeFocusBtn.addEventListener('click', () => {
+  textInput.blur();
+});
+textInput.addEventListener('focus', () => {
+  textInput.value = 'Этот текст в фокусе';
+});
+textInput.addEventListener('blur', () => {
+  textInput.value = '';
 });

@@ -894,6 +894,149 @@
         Но в последнем случае поведение по умолчанию можно отменить вызвав
         способ eventPreventDefault()
       </p>
+      <h3 class="title">События элементов форм</h3>
+      <p>
+        <b>События submit</b><br />
+        Отправка формы происходит во время щелчка по кнопке с атрибутом
+        type="submit" или нажатию клавиши enter нахлдясь в любом ее текстовом
+        поле. События submit можно применить для валидации формы перед
+        отправкой, поскольку на объекте события существует много полезных
+        свойств, связаных с элементами формы. Submit формы перезагружает
+        страницу, поэтому не забывайте отменять действие по умолчанию методом
+        preventDefault.
+      </p>
+      <form class="form1" autocomplete="off">
+        <input type="text" name="login" placeholder="Login" />
+        <input type="password" name="password" placeholder="Password" />
+        <button class="btn btn4" type="submit">Register</button>
+      </form>
+      <p class="bg">
+        const registerForm = document.querySelector('.form1'); <br />
+        registerForm.addEventListener('submit', handleSubmit);<br /><br />
+
+        function handleSubmit(e) {<br />
+        e.preventDefault();<br />
+        const form = e.target;<br />
+        const login = form.elements.login.value;<br />
+        const password = form.elements.password.value;<br />
+        if (login === '' || password === '') {<br />
+        return console.log('Заполните все поля');<br />
+        }<br />
+        console.log(`Login: ${login}, password: ${password}`);<br />
+        form.reset();<br />
+        }<br />
+      </p>
+      <p>
+        <b
+          >Свойство elements DOM элемента формы содерэит объект с сылкой на все
+          элементы имеющий атрибут name. Поэтому в примере мы получаем значение
+          полей login.value и password.value</b
+        >
+      </p>
+      <h3 class="title">Событие change</h3>
+      <p>
+        Происходит после смены элемента формы для тектовых полей или text-aria
+        событие произойдет не на каждом вводе символа а после потери фокуса, что
+        не всегда удобно. Например пока вы набираете что-либо в текстовом поле
+        событие отсутствует, но как только фокус пропал произойдет событие
+        change. Для других элементов напрример select, check box или радиокнопок
+        событие change срабатывает сразу при выборе значения.
+      </p>
+      <div>
+        <p>Выбранный текст: <span class="text__span">none</span></p>
+        <p>Выбранный значение: <span class="text__value">none</span></p>
+        <p>
+          <select class="roll__name">
+            <option value="philadelphia">Philadilphia</option>
+            <option value="kalifornia">Kalifornia</option>
+            <option value="red-dragon">Red dragon</option>
+          </select>
+        </p>
+      </div>
+      <p class="bg">
+        const select = document.querySelector('.roll__name'); <br />
+        const textSpan = document.querySelector('.text__span');<br />
+        const textValue = document.querySelector('.text__value');<br />
+        select.addEventListener('change', setOutput);<br /><br />
+
+        function setOutput(e) {<br />
+        const selectOptionsValue = e.currentTarget.value;<br />
+        const selectOptionsIndex = e.currentTarget.selectedIndex;<br />
+        const selectOptionsText =
+        e.currentTarget.options[selectOptionsIndex].text;<br /><br />
+
+        textSpan.textContent = selectOptionsText;<br />
+        textValue.textContent = selectOptionsValue;<br />
+        }
+      </p>
+      <p class="information">
+        Обрати внимание на полезное свойство при работе с элементом select в
+        свойтвах value, selectedIndex, options
+      </p>
+      <h3 class="title">Событие input</h3>
+      <p>
+        Происходит только на текстовых полях и text-aria и создается каждый раз
+        при изменении значения элемента, не дожидаясь потере фокуса. На практике
+        input это самое главное событие при работе с текстовыми полями форм.
+      </p>
+      <input type="text" class="text__input" />
+      <p>Значение текстового поля: <span class="output"></span></p>
+      <p class="bg">
+        const textInput = document.querySelector('.text__input'); <br />
+        const output = document.querySelector('.output');<br /><br />
+
+        textInput.addEventListener(<br />
+        'input',<br />
+        e => (output.textContent = e.currentTarget.value)<br />
+        );
+      </p>
+      <h3 class="title">Событие focus и blur</h3>
+      <p>
+        Элемент получает фокус во емя щелчка мыши или клавишей tab. Момент
+        получения и потери фокуса очень важен, получая фокус мы можем загрузить
+        данные для автозаполнения, начать отслеживать изменения и т.д. При
+        потере фокуса проверить введенные данные. Во время фокусировки элемента
+        происходит событие focus, а когда фокус исчезает, например пользователь
+        кликает в другую область экрана, происходит событие blur. Активировать
+        или отменить фокус можно программой вызвав в коде для элемента
+        одноименные методы focus() и blur()
+      </p>
+      <div>
+        <button class="btn" type="button" data-action="set">Focus</button>
+        <button class="btn" type="button" data-action="remove">
+          Remove focus
+        </button>
+        <input type="text" class="text__input1" />
+      </div>
+      <p class="bg">
+        const textInput = document.querySelector('.text__input1'); <br />
+        const setFocusBtn = document.querySelector('[data-action="set"]');<br />
+        const removeFocusBtn =
+        document.querySelector('[data-action="remove"]');<br /><br />
+
+        setFocusBtn.addEventListener('click', () => {<br />
+        textInput.focus();<br />
+        });<br />
+        removeFocusBtn.addEventListener('click', () => {<br />
+        textInput.blur();<br />
+        });<br />
+        textInput.addEventListener('focus', () => {<br />
+        textInput.value = 'Этот текст в фокусе';<br />
+        });<br />
+        textInput.addEventListener('blur', () => {<br />
+        textInput.value = '';<br />
+        });<br />
+      </p>
+      <p>
+        Фокус может быть только на одном элементе страницы за еденицу времени и
+        текущий элемент, на котором находится фокус доступен как
+        document.activeElement
+      </p>
+      <p class="information">
+        Многие элементы не могут получить фокусировку, к примеру если кликнуть
+        по div то фокусировка на нем не произойдет, потому что это не
+        интерактивный элемент
+      </p>
     </section>
     <script src="./js/moduleSix.js"></script>
     <script src="./js/DOM.js"></script>
