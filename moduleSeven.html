@@ -127,7 +127,516 @@
         приходится обходить, например аналитика использует вплытие, чтобы
         отслеживать событие на странице.
       </p>
+      <h3 class="title">Делегирование событий</h3>
+      <p>
+        Всплывание позволяет раелизовать один из самых полезных приемов -
+        делегирование событий. Он заключается в том, что если есть группа
+        элементов, событие которое нужно обработать, добавляется один обработчик
+        на их общего предка вместо того, чтобы добавлять обработчик каждому
+        элементу. Используя свойство e.target можно получить ссылку на целевой
+        элемент, понять на каком именно дочернем элементе произошло событие и
+        обработать его. <br /><br />
+        Рассмотрим делегирование на примере. Создадим элемент div, добавляем к
+        нему любое кол-во кнопок, например 100 и регистрируем каждому слушателю
+        событие клика с функцией handlButtonClick
+      </p>
+      <img src="./images/before-delegation.jpg" alt="" class="img" />
+      <p>
+        Проблема в том, что у нас есть 100 слушателей событий. Все они указывают
+        на одну и ту же функцию слушателя, но слушателей 100. Что будет если мы
+        переместим всех слушателей на общего предка элемента div?
+      </p>
+      <img src="./images/after-deligation.jpg" alt="" class="img" />
+      <p>
+        Теперь есть только один обработчик события - клика и браузера, не нужно
+        хранить в памяти 100 разных слушателей. Т.е делегирование сводится к
+        трем простым шагам:
+      </p>
+      <ul>
+        <li>
+          Определить совместного предка группы для элементов для отслеживания
+          событий
+        </li>
+        <li>
+          Зарегестрировать на предковом элементе обработчика событий, который мы
+          хотим отслеживать из группы элементов
+        </li>
+        <li>
+          В обработчике использовать event.target для обработки целевого
+          элемента
+        </li>
+      </ul>
+      <p>
+        Такой подход облегчает инициализацию слушателей однотипных элементов.
+        Можно добавлять, удалять или изменять элементы, при этом не нужно
+        вручную добавлять или удалять обработчик событий.
+      </p>
+      <h3 class="title">Палитра цветов</h3>
+      <p>
+        Будем создавать цветовую палитру с возможностью выбора цветов по клику и
+        отображением выбранного цвета. Вместо того чтобы назначить обработчик
+        каждому элементу палитры, которых можеть быть очень много, повесим один
+        слушатель на общего предка div.color-palette. В обработчике события
+        клика используем event.target, чтобы получить элемент на котором
+        произошло событие и связвный с ним цвет, хранящийся в атрибуте
+        data-color
+      </p>
+      <p class="output">Select color: -</p>
+      <div class="color-palette"></div>
+      <p class="information">
+        Обязательно проверяем цель клика, чтобы это точно была кнопка, потому
+        что мы не хотим обрабатывать клики в элемент контейнере. Для проверки
+        типа элемента используем свойство nodeName
+      </p>
+      <h3 class="title">Throttle и debounce</h3>
+      <p>
+        Достаточно часто необходимо обработать изменение размера окна, скролла,
+        перемещение мыши или текстового ввода пользователя. Это может быть
+        сортировка коллекции и отображение результата, анимация элемента,
+        манипуляция с DOM деревом и прочее. Все это улучшит UX (user
+        experience), но к сожелению имеет большую нагрузку на браузер, поскольку
+        обработчики событий срабатывают слишком часто. Такие события
+        неофициально называют "chatty events". <br />
+        Например если добавить слушателя событий к скроллу во время прокрутки
+        сраницы мышкой можно вызвать около 30 событий в секунду. Медленная
+        прокрутка (swipe) в смартфоне может вызвать до 100 событий в секунду.
+        Если обработчик событий скролла выполняет тяжелые вычисления и другие
+        манипуляции событий DOM гарантировано возникнут проблемы с
+        производительностью
+      </p>
+      <p class="cta">Scroll me</p>
+      <div class="event-counter">
+        <div class="box">
+          <p>Numbers of scroll events</p>
+          <span class="output1">0</span>
+        </div>
+        <div>
+          <button type="button" class="btn scroll-btn">Reset</button>
+        </div>
+      </div>
+      <p>
+        <b>throttle и debonce</b><br />
+        Это два похожих но разных по поведению приема, позволяющих
+        контролировать колличество раз, которые мы позволяем выполнять функции
+        со временем. Используем их реализацию из библиотеки Lodash. <br />
+        <b>Подключение библиотеки</b><br />
+        <b>CDN(content delivery network)</b> - это географически распределенная
+        сетевая инфраструктура, обеспечивающая быструю доставку контента
+        пользователем веб сервисов и сайтов. Серверы входящие в CDN
+        географически расположены таким образом чтобы сделать время ответа для
+        пользователей сайта/сервиса минимальными. <br />
+        Подключим к проэту библиотеку Lodash через CDN. Для этого используем
+        сервис CDNJS.com и добавим ссылку на скрипт библиотеки в HTML документе.
+      </p>
+      <p class="bg">
+        &lt;!DOCTYPE html &gt; <br />
+        &lt; html lang = &quot;en&quot; &gt; <br />
+        &lt; head &gt; <br />
+        &lt; meta charset = &quot;UTF-8&quot; /&gt; <br />
+        &lt; title &gt; Название документа &lt;/ title &gt; <br />
+        &lt;/ head &gt; <br />
+        &lt; body &gt; <br />
+        &lt;!-- HTML-разметка --&gt;<br /><br />
+
+        &lt;!-- Файл скрипта библиотеки Lodash --&gt; <br />
+        &lt; script <br />
+        async <br />
+        src =
+        &quot;https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js&quot;
+        <br />
+        integrity =
+        &quot;sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh<br />+quCY7yefSmlkQw1ANQ==&quot;
+        <br />
+        crossorigin = &quot;anonymous&quot; <br />
+        referrerpolicy = &quot;no-referrer&quot; <br />
+        &gt; &lt;/ script &gt; <br />
+        &lt;!-- Ваш файл скрипта --&gt; <br />
+        &lt; script defer src = &quot;path/to/script.js&quot; &gt; &lt;/ script
+        &gt;<br />
+        &lt;/ body &gt; <br />
+        &lt;/ html &gt;<br />
+      </p>
+      <p>
+        Теперь мы можем получить доступ к библиотеке в нашем скрипте. При
+        подключение к библиотеке CDN к объекту window добавляется свойство, в
+        котором хранится то, что предоствляет библиотека. Имя этого свойства
+        уникально для библиотеки и описано в документации. Для Lodash это символ
+        "_.". Для проверки используется метод add() который просто добаляет 2
+        числа
+      </p>
+      <p class="bg">
+        const result = _.add(1,22); <br />
+        console.log(result)//23
+      </p>
+      <p>
+        <b>throttle</b><br />
+        Прием throttle контролирует количество раз, котрое функция может быть
+        вызвана в течении определенного промежутка времени. Т.е позволяет
+        вызвать функцию не чаще одного раза в N милисикунд, гарантируя ее
+        регулярное выполнение
+      </p>
+      <img src="./images/throttle.jpg" alt="" class="img" />
+      <p>
+        Используя throttle мы не контролируем как часто браузер будет
+        генерировать события. Мы всего навсего берем контроль над частотой
+        выполнения функции обработчика событий
+      </p>
+      <p class="bg">
+        document.addEventListener("scroll", _.throttle(()=> { <br />
+        console.log("Вызов обработчика прокрутки каждые 300ms");<br />
+        }, 300))<br />
+      </p>
+      <p>
+        Реализация из библиотеки Lodash ожидает первым аргументом функцию,
+        которую необходимо тормозить а вторым количество милисекунд. Возвращает
+        новую функцию для передачи события в слушатель.
+      </p>
+      <p class="cta">Scroll me</p>
+
+      <div class="event-counter">
+        <div class="box">
+          <p>No timing function</p>
+          <span class="output1 vanilla">0</span>
+        </div>
+
+        <div class="box">
+          <p>Throttled</p>
+          <span class="output1 throttled">0</span>
+        </div>
+      </div>
+      <p>
+        <b>Прием debounce</b><br />
+        Гарантирует что функция будет вызвана только в том случае если между
+        событиями будет N милисекундная пауза. Например пока пользователь
+        скролит страницу функция не будет вызвана, но как только он перестал
+        скролить, функция будет вызвана через 300ms. Если скролл возобновится
+        раньше чем через 300ms после паузы функция не будет вызвана.
+      </p>
+      <img src="./images/throttle1.jpg" alt="" class="img" />
+      <p>
+        Используя debounce мы не управляем тем, как часто браузер будет
+        генерировать события, а всего навсего берем контроль над частотой
+        выполнения функции обработчика событий
+      </p>
+      <p class="bg">
+        document.addEventListener("scroll", _.debounce(()=> { <br />
+        console.log("Вызов обработчика прокрутки после 300ms паузы");<br />
+        }, 300))<br />
+      </p>
+      <p class="cta">Scroll me</p>
+
+      <div class="event-counter">
+        <div class="box">
+          <p>No timing function</p>
+          <span class="output1 vanilla">0</span>
+        </div>
+
+        <div class="box">
+          <p>Throttled</p>
+          <span class="output1 throttled">0</span>
+        </div>
+
+        <div class="box">
+          <p>Debounce</p>
+          <span class="output1 debounce">0</span>
+        </div>
+      </div>
+      <p>
+        <b>Режим debounce</b><br />
+        По умолчанию метод debounce работает в режиме, когда функция вызывается
+        через N милисекунд паузы между потоками событий. Этот режим называется
+        trailing age. Существуют задачи когда функцию нужно вызвать сразу при
+        наступлении первого события в потоке, а затем игнорировать все
+        последующие события до паузы между ними, например 300ms. На старте след
+        потока событий это поведение повторяется. Такой режим называется leading
+        age.
+      </p>
+      <img src="./images/leading-debounce.jpg" alt="" class="img" />
+      <p>
+        Методу debounce() библиотеке lodash можно передать необязательный третий
+        аргумент - объект параметров, содержащий 2 свойства - leading(по
+        умолчанию false) и trailing (по умолчанию true). Эти насройки изменяют
+        режим и указывают должна ли функция запускаться в начале потока событий
+        или в конце после паузы
+      </p>
+      <p class="bg">
+        document.addEventListener( <br />
+        'scroll',<br />
+        _.debounce(<br />
+        () => {<br />
+        console.log('Прослушка каждый раз при скролле');<br />
+        },<br />
+        300,<br />
+        {<br />
+        leading: true,<br />
+        trailing: false,<br />
+        }<br />
+        )<br />
+        );<br />
+      </p>
+      <p>
+        На практике режим leading может применяться, например, если необходимо
+        выполнить функцию отправки запроса на сервер при первом нажатии кнопки,
+        после чего игнорировать все последующие клики до паузы. В примере
+        реализован debounce в обоих режимах событиях scroll
+      </p>
+      <p class="cta">Scroll me</p>
+
+      <div class="event-counter">
+        <div class="box">
+          <p>No timing function</p>
+          <span class="output2 vanilla2">0</span>
+        </div>
+
+        <div class="box">
+          <p>Throttled</p>
+          <span class="output2 throttled2">0</span>
+        </div>
+
+        <div class="box">
+          <p>Trailing Debounce</p>
+          <span class="output2 trailing2">0</span>
+        </div>
+        <div class="box">
+          <p>Leading Debounce</p>
+          <span class="output2 leading2">0</span>
+        </div>
+      </div>
+      <h3 class="title">Отложенная загрузка</h3>
+      <p>
+        Веб страница содержит болшее кол-во изображений увеличивающих размер
+        страницы и влиящие на скорость их загрузки. Большинство изображений
+        находятся за пределами первого экрана (за кадром - below the fold),
+        поэтому пользователь видит их только после прокрутки страницы. Это
+        означает что вы, возможно, скачиваете то, что пользователь никогда не
+        увидит, но потратит на это время. Загрузка некритического контента так
+        же разряжает аккум моб устройств и расходует другие системные ресурсы
+      </p>
+      <img src="./images/page-fold.jpg" alt="" class="img" />
+      <p>
+        Сроки above the fold (в кадре) и below the fold (за кадром) пришли со
+        времен до появления цифровых технологий. Если вы когда нибудь покупали
+        газету в киоске, то как правило складывали их пополам, чтобы прохожие
+        могли видеть только верхнюю половину страницы. Если им не понравится что
+        они увидят, они пройдут мимо. Вот почему так важно размещать верхний
+        контент верхней части страницы. <br />
+        <b>Отложенная загрузка (lazy loading)</b> - это прием, который
+        откладывает загрузку некритических ресурсов при загрузке страницы.
+        Вместо этого некритические ресурсы загружаются только в случае
+        необходимости. Снижает первоначальный вес ресурсов, который необходимо
+        загрузить для отображения страницы. Использование системных ресурсов
+        повышает время загрузки и последующего рендера. Все это положительно
+        сказывается на производительности.
+      </p>
+      <ul>
+        <li>
+          Вы попадаете на страницу и начинаете прокручивать ее, читая содержимое
+        </li>
+        <li>
+          В какой-то момент вы прокручиваете страницу к изображению заглушки
+        </li>
+        <li>Изображение-заглушка внезапно меняется на подлинное изображение</li>
+      </ul>
+      <p>
+        <b>Loading</b><br />
+        Раньше разработчикам приходилось полагаться только на возможности JS.
+        Современные браузеры могут это делать без JS, но к сожелению не все.
+        HTML атрибут loading тега img поддерживается нативно во всех современных
+        браузерах кроме сафари и позволяют браузеру отложить загрузку
+        изображений за кадром, пока пользователь не прокрутит к ним страницу.
+      </p>
+      <p class="bg">
+        &lt;img src=&quot;my-image.jpg&quot; loading=&quot;lazy&quot;
+        alt=&quot;Image description&quot; /&gt;
+      </p>
+
+      <ul>
+        Поддерживает 3 значения
+        <li>lazy - браузер выполнит отложенную загрузку изображений</li>
+        <li>
+          eager - изображение будет загружено при первой возможности, т.е без
+          отложенной загрузки
+        </li>
+        <li>
+          auto - браузер сам определяет отложенная загрузка или нет, значение по
+          умолчанию
+        </li>
+      </ul>
+      <p>
+        Мы не можем узнать или изменить поведение и механизм определения времени
+        отложенной загрузки изображения. Главное что браузер загрузит такие
+        изображения незадолго до того, как они попадут в область просмотра.
+        <br />
+        Откройте вкладку network в инструментах разработчика и выберете фильтр
+        img для отображения только загрузки изображений. После этого
+        прокручивайте пример и наблюдайте как будут загружатся закадровые
+        изображения. Браузеры поддерживающие атрибут loading будут загружать
+        изображения отложено
+      </p>
+      <img
+        src="https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=960"
+        loading="lazy"
+        alt="Close-Up Photography of Sleeping Tabby Cat"
+        width="340"
+      />
+
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad fugiat,
+        error quisquam alias eaque officia cum quasi enim libero a molestiae
+        repudiandae repellat deserunt debitis deleniti vel accusantium. Aut enim
+        doloremque ullam quibusdam consequatur in repellendus beatae? Aspernatur
+        sequi fugit vero provident ea
+      </p>
+
+      <img
+        src="https://images.pexels.com/photos/2558605/pexels-photo-2558605.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=960"
+        loading="lazy"
+        alt="Photo of Grey Tabby Kitten Lying Down"
+        width="340"
+      />
+
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad fugiat,
+        error quisquam alias eaque officia cum quasi enim libero a molestiae
+        repudiandae repellat deserunt debitis deleniti vel accusantium. Aut enim
+        doloremque ullam quibusdam consequatur in repellendus beatae? Aspernatur
+        sequi fugit vero provident
+      </p>
+
+      <img
+        src="https://images.pexels.com/photos/1440403/pexels-photo-1440403.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=960"
+        loading="lazy"
+        alt="Orange Kitten"
+        width="340"
+      />
+
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad fugiat,
+        error quisquam alias eaque officia cum quasi enim libero a molestiae
+        repudiandae repellat d
+      </p>
+
+      <img
+        src="https://images.pexels.com/photos/2817421/pexels-photo-2817421.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=960"
+        loading="lazy"
+        alt="Photo of Tabby Cat Sleeping On Chair"
+        width="340"
+      />
+
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad fugiat,
+        error quisquam alias eaque officia cum quasi enim libero a molestiae
+        repudiandae repellat deserunt debitis deleniti vel accusantium. Aut enim
+        doloremque ullam quib
+      </p>
+
+      <img
+        src="https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=960"
+        loading="lazy"
+        alt="Brown Cat With Green Eyes"
+        width="340"
+      />
+
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad fugiat,
+        error quisquam alias eaque officia cum quasi enim libero a molestiae
+        repudiandae repellat deserunt debitis deleniti vel accusantium. Aut enim
+        doloremque ulla
+      </p>
+
+      <img
+        src="https://images.pexels.com/photos/3635550/pexels-photo-3635550.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=960"
+        loading="lazy"
+        alt="Close-up Photo of Grey and Brown Cat"
+        width="340"
+      />
+
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad fugiat,
+        error quisquam alias eaque officia cum quasi enim libero a molestiae
+        repudiandae repellat deserunt debitis deleniti vel accusantium. Aut enim
+        doloremqu
+      </p>
+
+      <img
+        src="https://images.pexels.com/photos/57416/cat-sweet-kitty-animals-57416.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=960"
+        loading="lazy"
+        alt="Close-Up Photo of Yellow and White Cat"
+        width="340"
+      />
+
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad fugiat,
+        error quisquam alias eaque officia cum quasi enim libero a molestiae
+        repudiandae repellat deserunt debitis deleniti vel accusantium. Aut enim
+        doloremque ullam quibusdam consequatur in repellendus beatae? Aspernatur
+        sequi fugit vero provi
+      </p>
+      <p>
+        <b>Lazysizes</b><br />
+        Чтобы обеспечить кроссбраузерность т.е совместимость с более старыми
+        браузерами или еще не поддерживающих это нативно можно использовать ряд
+        существующих JS библиотек. Один из самых популярных это это lazysizes ,
+        vanilla-lazyload и lozad.js . Выбор библиотеки сводится к набору
+        возможности из личных предпочтений. Разберем библиотеку lazysizes.
+        Первое что необходимо сделать - это подключить библиотеку CDN. <br />
+        Всем изображениям, котрые необходимо загружать отложенно мы зададим
+        класс lazyload и заменяем атрибут src на data-src, это нужно библиотеке
+        lazysizes для правильной работы
+      </p>
+      <p class="bg">
+        &lt;img class=&quot;lazyload&quot;
+        data-src=&quot;path/to/my-image.jpg&quot; alt=&quot;Generic alt&quot;
+        /&gt;
+      </p>
+      <p>
+        Пока загружаемое изображение можно показывать заполнитель (изображения
+        ниже) будет низкого качества. Эта техника называется LQIP (low quality
+        image placeholder). Существует много вариантов реализации LQIP, но для
+        начала достаточно будет показать один стандартный заполнитель вместо
+        всех изображений. Для этого добавим атрибут scr, значение которого будет
+        ссылка изображения заполнителя
+      </p>
+      <p class="bg">
+        &lt;img <br />
+        class=&quot;lazyload&quot; <br />
+        src=&quot;path/to/lqip-placeholder.jpg&quot; <br />
+        data-src=&quot;path/to/my-image.jpg&quot; <br />
+        alt=&quot;Generic alt&quot;<br />
+        /&gt;
+      </p>
+      <p>
+        Когда изображение было загружено библиотека lazysizes добавляет элемент
+        класса lazyload. Это можно использовать для применения css эффектов в
+        момент загрузки изображения.
+      </p>
+      <p class="bg">
+        .blur-up { <br />
+        filter: blur(5px);<br />
+        transition: filter 400ms;<br />
+        }<br /><br />
+
+        .blur-up.lazyloaded {<br />
+        filter: blur(0);<br />
+        }<br />
+      </p>
+      <p>После объявлерния стилей добавляется класс blur-up тегом img</p>
+      <p class="bg">
+        &lt;img <br />
+        class=&quot;lazyload blur-up&quot;<br />
+        src=&quot;path/to/lqip-placeholder.jpg&quot;<br />
+        data-src=&quot;path/to/my-image.jpg&quot;<br />
+        alt=&quot;Generic alt&quot;<br />
+        /&gt;<br />
+      </p>
     </section>
     <script src="./js/moduleSeven.js"></script>
+    <script src="./js/lodash.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"
+      integrity="sha512-q583ppKrCRc7N5O0n2nzUiJ+suUv7Et1JGels4bXOaMFQcamPk9HjdUknZuuFjBNs7tsMuadge5k9RzdmO+1GQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </body>
 </html>
