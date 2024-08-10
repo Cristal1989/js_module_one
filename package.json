@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node test.js"
+    "start": "node js/main.js"
   },
   "author": "Dima",
   "license": "ISC",
   "dependencies": {
+    "joi": "^17.13.3",
+    "shortid": "^2.2.16",
     "validator": "^13.12.0"
   }
 }
