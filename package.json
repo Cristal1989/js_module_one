@@ -10,7 +10,9 @@
   "author": "Dima",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.7",
     "joi": "^17.13.3",
+    "postlist": "^1.0.6",
     "shortid": "^2.2.16",
     "validator": "^13.12.0"
   }
