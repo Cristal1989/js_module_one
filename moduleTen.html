@@ -719,8 +719,430 @@
         элементов в одной группе. Когда бэкэнд возвращает не кол-во доступных
         страниц а общее кол-во элементов доступных в коллекции.
       </p>
+      <h3 class="title">CRUD</h3>
+      <p>Для взамодействия с ресурсами бэкэнда используется четыре операции:</p>
+      <ul>
+        <li><b>Создание (create)</b></li>
+        <li><b>Чтение (read)</b></li>
+        <li><b>Обновление (update)</b></li>
+        <li><b>Удаление (delete)</b></li>
+        Для каждого из них определен стандартный HTTP метод
+      </ul>
+      <p>
+        <b>Описание метода</b><br />
+        POST операция create - создать новый ресурс. <br />
+        GET операция read - получить набор ресурсов или один ресурс по
+        индификатору <br />
+        PUT и PATCH операция update - обновить ресурс по индификатору. <br />
+        DELETE операция delete - удалить ресурс по индификатору
+      </p>
+      <p>
+        <b>Чтение</b><br />
+        HTTP метод GET используется для получения существующих данных. <br />
+        Метод fetch() должен отпралять на сервер get запрос без тела. Бэкэнд
+        после получения запроса обрабатывает его и в ответе вернет необходимый
+        ресурс. <br />
+        Получим массив всех постов. С этой целью обращаемся к ресурсу /posts
+        описаному в документации бэкэнду. Метод fetch() по умолчанию делает get
+        запрос, поэтому необязательно переопределять опции запроса.
+      </p>
+      <p class="bg">
+        fetch('https://jsonplaceholder.typicode.com/posts') <br />
+        .then(response => response.json())<br />
+        .then(posts => console.log(posts))<br />
+        .catch(error => console.log(error));<br />
+      </p>
+      <p>
+        Получим 1 пост по индификатору (id), добавив его к ресурсу
+        /posts/:postid. Последняя часть этого пути называется динамическим
+        параметром и в документации описывается как /resurse/:params. Ресурс не
+        меняется, это путь в целую коллекцию, а значение параметра меняется для
+        каждого его элемента.
+      </p>
+      <p class="bg">
+        const postId = 1; <br /><br />
+
+        fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)<br />
+        .then(response => response.json())<br />
+        .then(posts => console.log(posts))<br />
+        .catch(error => console.log(error));<br />
+      </p>
+      <p>
+        <b>CREATE</b><br />
+        Метод post() используется для добавления нового ресурса. Метод fetch()
+        должен отправлять пост запрос на сервер в теле которого будет объект с
+        полями after и body, индификатор будет автоматически создан базой
+        данных. Результатом запроса будет объект добавленный в базу данных
+      </p>
+      <p class="bg">
+        const postToAdd = { <br />
+        author: "Athor Name",<br />
+        body: "Create is awesome"<br />
+        };<br />
+        const options = {<br />
+        method: "POST",<br />
+        body: JSON.stringify(postToAdd),<br />
+        headers: {"contentType": "application/json"}<br />
+        }<br />
+        fetch('https://jsonplaceholder.typicode.com/posts', options)<br />
+        .then(response => response.json())<br />
+        .then(posts => console.log(posts))<br />
+        .catch(error => console.log(error));<br />
+      </p>
+      <p>
+        Делаем запрос на создание поста обращаясь к ресурсу /posts но в
+        настройках метод fetch() меняем HTTP метод на post. Таким образом бэкэнд
+        уже знает что нужно не прочесть уже существующий, а создать новый ресурс
+        в этой коллекции <br />
+        Тело запроса должно быть строчкой т.к протокол HTTP передает все как
+        текст. При передачи сложных типов данных их необходимо перевести в
+        строку методом JSON.stringify(). Укажем заголовок "content type"
+        уточняющий для бэкэнд тип передаваемых данных
+      </p>
+      <p class="bg">
+        { <br />
+        "id": 1,<br />
+        "author": "Author Name",<br />
+        "content": "Text Content" <br />};
+      </p>
+      <p>
+        <b>UPDATE</b>
+        Метод PATCH и PUT используется для обновления существующих данных. Какой
+        метод использовать будет написано в документации бэкэнда. Метод fetch()
+        должен отправлять на сервер запрос в котором необходимо в теле объекта
+        указать поля для изменений. Путь указывает в какой коллекции и какой
+        элемент мы хотим обновить. Бэкэнд после получения запроса обрабатывает
+        его и в ответе вернет обновленный ресурс
+      </p>
+      <p class="bg">
+        const postToUpdate = { <br />
+        id: 1,<br />
+        body: "Text content",<br />
+        }<br />
+        const options = {<br />
+        method: 'PATCH',<br />
+        body: JSON.stringify(postToUpdate),<br />
+        headers: { "contentType": 'application/json' },<br />
+        }<br />
+        fetch(`https://jsonplaceholder.typicode.com/posts/${postToUpdate.id}`,
+        options)<br />
+        .then(response => response.json())<br />
+        .then(post => console.log(post))<br />
+        .catch(error => console.log("ERROR" + error));<br />
+        //<br />
+        {<br />
+        userId: 1,<br />
+        id: 1,<br />
+        title: 'sunt aut facere repellat provident occaecati excepturi optio
+        reprehenderit',<br />
+        body: 'quia et suscipit\n' +<br />
+        'suscipit recusandae consequuntur expedita et cum\n' +<br />
+        'reprehenderit molestiae ut ut quas totam\n' +<br />
+        'nostrum rerum est autem sunt rem eveniet architecto'<br />
+        }<br />
+      </p>
+      <p>
+        Метод PATCH заменяет в существующем ресурсе значение передаваемые через
+        запросы свойств. Метод PUT полностью заменяет ресурс. <br />
+        <b>DELETE</b><br />
+        Метод DELETE используется для удаления существующих данных. Метод
+        fetch() должен отправлять на сервер delete запрос без тела. Путь
+        указывает в какой коллекции и какой элемент мы хотим удалить. Бэкэнд
+        после получения запроса обрабатывает его, удалит ресурс из коллекции и в
+        ответ вернет статус результат.
+      </p>
+      <p class="bg">
+        const postIdToDelete = 1; <br />
+        fetch(`https://jsonplaceholder.typicode.com/posts/${postIdToDelete}`,
+        {method: "DELETE"})<br />
+        .then(()=> console.log("Post Deleted"))<br />
+        .catch(error => console.log("ERROR: ", error));<br />
+      </p>
+      <h3 class="title">Асинхронные функции</h3>
+      <p>
+        Работа с бэкэндом может быть запутана. После одной асинхронной операции
+        необходимо сделать еще один запрос на сервер на оснавании полученных
+        данных, и так несколько раз. К примеру на странице профиля пользователь
+        хочет посмотреть список друзей. Первое что необходимо сделать -
+        подтвердить его права доступа к этой странице на бэкэнде. Для этого
+        нужно запустить myapi.com/me. Если бэкэнд позволит доступ, в ответ мы
+        получим уникальный токен доступа к защищенным ресурсам
+      </p>
+      <p class="bg">
+        const fetchFriends = () => { <br />
+        return fetch('myapi.com/me').then(token => {<br />
+        console.log(token);<br />
+        })<br />
+        }<br />
+      </p>
+      <p>
+        Затем необходимо сделать запрос профиля пользователя с
+        myapi.com/profile, но профиль не полный, он содержит только критическо
+        важную инфу: индификатор пользователя без списка друзей
+      </p>
+      <p class="bg">
+        const fetchFriends = () => { <br />
+        return fetch('myapi.com/me').then(token => {<br />
+        return fetch(`myapi.com/profile?token=${token}`).then(user => {<br />
+        console.log(user.id);<br />
+        })<br />
+        })<br />
+        }<br />
+      </p>
+      <p>
+        И только после этого можно запросить список друзей <br />
+        myapi.com/users/:userid/friends
+      </p>
+      <p class="bg">
+        const fetchFriends = () => { <br />
+        return fetch('myapi.com/me').then(token => {<br />
+        return fetch(`myapi.com/profile?token=${token}`).then(user => {<br />
+        return fetch(`myapi.com/users/${user.id}/friends`)<br />
+        })<br />
+        })<br />
+        }<br />
+        fetchFriends().then(friends => {<br />
+        console.log(friends);<br />
+        }).catch(error => console.error(error))<br />
+      </p>
+      <p>
+        Не самый удобный способ для чтения кода хотя операции сомнительно
+        простые. Поскольку мы передаем функции обработчики метода then()
+        образовывая елковидную вложенность <br />
+        Асинхронные функции помогают избавится от колбэков и вложенных
+        конструкций. В то же время они отлично работают вместе с методом then()
+        и catch() потому что гарантировано возвращают промис.
+      </p>
+      <p class="bg">
+        const fetchFriends = async => { <br />
+        const token = await fetch('myapi.com/me');<br />
+        const user = await fetch(`myapi.com/profile?token=${token}`);<br />
+        const friends = await fetch(`myapi.com/users/${user.id}/friends`);<br />
+        return friends;<br />
+        }<br /><br />
+
+        fetchFriends()<br />
+        .then(friends => console.log(friends))<br />
+        .catch(error => console.error(error));<br />
+      </p>
+      <p>
+        <b>Синтаксис async await</b><br />
+        <b>Асинхронная функция async await</b> - удобный способ написания
+        асинхронного кода. В основе синтаксиса async await лежат promise,
+        поэтому он не блокирует основной поток выполнения программы. <br />
+        Для объявления асинхронной стрелочной функции перед списком параметров
+        добавляем ключевое слово async. А внутри нее можно использовать оператор
+        await и справа от него поставить нечто что вернет нам promise. Метод
+        response.json() так же возвращает promise поэтому ставим await
+      </p>
+      <p class="bg">
+        const fetchUsers = async () => { <br />
+        const response = await
+        fetch('https://jsonplaceholder.typicode.com/users');<br />
+        const users = await response.json();<br />
+        return users;<br />
+        };<br /><br />
+
+        fetchUsers().then(users => console.log(users));<br />
+      </p>
+      <p>
+        Когда инторпритатор вт=стречает await он приостанавля=ивает выполнение
+        этой функции (не только скрипта) и ждет пока не выполнится promise
+        справа от await. Как только promise выполнится выполнение функции
+        востанавливается и на строке ниже нам доступен результат асинхронной
+        операции
+      </p>
+      <ul>
+        <li>
+          Оператор await - можно использовать только в теле асинхронной функции
+          async
+        </li>
+        <li>
+          Оператор await приостанавливает функцию пока promise не выполнится
+          (fulfilled & reject)
+        </li>
+        <li>
+          Если promise успешный (fulfilled) оператор await вернет его значение
+        </li>
+        <li>Если promise отклонен (reject) оператор await выбросит ошибку</li>
+        <li>
+          Асинхронная функция всегда возвращает promise поэтому любое
+          возвращаемое значение будет его значением
+        </li>
+        <li>
+          Если не указать возвращаемое значение возвратится promise со значением
+          undefind
+        </li>
+      </ul>
+      <p>
+        Любая функция может быть асинхронной будь то метод объекта, класса,
+        колбэк, объявление или инлайн функция. Все они могут использовать
+        оператор await и вернут promise, потому что будут асинхронными
+        функциями.
+      </p>
+      <p class="bg">
+        // Function declaration <br />
+        async function foo() {<br />
+        // Тело функции<br />
+        }<br /><br />
+
+        // Function expression<br />
+        const foo = async function () {<br />
+        // Тело функции<br />
+        }<br /><br />
+
+        // Array function<br />
+        const foo = async () => {<br />
+        // Тело функции<br />
+        }<br /><br />
+
+        // Метод объекта<br />
+        const user = {<br />
+        async foo() {<br />
+        // Тело функции<br />
+        }<br />
+        }<br /><br />
+
+        // Метод класса<br />
+        class User{<br />
+        async foo() {<br />
+        // Тело функции<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        Обработчик ошибок <br />
+        Если результат асинхронной функции (promise) не используется во внешнем
+        коде, ошибки обрабатываются в теле функции try/catch. Значение параметра
+        error в блоке catch это ошибка, котору сгенерирует await если promise
+        будет отклонен
+      </p>
+      <p class="bg">
+        const fetchUsers = async () => { <br />
+        try {<br />
+        const response = await
+        fetch('https://jsonplaceholder.typicode.com/users');<br />
+        const users = await response.json();<br />
+        console.log(users);<br />
+        } catch (error) {<br />
+        console.log(error.message);<br />
+        }<br />
+        };<br /><br />
+
+        fetchUsers();<br />
+      </p>
+      <p>
+        Если результат асинхронной функции (promise) используется во внешнем
+        коде (глобально) т.е вне других асинхронных функций, ошибки
+        обрабатываются колбэком метода catch. Значение параметра error в методе
+        catch это ошибка, которую сгенерирует await если promise будет отклонен.
+      </p>
+      <p class="bg">
+        const fetchUsers = async () => { <br />
+        const response = await
+        fetch('https://jsonplaceholder.typicode.com/users');<br />
+        const users = await response.json();<br />
+        return users;<br />
+        }<br /><br />
+
+        fetchUsers().then(users => console.log(users)).catch(error =>
+        console.log(error));<br />
+      </p>
+      <p>
+        Так работать не будет - await можно использовать только в теле
+        асинхронной функции
+      </p>
+      <p class="bg">
+        const fetchUsers = async () => { <br />
+        const response = await
+        fetch('https://jsonplaceholder.typicode.com/users');<br />
+        const users = await response.json();<br />
+        return users;<br />
+        };<br /><br />
+
+        const users = await fetchUsers();
+      </p>
+      <p>
+        Если результат асинхронной функции используется в другой асинхронной
+        функции то ошибки обрабатываются в конструкции try/catch, значение
+        параметра error в блоке catch это ошибка, которую сгенерирует await если
+        promise будет отклонен
+      </p>
+      <p class="bg">
+        const fetchUsers = async () => { <br />
+        const response = await
+        fetch('https://jsonplaceholder.typicode.com/users');<br />
+        const users = await response.json();<br />
+        return users;<br />
+        };<br /><br />
+
+        const asyncFoo = async () => {<br />
+        try {<br />
+        const users = await fetchUsers();<br />
+        console.log(users);<br />
+        } catch (error) {<br />
+        console.log(error.message);<br />
+        }<br />
+        }<br /><br />
+
+        asyncFoo();<br />
+      </p>
+      <p>
+        <b>Параллельные запросы</b><br />
+        Если одновременно необходимо сделать несколько запросов то использовать
+        синтаксис async/await нужно очень осторожно. В след примере будет три
+        последовательных запроса, т.к выполнение асинхронной функции
+        приостанавливается, когда инторпритатор встречает await. Кроме того парс
+        результатов запросов так же будет последовательным что займет больше
+        времени
+      </p>
+      <p class="bg">
+        const fetchUsers = async () => { <br />
+        const baseUrl = 'https://jsonplaceholder.typicode.com';<br />
+        const firstResponse = await fetch(`${baseUrl}/users/1`);<br />
+        const secondResponse = await fetch(`${baseUrl}/users/2`);<br />
+        const thirdResponse = await fetch(`${baseUrl}/users/3`);<br /><br />
+
+        const firstUser = await firstResponse.json();<br />
+        const secondUser = await secondResponse.json();<br />
+        const thirdUser = await thirdResponse.json();<br /><br />
+
+        console.log(firstUser, secondUser, thirdUser);<br />
+        };<br /><br />
+
+        fetchUsers();
+      </p>
+      <p>
+        В нашем случае они полностю независимые, поэтому нужно запустить их
+        параллельно. Для этого создается масси в promises после чего
+        используется метод Promise.all() для ожидания их выполнения. Массив
+        промисов создается методом map(), filter() в зависимости от задачи
+      </p>
+      <p class="bg">
+        const fetchUsers = async () => { <br />
+        const baseUrl = 'https://jsonplaceholder.typicode.com';<br />
+        const userIds = [1, 2, 3];
+        <br /><br />
+        // Создаем массив promise<br />
+        const arrayOfPromoses = userIds.map(async userId => {<br />
+        const response = await fetch(`${baseUrl}/users/${userId}`);<br />
+        return response.json();<br />
+        })<br /><br />
+
+        // Запускаем все promises параллельно и ждем их завершения<br />
+        const users = await Promise.all(arrayOfPromoses);<br />
+        console.log(users);<br />
+        }<br /><br />
+
+        fetchUsers();
+      </p>
+      <div>
+        <button type="button" class="btn5 btn">Fetch users</button>
+        <ul class="user-list5"></ul>
+      </div>
     </section>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./js/moduleTen.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
+    <!-- <script src="./js/moduleTen.js"></script> -->
+    <script src="./js/fetchUsers.js"></script>
   </body>
 </html>

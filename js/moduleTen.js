@@ -265,3 +265,244 @@ function renderPosts3(posts) {
     .join('');
   postLimit3.innerHTML = markUp;
 }
+
+// ===================================== Чтение read =======================
+
+fetch('https://jsonplaceholder.typicode.com/posts')
+  .then(response => response.json())
+  .then(posts => console.log(posts))
+  .catch(error => console.log(error));
+
+// ======================== post id ======================
+
+const postId = 1;
+
+fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+  .then(response => response.json())
+  .then(posts => console.log(posts))
+  .catch(error => console.log(error));
+
+// ========================= CREATE =======================
+
+const postToAdd = {
+  author: 'Athor Name',
+  body: 'Create is awesome',
+};
+const options = {
+  method: 'POST',
+  body: JSON.stringify(postToAdd),
+  headers: { contentType: 'application/json' },
+};
+fetch('https://jsonplaceholder.typicode.com/posts', options)
+  .then(response => response.json())
+  .then(post => console.log(post))
+  .catch(error => console.log(error));
+
+// ==============================
+
+// { "id": 1, "author": "Author Name", "content": "Text Content" };
+
+// ================================= PATCH & PUT ===========================
+
+const postToUpdate = {
+  id: 1,
+  body: 'Text content',
+};
+const options = {
+  method: 'PATCH',
+  body: JSON.stringify(postToUpdate),
+  headers: { contentType: 'application/json' },
+};
+fetch(`https://jsonplaceholder.typicode.com/posts/${postToUpdate.id}`, options)
+  .then(response => response.json())
+  .then(post => console.log(post))
+  .catch(error => console.log('ERROR' + error));
+
+// ========================= DELETE ====================================
+
+const postIdToDelete = 1;
+fetch(`https://jsonplaceholder.typicode.com/posts/${postIdToDelete}`, {
+  method: 'DELETE',
+})
+  .then(() => console.log('Post Deleted'))
+  .catch(error => console.log('ERROR: ', error));
+
+// ===================================== Асинхронные функции ==========================
+
+// ==================================== Token =================================
+
+const fetchFriends = () => {
+  return fetch('myapi.com/me').then(token => {
+    console.log(token);
+  });
+};
+
+// ===========================
+
+const fetchFriends = () => {
+  return fetch('myapi.com/me').then(token => {
+    return fetch(`myapi.com/profile?token=${token}`).then(user => {
+      console.log(user.id);
+    });
+  });
+};
+
+// ================================
+
+const fetchFriends = () => {
+  return fetch('myapi.com/me').then(token => {
+    return fetch(`myapi.com/profile?token=${token}`).then(user => {
+      return fetch(`myapi.com/users/${user.id}/friends`);
+    });
+  });
+};
+fetchFriends()
+  .then(friends => {
+    console.log(friends);
+  })
+  .catch(error => console.error(error));
+
+// ====================================================
+
+const fetchFriends = async () => {
+  const token = await fetch('https://my-api.com/me');
+  const user = await fetch(`https://my-api.com/profile?token=${token}`);
+  const friends = await fetch(`https://my-api.com/users/${user.id}/friends`);
+  return friends;
+};
+
+fetchFriends()
+  .then(friends => console.log(friends))
+  .catch(error => console.error(error));
+
+// ================================= async/await ===================================
+
+const fetchUsers = async () => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/users');
+  const users = await response.json();
+  return users;
+};
+
+fetchUsers().then(users => console.log(users));
+
+// ========================================
+
+// Function declaration
+async function foo() {
+  // Тело функции
+}
+
+// Function expression
+const foo = async function () {
+  // Тело функции
+};
+
+// Array function
+const foo = async () => {
+  // Тело функции
+};
+
+// Метод объекта
+const user = {
+  async foo() {
+    // Тело функции
+  },
+};
+
+// Метод класса
+class User {
+  async foo() {
+    // Тело функции
+  }
+}
+
+// ===================================== Обработчик ошибок  ====================
+
+const fetchUsers = async () => {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users');
+    const users = await response.json();
+    console.log(users);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+fetchUsers();
+
+// ========================================
+
+const fetchUsers = async () => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/users');
+  const users = await response.json();
+  return users;
+};
+
+fetchUsers()
+  .then(users => console.log(users))
+  .catch(error => console.log(error));
+
+// ============================= плохой пример =============
+
+const fetchUsers = async () => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/users');
+  const users = await response.json();
+  return users;
+};
+
+const users = await fetchUsers();
+
+// ==================================
+
+const fetchUsers = async () => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/users');
+  const users = await response.json();
+  return users;
+};
+
+const asyncFoo = async () => {
+  try {
+    const users = await fetchUsers();
+    console.log(users);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+asyncFoo();
+
+// =================================== Параллельные запросы ========================
+
+const fetchUsers = async () => {
+  const baseUrl = 'https://jsonplaceholder.typicode.com';
+  const firstResponse = await fetch(`${baseUrl}/users/1`);
+  const secondResponse = await fetch(`${baseUrl}/users/2`);
+  const thirdResponse = await fetch(`${baseUrl}/users/3`);
+
+  const firstUser = await firstResponse.json();
+  const secondUser = await secondResponse.json();
+  const thirdUser = await thirdResponse.json();
+
+  console.log(firstUser, secondUser, thirdUser);
+};
+
+fetchUsers();
+
+// ============================================
+
+const fetchUsers = async () => {
+  const baseUrl = 'https://jsonplaceholder.typicode.com';
+  const userIds = [1, 2, 3];
+
+  // Создаем массив promise
+  const arrayOfPromoses = userIds.map(async userId => {
+    const response = await fetch(`${baseUrl}/users/${userId}`);
+    return response.json();
+  });
+
+  // Запускаем все promises параллельно и ждем их завершения
+  const users = await Promise.all(arrayOfPromoses);
+  console.log(users);
+};
+
+fetchUsers();
